@@ -1,1 +1,6 @@
-Sube SOLO index.html. Cambia Predicción del día por Acierto más impresionante y agrega Oráculo del Día/Turista del Mundial.
+Sube/reemplaza estos 2 archivos:
+1. actualizar_resultados.py
+2. .github/workflows/actualizar-resultados.yml
+
+Luego ve a GitHub → Actions → Actualizar resultados de la polla → Run workflow.
+No necesitas API key. No reemplaces index.html ni predicciones.json.
