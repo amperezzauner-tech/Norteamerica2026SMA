@@ -1,0 +1,28 @@
+# Polla Norteamérica 2026 - versión corregida
+
+Archivos principales para GitHub Pages:
+
+- index.html
+- grupos.html
+- predicciones.json
+- resultados.json
+
+Correcciones incluidas:
+
+- Se eliminó el participante agregado por error: Alejandro Gonzalex.
+- Total real: 116 participantes.
+- La página calcula automáticamente partidos jugados desde resultados.json.
+- El archivo principal se llama exactamente index.html.
+
+Importante:
+
+No subas index(2).html ni grupos_corregido(2).html como nombres finales. GitHub Pages debe tener index.html en la raíz del repositorio.
+
+Para probar localmente, abre una terminal en esta carpeta y ejecuta:
+
+python3 -m http.server 8000
+
+Luego abre:
+http://localhost:8000
+
+Si abres index.html con doble clic, algunos navegadores bloquean la lectura de predicciones.json y resultados.json por seguridad.
