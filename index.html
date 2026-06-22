@@ -70,6 +70,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .quick-award-desc{font-size:.78rem;color:var(--muted);line-height:1.4;margin-top:7px}
 
 @media(max-width:720px){.hero,.grid2,.grid3{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.leader{min-height:150px}.leader-name{font-size:1.25rem}.leader-points{font-size:2.05rem}.tabs{display:none}.wrap{padding:10px}.brand h1{font-size:.92rem}.pill{font-size:.58rem}.rank-row{grid-template-columns:34px 1fr 62px}.name{font-size:.84rem}.section-title{font-size:.82rem}.bottom button{font-size:.58rem}}
+
+.collective-score-table{width:100%;border-collapse:collapse;background:#fff;color:#111;border-radius:10px;overflow:hidden;font-size:.82rem;margin-top:8px}
+.collective-score-table th{background:#bfbfbf;color:#111;text-transform:uppercase;text-align:left;padding:7px;border:1px solid #111}
+.collective-score-table td{padding:7px;border:1px solid #111}
+.collective-score-table tfoot td{background:#bfbfbf;font-weight:900;text-transform:uppercase}
+.collective-score-table td.num{text-align:center;font-weight:850}
+.collective-top-title{margin-top:12px;font-weight:950;color:var(--gold)}
+.collective-help{font-size:.68rem;color:var(--muted);margin-top:4px}
 </style>
 </head>
 <body>
@@ -398,14 +406,49 @@ function renderSurprise(){
   document.getElementById('surprise-card').innerHTML='<div class="label">Más aciertos en marcadores poco predichos</div><h2 style="color:var(--gold);margin:5px 0">'+esc(SURPRISE.nombre)+'</h2><p><b>'+SURPRISE.surpriseHits+' marcadores sorpresa</b> · '+SURPRISE.surpriseScore+' pts de rareza</p>'+(rare?'<p class="muted" style="margin-top:8px">Ejemplo: '+esc(rare.m.local)+' '+rare.m.golesLocal+'-'+rare.m.golesVisitante+' '+esc(rare.m.visitante)+' · solo '+rare.exactCount+' exactos.</p>':'');
 }
 function renderCollective(){
-  const m=displayFocusMatch();if(!m)return;
-  let local=0,emp=0,visit=0;
-  PARTICIPANTES.forEach(p=>{const pr=p.predicciones?.[m.id];if(!pr)return;const o=outcome(+pr.golesLocal,+pr.golesVisitante);if(o==='L')local++;else if(o==='V')visit++;else emp++});
-  const total=local+emp+visit||1;
+  const box=document.getElementById('collective-card');
+  if(!box)return;
+  const m=displayFocusMatch();
+  if(!m){box.innerHTML='<div class="empty">No hay partido para mostrar.</div>';return;}
+
+  let local=0,emp=0,visit=0,total=0;
+  const scores={};
+
+  PARTICIPANTES.forEach(p=>{
+    const pr=p.predicciones && p.predicciones[m.id];
+    if(!pr || pr.golesLocal===undefined || pr.golesVisitante===undefined || pr.golesLocal===null || pr.golesVisitante===null)return;
+    const gl=Number(pr.golesLocal);
+    const gv=Number(pr.golesVisitante);
+    if(Number.isNaN(gl)||Number.isNaN(gv))return;
+    total++;
+    const o=outcome(gl,gv);
+    if(o==='L')local++;else if(o==='V')visit++;else emp++;
+    const marcador=gl+'-'+gv;
+    scores[marcador]=(scores[marcador]||0)+1;
+  });
+
+  const denom=total||1;
   const live=currentLiveMatch();
   const title=live&&live.id===m.id?'🔴 Partido en vivo':'⏳ Próximo partido';
-  const rows=[[m.local,local,''],['Empate',emp,'ok'],[m.visitante,visit,'violet']];
-  document.getElementById('collective-card').innerHTML='<div class="live-card"><span class="'+(live&&live.id===m.id?'live-badge':'time-badge')+'">'+title+'</span><h3 style="margin:5px 0 4px">'+esc(m.local)+' vs '+esc(m.visitante)+'</h3>'+(fmtTime(m)?'<div class="pred-small">Horario: '+esc(fmtTime(m))+'</div>':'')+'</div>'+rows.map(r=>'<div class="barrow"><div class="barhead"><span>'+esc(r[0])+'</span><b>'+pct(r[1],total)+'%</b></div><div class="bar"><div class="fill '+r[2]+'" style="width:'+pct(r[1],total)+'%"></div></div></div>').join('');
+  const top=Object.entries(scores).sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0], 'es'));
+
+  const topRows=top.slice(0,12).map(r=>
+    '<tr><td>'+esc(r[0])+'</td><td class="num">'+r[1]+'</td><td class="num">'+((r[1]/denom)*100).toFixed(1)+'%</td></tr>'
+  ).join('');
+
+  const fullRows=top.map(r=>
+    '<tr><td>'+esc(r[0])+'</td><td class="num">'+r[1]+'</td><td class="num">'+((r[1]/denom)*100).toFixed(1)+'%</td></tr>'
+  ).join('');
+
+  box.innerHTML=
+    '<div class="live-card"><span class="'+(live&&live.id===m.id?'live-badge':'time-badge')+'">'+title+'</span><h3 style="margin:5px 0 4px">'+esc(m.local)+' vs '+esc(m.visitante)+'</h3>'+(fmtTime(m)?'<div class="pred-small">Horario: '+esc(fmtTime(m))+'</div>':'')+'</div>'+
+    '<div class="barrow"><div class="barhead"><span>Victoria '+esc(m.local)+'</span><b>'+pct(local,denom)+'%</b></div><div class="bar"><div class="fill" style="width:'+pct(local,denom)+'%"></div></div></div>'+
+    '<div class="barrow"><div class="barhead"><span>Empate</span><b>'+pct(emp,denom)+'%</b></div><div class="bar"><div class="fill ok" style="width:'+pct(emp,denom)+'%"></div></div></div>'+
+    '<div class="barrow"><div class="barhead"><span>Victoria '+esc(m.visitante)+'</span><b>'+pct(visit,denom)+'%</b></div><div class="bar"><div class="fill violet" style="width:'+pct(visit,denom)+'%"></div></div></div>'+
+    '<div class="collective-top-title">📊 Resultados más votados</div>'+
+    '<div class="collective-help">Tabla de marcadores exactos predichos por los '+total+' participantes.</div>'+
+    '<div style="overflow:auto"><table class="collective-score-table"><thead><tr><th>Marcador</th><th>Cantidad</th><th>%</th></tr></thead><tbody>'+(topRows||'<tr><td colspan="3">Sin predicciones cargadas para este partido.</td></tr>')+'</tbody><tfoot><tr><td>Total</td><td class="num">'+total+'</td><td></td></tr></tfoot></table></div>'+
+    (top.length>12?'<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:850;color:var(--muted)">Ver todos los marcadores</summary><div style="overflow:auto;margin-top:8px"><table class="collective-score-table"><thead><tr><th>Marcador</th><th>Cantidad</th><th>%</th></tr></thead><tbody>'+fullRows+'</tbody><tfoot><tr><td>Total</td><td class="num">'+total+'</td><td></td></tr></tfoot></table></div></details>':'');
 }
 function renderChampionCards(){
   const fav=CHAMPIONS[0]||{team:'—',n:0};
