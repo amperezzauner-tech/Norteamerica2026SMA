@@ -40,6 +40,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .bottom{background:linear-gradient(90deg,rgba(6,27,53,.98),rgba(7,55,99,.98),rgba(6,27,53,.98))}
 .bottom:before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#e5253a,#ffd447,#0fb36d,#00a6ff)}
 
+
+.submenu{display:flex;gap:7px;overflow:auto;margin-bottom:10px;padding-bottom:2px}
+.submenu button{border:1px solid var(--line);background:linear-gradient(180deg,#073763,#062441);color:var(--muted);border-radius:999px;padding:8px 11px;font-size:.68rem;font-weight:900;white-space:nowrap;cursor:pointer}
+.submenu button.act{background:linear-gradient(135deg,var(--gold),#ffef9a);color:#06101d;border-color:var(--gold)}
+.subpanel{display:none}.subpanel.act{display:block}
+.pred-table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:rgba(6,27,53,.35)}
+.pred-table{width:100%;border-collapse:collapse;min-width:780px}
+.pred-table th{position:sticky;top:0;background:#062441;color:var(--gold);font-size:.67rem;text-transform:uppercase;letter-spacing:.4px;padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}
+.pred-table td{padding:10px 8px;border-bottom:1px solid rgba(31,122,140,.45);font-size:.78rem;vertical-align:top}
+.pred-table tr:hover{background:rgba(255,212,71,.06)}
+.pred-team{font-weight:900;color:var(--white)}
+.pred-small{font-size:.68rem;color:var(--muted);margin-top:3px}
+.pred-winner{font-weight:950;color:var(--gold)}
+.pred-score-chip{display:inline-block;border:1px solid #ffd44788;background:#ffd44722;color:#fff7e6;border-radius:999px;padding:3px 7px;font-size:.68rem;font-weight:900;margin:1px}
+.award-card{padding:12px;border:1px solid rgba(31,122,140,.7);border-radius:16px;background:linear-gradient(135deg,rgba(7,55,99,.9),rgba(6,27,53,.9));margin-bottom:9px}
+.award-card h3{font-size:.92rem;color:var(--gold);margin-bottom:3px}
+.award-desc{font-size:.72rem;line-height:1.38;color:var(--muted);margin-top:3px}
+.award-rule{font-size:.66rem;color:var(--white);opacity:.9;margin-top:4px}
+
 @media(max-width:720px){.hero,.grid2,.grid3{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.leader{min-height:150px}.leader-name{font-size:1.25rem}.leader-points{font-size:2.05rem}.tabs{display:none}.wrap{padding:10px}.brand h1{font-size:.92rem}.pill{font-size:.58rem}.rank-row{grid-template-columns:34px 1fr 62px}.name{font-size:.84rem}.section-title{font-size:.82rem}.bottom button{font-size:.58rem}}
 </style>
 </head>
@@ -61,8 +80,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <nav class="tabs">
     <button class="tabbtn act" onclick="show('inicio',this)">🏠 Inicio</button>
     <button class="tabbtn" onclick="show('ranking',this)">🏆 Ranking</button>
-    <button class="tabbtn" onclick="show('preds',this)">🔮 Preds</button>
     <button class="tabbtn" onclick="show('partidos',this)">⚽ Partidos</button>
+    <button class="tabbtn" onclick="show('preds',this)">🔮 Mundial</button>
     <button class="tabbtn" onclick="show('salon',this)">🏅 Salón</button>
   </nav>
 
@@ -99,21 +118,58 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <div class="card"><div class="section-title">👥 Grupos privados</div><div class="body"><a class="linkbtn" href="grupos.html">Abrir ligas privadas</a><p class="muted" style="margin-top:10px;line-height:1.45">Aquí puedes manejar Familia Mamá, Familia Papá, Tincho, Baby FC o cualquier grupo interno.</p></div></div>
   </section>
 
-  <section id="partidos" class="section"><div class="grid2"><div class="card"><div class="section-title">✅ Últimos resultados</div><div class="body" id="played-list"></div></div><div class="card"><div class="section-title">⏳ Próximos partidos</div><div class="body" id="pending-list"></div></div></div></section>
+  <section id="partidos" class="section">
+    <div class="card">
+      <div class="section-title">⚽ Partidos <span class="chip">predicciones · resultados · próximos</span></div>
+      <div class="body">
+        <div class="submenu">
+          <button class="act" onclick="showSub('match-preds',this)">🔮 Predicciones por partido</button>
+          <button onclick="showSub('match-results',this)">✅ Resultados</button>
+          <button onclick="showSub('match-next',this)">⏳ Próximos partidos</button>
+        </div>
+        <div id="sub-match-preds" class="subpanel act">
+          <div class="pred-table-wrap">
+            <table class="pred-table">
+              <thead><tr><th>Partido</th><th>La multitud dice</th><th>Marcador más predicho</th><th>Top marcadores</th><th>Estado</th></tr></thead>
+              <tbody id="match-pred-table"></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="sub-match-results" class="subpanel"><div id="played-list"></div></div>
+        <div id="sub-match-next" class="subpanel"><div id="pending-list"></div></div>
+      </div>
+    </div>
+  </section>
 
   <section id="salon" class="section">
     <div class="grid2">
-      <div class="card"><div class="section-title">🏅 Salón de la fama</div><div class="body" id="badges"></div></div>
-      <div class="card"><div class="section-title">🧨 Resultados menos predichos</div><div class="body" id="rarest-results"></div></div>
+      <div class="card">
+        <div class="section-title">🏅 Salón de la fama <span class="chip">premios automáticos</span></div>
+        <div class="body" id="badges"></div>
+      </div>
+      <div class="card">
+        <div class="section-title">📖 Qué significa cada premio</div>
+        <div class="body" id="award-definitions">
+          <div class="award-card"><h3>👑 Oráculo del Día</h3><div class="award-desc">La persona que más puntos hizo en la jornada más reciente con partidos finalizados.</div><div class="award-rule">Premia el mejor rendimiento del día.</div></div>
+          <div class="award-card"><h3>🤡 Turista del Mundial</h3><div class="award-desc">La persona con menos puntos en la jornada más reciente.</div><div class="award-rule">Premio cariñoso para quien salió a pasear y no a pronosticar.</div></div>
+          <div class="award-card"><h3>🔥 Golpe de Suerte</h3><div class="award-desc">Quien acertó un marcador exacto muy poco predicho.</div><div class="award-rule">Entre más raro el marcador, más vale el golpe.</div></div>
+          <div class="award-card"><h3>🎯 Francotirador</h3><div class="award-desc">Quien lleva más marcadores exactos en todo el torneo.</div><div class="award-rule">No basta acertar ganador: aquí manda el marcador perfecto.</div></div>
+          <div class="award-card"><h3>🐙 Pulpo Paul</h3><div class="award-desc">Quien tiene el mayor porcentaje de aciertos de resultado.</div><div class="award-rule">Mide consistencia: local, empate o visitante.</div></div>
+          <div class="award-card"><h3>🧨 Rey del Batacazo</h3><div class="award-desc">Quien acertó el resultado menos predicho del torneo.</div><div class="award-rule">Premia ver venir lo que casi nadie vio.</div></div>
+          <div class="award-card"><h3>🏆 Rey del Mundial</h3><div class="award-desc">El líder actual de la clasificación general.</div><div class="award-rule">El premio principal: más puntos acumulados.</div></div>
+        </div>
+      </div>
     </div>
+    <div style="height:10px"></div>
+    <div class="card"><div class="section-title">🧨 Resultados menos predichos</div><div class="body" id="rarest-results"></div></div>
   </section>
 </div>
 
 <nav class="bottom">
   <button class="act" onclick="showMobile('inicio',this)"><b>🏠</b>Inicio</button>
   <button onclick="showMobile('ranking',this)"><b>🏆</b>Ranking</button>
-  <button onclick="showMobile('preds',this)"><b>🔮</b>Preds</button>
   <button onclick="showMobile('partidos',this)"><b>⚽</b>Partidos</button>
+  <button onclick="showMobile('preds',this)"><b>🔮</b>Mundial</button>
   <button onclick="showMobile('salon',this)"><b>🏅</b>Salón</button>
 </nav>
 
@@ -226,7 +282,7 @@ function renderAll(){
   document.getElementById('stat-exact').textContent=exactTop;
   document.getElementById('stat-champ').textContent=fav.team;
   document.getElementById('rbar').innerHTML='<b>Resultados:</b> '+(PLAYED.length?PLAYED.slice(-18).map(m=>esc(m.local.substring(0,3))+'-'+esc(m.visitante.substring(0,3))+' '+m.golesLocal+'-'+m.golesVisitante).join(' · '):'sin partidos finalizados');
-  renderDaily();renderSurprise();renderCollective();renderChampionCards();renderGroupButtons();renderGroupPredictions();renderTopMeter();renderRanking();renderMatches();renderBadges();renderRarest();
+  renderDaily();renderSurprise();renderCollective();renderChampionCards();renderGroupButtons();renderGroupPredictions();renderTopMeter();renderRanking();renderMatches();renderMatchPredictionTable();renderBadges();renderRarest();
 }
 function renderDaily(){
   let best=null;
@@ -300,20 +356,98 @@ function predBar(label,n,total,cls){return '<div class="barrow"><div class="barh
 function renderTopMeter(){document.getElementById('top-meter').innerHTML=RANKING.slice(0,5).map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">#'+p.pos+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">'+p.hit+'/'+PLAYED.length+' aciertos</span><span class="chip">'+p.exact+' exactos</span><span class="chip">'+p.pct+'%</span></div></div><div class="pts">'+p.pts+'</div></div>').join('')}
 function renderRanking(){const q=norm(document.getElementById('search')?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span></div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
 function renderMatches(){document.getElementById('played-list').innerHTML=PLAYED.slice().reverse().slice(0,18).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">'+m.golesLocal+' - '+m.golesVisitante+'</div></div>').join('')||'<div class="empty">Sin resultados.</div>';document.getElementById('pending-list').innerHTML=PENDING.slice(0,18).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">⏳</div></div>').join('')||'<div class="empty">No hay pendientes.</div>'}
+
+function showSub(id,btn){
+  document.querySelectorAll('.subpanel').forEach(s=>s.classList.remove('act'));
+  const panel=document.getElementById('sub-'+id); if(panel) panel.classList.add('act');
+  btn?.parentElement?.querySelectorAll('button').forEach(b=>b.classList.remove('act'));
+  btn?.classList.add('act');
+}
+function matchPredictionStats(m){
+  let local=0,emp=0,visit=0,total=0;
+  const scoreCounts={};
+  PARTICIPANTES.forEach(p=>{
+    const pr=p.predicciones?.[m.id]; if(!pr)return;
+    total++;
+    const gl=+pr.golesLocal, gv=+pr.golesVisitante;
+    const o=outcome(gl,gv);
+    if(o==='L')local++; else if(o==='V')visit++; else emp++;
+    const key=gl+'-'+gv; scoreCounts[key]=(scoreCounts[key]||0)+1;
+  });
+  const scores=Object.entries(scoreCounts).map(([score,n])=>({score,n})).sort((a,b)=>b.n-a.n||a.score.localeCompare(b.score));
+  const leader=[{label:m.local,n:local},{label:'Empate',n:emp},{label:m.visitante,n:visit}].sort((a,b)=>b.n-a.n)[0]||{label:'—',n:0};
+  let exact=0,hit=0;
+  if(m.estado==='finalizado'){
+    RANKING.forEach(p=>{
+      const pr=p.predicciones?.[m.id]; if(!pr)return;
+      if(+pr.golesLocal===+m.golesLocal&&+pr.golesVisitante===+m.golesVisitante) exact++;
+      if(outcome(+pr.golesLocal,+pr.golesVisitante)===outcome(+m.golesLocal,+m.golesVisitante)) hit++;
+    });
+  }
+  return {local,emp,visit,total,scores,leader,exact,hit};
+}
+function renderMatchPredictionTable(){
+  const tbody=document.getElementById('match-pred-table'); if(!tbody)return;
+  tbody.innerHTML=MATCHES.map(m=>{
+    const st=matchPredictionStats(m);
+    const topScores=st.scores.slice(0,4).map(s=>'<span class="pred-score-chip">'+esc(s.score)+' · '+s.n+'</span>').join(' ');
+    const state=m.estado==='finalizado'
+      ? '<span class="chip gold">Final: '+m.golesLocal+'-'+m.golesVisitante+'</span><div class="pred-small">✅ '+st.hit+' acertaron resultado · 🎯 '+st.exact+' exactos</div>'
+      : '<span class="chip">Pendiente</span><div class="pred-small">'+st.total+' predicciones cargadas</div>';
+    const crowd='<div class="pred-winner">'+esc(st.leader.label)+' '+pct(st.leader.n,st.total)+'%</div><div class="pred-small">'+esc(m.local)+': '+pct(st.local,st.total)+'% · Empate: '+pct(st.emp,st.total)+'% · '+esc(m.visitante)+': '+pct(st.visit,st.total)+'%</div>';
+    return '<tr><td><div class="pred-team">'+esc(m.local)+' vs '+esc(m.visitante)+'</div><div class="pred-small">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+' · '+esc(m.id)+'</div></td><td>'+crowd+'</td><td><span class="pred-score-chip">'+esc(st.scores[0]?.score||'—')+' · '+(st.scores[0]?.n||0)+'</span></td><td>'+topScores+'</td><td>'+state+'</td></tr>';
+  }).join('');
+}
+function jornadaKey(m){return 'J'+(m.jornada||'?')+'-'+(m.grupo||'?')}
+function recentJornadaMatches(){
+  if(!PLAYED.length)return [];
+  const last=PLAYED[PLAYED.length-1];
+  const key=jornadaKey(last);
+  const same=PLAYED.filter(m=>jornadaKey(m)===key);
+  return same.length?same:[last];
+}
+function jornadaScores(){
+  const ms=recentJornadaMatches();
+  return RANKING.map(p=>{
+    let pts=0,hit=0,exact=0;
+    ms.forEach(m=>{
+      const pr=p.predicciones?.[m.id]; if(!pr)return;
+      const s=points(pr.golesLocal,pr.golesVisitante,m.golesLocal,m.golesVisitante);
+      pts+=s;
+      const ok=outcome(+pr.golesLocal,+pr.golesVisitante)===outcome(+m.golesLocal,+m.golesVisitante);
+      const ex=+pr.golesLocal===+m.golesLocal&&+pr.golesVisitante===+m.golesVisitante;
+      if(ok)hit++; if(ex)exact++;
+    });
+    return {...p,jPts:pts,jHit:hit,jExact:exact,jGames:ms.length};
+  }).sort((a,b)=>b.jPts-a.jPts||b.jExact-a.jExact||b.jHit-a.jHit);
+}
+
 function renderBadges(){
   const exact=RANKING.slice().sort((a,b)=>b.exact-a.exact)[0]||{};
   const hit=RANKING.slice().sort((a,b)=>b.pct-a.pct||b.hit-a.hit)[0]||{};
   const leader=RANKING[0]||{};
-  const fav=CHAMPIONS[0]?.team;
-  const champVision=RANKING.find(p=>p.honor?.campeon===fav)||leader;
+  const jscores=jornadaScores();
+  const oracle=jscores[0]||leader;
+  const tourist=jscores.slice().reverse().find(p=>p.jGames>0)||jscores[jscores.length-1]||leader;
+  const golpe=RANKING.slice().sort((a,b)=>(b.surpriseScore||0)-(a.surpriseScore||0))[0]||leader;
+  const batacazoEvent=RARE_EVENTS[0];
+  let batacazoWinner=null;
+  if(batacazoEvent){
+    batacazoWinner=RANKING.find(p=>{
+      const pr=p.predicciones?.[batacazoEvent.m.id];
+      return pr&&+pr.golesLocal===+batacazoEvent.m.golesLocal&&+pr.golesVisitante===+batacazoEvent.m.golesVisitante;
+    });
+  }
   const data=[
-    [BADGE_DEFS.leader,leader,(leader.pts||0)+' pts'],
-    [BADGE_DEFS.surprise,SURPRISE||leader,(SURPRISE?.surpriseHits||0)+' sorpresas'],
-    [BADGE_DEFS.exact,exact,(exact.exact||0)+' exactos'],
-    [BADGE_DEFS.hit,hit,(hit.pct||0)+'% acierto'],
-    [BADGE_DEFS.champion,champVision,'Campeón: '+(champVision?.honor?.campeon||'—')]
+    ['👑','Oráculo del Día','Mejor puntaje en la jornada más reciente',oracle,(oracle.jPts??0)+' pts · '+(oracle.jHit??0)+' aciertos · '+(oracle.jExact??0)+' exactos'],
+    ['🤡','Turista del Mundial','Menor puntaje en la jornada más reciente',tourist,(tourist.jPts??0)+' pts · '+(tourist.jHit??0)+' aciertos'],
+    ['🔥','Golpe de Suerte','Más aciertos en marcadores poco predichos',golpe,(golpe.surpriseHits||0)+' sorpresas · '+(golpe.surpriseScore||0)+' rareza'],
+    ['🎯','Francotirador','Más marcadores exactos acumulados',exact,(exact.exact||0)+' exactos'],
+    ['🐙','Pulpo Paul','Mayor porcentaje de aciertos de resultado',hit,(hit.pct||0)+'% · '+(hit.hit||0)+'/'+PLAYED.length],
+    ['🧨','Rey del Batacazo','Acertó el resultado menos predicho del torneo',batacazoWinner||golpe,batacazoEvent?esc(batacazoEvent.m.local)+' '+batacazoEvent.m.golesLocal+'-'+batacazoEvent.m.golesVisitante+' '+esc(batacazoEvent.m.visitante)+' · '+batacazoEvent.exactCount+' exactos':'—'],
+    ['🏆','Rey del Mundial','Líder de la clasificación general',leader,(leader.pts||0)+' pts · #1 general']
   ];
-  document.getElementById('badges').innerHTML=data.map(x=>'<div class="badge-card"><div class="badge-ico">'+x[0].ico+'</div><div><div class="badge-title">'+x[0].title+'</div><div class="muted" style="font-size:.72rem">'+x[0].desc+'</div><div class="badge-winner">'+esc(x[1]?.nombre||'—')+' · '+esc(x[2])+'</div></div></div>').join('');
+  document.getElementById('badges').innerHTML=data.map(x=>'<div class="badge-card"><div class="badge-ico">'+x[0]+'</div><div><div class="badge-title">'+x[1]+'</div><div class="award-desc">'+x[2]+'</div><div class="badge-winner">'+esc(x[3]?.nombre||'—')+' · '+x[4]+'</div></div></div>').join('');
 }
 function renderRarest(){
   document.getElementById('rarest-results').innerHTML=RARE_EVENTS.slice(0,10).map(e=>'<div class="match-card"><div><b>'+esc(e.m.local)+' '+e.m.golesLocal+'-'+e.m.golesVisitante+' '+esc(e.m.visitante)+'</b><div class="muted" style="font-size:.68rem">Solo '+e.exactCount+' exactos · '+e.outcomeCount+' acertaron resultado</div></div><div class="score">🔥</div></div>').join('')||'<div class="empty">Sin resultados finalizados.</div>';
@@ -330,7 +464,7 @@ function openProfile(id){
 function closeProfile(){document.getElementById('profile').classList.remove('act')}
 function show(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act');document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('act'));btn?.classList.add('act');syncBottom(id)}
 function showMobile(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act');document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('act'));btn?.classList.add('act');document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('act'))}
-function syncBottom(id){const buttons=[...document.querySelectorAll('.bottom button')];buttons.forEach(b=>b.classList.remove('act'));const idx={inicio:0,ranking:1,preds:2,partidos:3,salon:4}[id];if(idx!==undefined)buttons[idx].classList.add('act')}
+function syncBottom(id){const buttons=[...document.querySelectorAll('.bottom button')];buttons.forEach(b=>b.classList.remove('act'));const idx={inicio:0,ranking:1,partidos:2,preds:3,salon:4}[id];if(idx!==undefined)buttons[idx].classList.add('act')}
 loadData();
 </script>
 </body>
