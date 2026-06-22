@@ -71,13 +71,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 @media(max-width:720px){.hero,.grid2,.grid3{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.leader{min-height:150px}.leader-name{font-size:1.25rem}.leader-points{font-size:2.05rem}.tabs{display:none}.wrap{padding:10px}.brand h1{font-size:.92rem}.pill{font-size:.58rem}.rank-row{grid-template-columns:34px 1fr 62px}.name{font-size:.84rem}.section-title{font-size:.82rem}.bottom button{font-size:.58rem}}
 
-.collective-score-table{width:100%;border-collapse:collapse;background:#fff;color:#111;border-radius:10px;overflow:hidden;font-size:.82rem;margin-top:8px}
-.collective-score-table th{background:#bfbfbf;color:#111;text-transform:uppercase;text-align:left;padding:7px;border:1px solid #111}
-.collective-score-table td{padding:7px;border:1px solid #111}
-.collective-score-table tfoot td{background:#bfbfbf;font-weight:900;text-transform:uppercase}
+.collective-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}
+.collective-kpi{background:rgba(255,255,255,.06);border:1px solid rgba(184,230,255,.22);border-radius:12px;padding:8px 7px;text-align:center}
+.collective-kpi b{display:block;color:var(--gold);font-size:1rem;line-height:1.1}.collective-kpi span{display:block;color:var(--muted);font-size:.58rem;font-weight:800;margin-top:3px}
+.collective-score-wrap{overflow:auto;border-radius:12px;border:1px solid rgba(255,255,255,.18);margin-top:8px}
+.collective-score-table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.96);color:#111;font-size:.72rem}
+.collective-score-table th{background:#d1d1cf;color:#111;text-transform:uppercase;text-align:left;padding:6px 7px;border-bottom:1px solid #333;font-size:.68rem}
+.collective-score-table td{padding:5px 7px;border-top:1px solid #d8d8d8}
+.collective-score-table tbody tr:nth-child(even) td{background:#f4f4f4}
+.collective-score-table tfoot td{background:#d1d1cf;font-weight:900;text-transform:uppercase;border-top:1px solid #333}
 .collective-score-table td.num{text-align:center;font-weight:850}
-.collective-top-title{margin-top:12px;font-weight:950;color:var(--gold)}
-.collective-help{font-size:.68rem;color:var(--muted);margin-top:4px}
+.collective-top-title{margin-top:10px;font-weight:950;color:var(--gold);font-size:1rem}
+.collective-help{font-size:.65rem;color:var(--muted);margin-top:3px;line-height:1.35}
+@media(max-width:720px){.collective-summary{grid-template-columns:1fr 1fr 1fr;gap:5px}.collective-kpi{padding:7px 4px}.collective-kpi b{font-size:.9rem}.collective-kpi span{font-size:.52rem}.collective-score-table{font-size:.68rem}.collective-score-table th,.collective-score-table td{padding:5px 6px}}
 </style>
 </head>
 <body>
@@ -411,44 +417,25 @@ function renderCollective(){
   const m=displayFocusMatch();
   if(!m){box.innerHTML='<div class="empty">No hay partido para mostrar.</div>';return;}
 
-  let local=0,emp=0,visit=0,total=0;
-  const scores={};
-
-  PARTICIPANTES.forEach(p=>{
-    const pr=p.predicciones && p.predicciones[m.id];
-    if(!pr || pr.golesLocal===undefined || pr.golesVisitante===undefined || pr.golesLocal===null || pr.golesVisitante===null)return;
-    const gl=Number(pr.golesLocal);
-    const gv=Number(pr.golesVisitante);
-    if(Number.isNaN(gl)||Number.isNaN(gv))return;
-    total++;
-    const o=outcome(gl,gv);
-    if(o==='L')local++;else if(o==='V')visit++;else emp++;
-    const marcador=gl+'-'+gv;
-    scores[marcador]=(scores[marcador]||0)+1;
-  });
-
+  const st=matchPredictionStats(m);
+  const total=st.total||0;
   const denom=total||1;
   const live=currentLiveMatch();
-  const title=live&&live.id===m.id?'🔴 Partido en vivo':'⏳ Próximo partido';
-  const top=Object.entries(scores).sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0], 'es'));
-
-  const topRows=top.slice(0,12).map(r=>
-    '<tr><td>'+esc(r[0])+'</td><td class="num">'+r[1]+'</td><td class="num">'+((r[1]/denom)*100).toFixed(1)+'%</td></tr>'
-  ).join('');
-
-  const fullRows=top.map(r=>
-    '<tr><td>'+esc(r[0])+'</td><td class="num">'+r[1]+'</td><td class="num">'+((r[1]/denom)*100).toFixed(1)+'%</td></tr>'
+  const title=live&&live.id===m.id?'🔴 Partido en vivo':'⏳ Partido mostrado automáticamente';
+  const rows=st.scores.slice(0,10).map((r,i)=>
+    '<tr><td>'+esc(r.score)+'</td><td class="num">'+r.n+'</td><td class="num">'+((r.n/denom)*100).toFixed(1)+'%</td></tr>'
   ).join('');
 
   box.innerHTML=
-    '<div class="live-card"><span class="'+(live&&live.id===m.id?'live-badge':'time-badge')+'">'+title+'</span><h3 style="margin:5px 0 4px">'+esc(m.local)+' vs '+esc(m.visitante)+'</h3>'+(fmtTime(m)?'<div class="pred-small">Horario: '+esc(fmtTime(m))+'</div>':'')+'</div>'+
-    '<div class="barrow"><div class="barhead"><span>Victoria '+esc(m.local)+'</span><b>'+pct(local,denom)+'%</b></div><div class="bar"><div class="fill" style="width:'+pct(local,denom)+'%"></div></div></div>'+
-    '<div class="barrow"><div class="barhead"><span>Empate</span><b>'+pct(emp,denom)+'%</b></div><div class="bar"><div class="fill ok" style="width:'+pct(emp,denom)+'%"></div></div></div>'+
-    '<div class="barrow"><div class="barhead"><span>Victoria '+esc(m.visitante)+'</span><b>'+pct(visit,denom)+'%</b></div><div class="bar"><div class="fill violet" style="width:'+pct(visit,denom)+'%"></div></div></div>'+
-    '<div class="collective-top-title">📊 Resultados más votados</div>'+
-    '<div class="collective-help">Tabla de marcadores exactos predichos por los '+total+' participantes.</div>'+
-    '<div style="overflow:auto"><table class="collective-score-table"><thead><tr><th>Marcador</th><th>Cantidad</th><th>%</th></tr></thead><tbody>'+(topRows||'<tr><td colspan="3">Sin predicciones cargadas para este partido.</td></tr>')+'</tbody><tfoot><tr><td>Total</td><td class="num">'+total+'</td><td></td></tr></tfoot></table></div>'+
-    (top.length>12?'<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:850;color:var(--muted)">Ver todos los marcadores</summary><div style="overflow:auto;margin-top:8px"><table class="collective-score-table"><thead><tr><th>Marcador</th><th>Cantidad</th><th>%</th></tr></thead><tbody>'+fullRows+'</tbody><tfoot><tr><td>Total</td><td class="num">'+total+'</td><td></td></tr></tfoot></table></div></details>':'');
+    '<div class="live-card"><span class="'+(live&&live.id===m.id?'live-badge':'time-badge')+'">'+title+'</span><h3 style="margin:5px 0 4px">'+esc(m.local)+' vs '+esc(m.visitante)+'</h3>'+(fmtTime(m)?'<div class="pred-small">Horario: '+esc(fmtTime(m))+'</div>':'')+'</div>'+ 
+    '<div class="collective-summary">'+
+      '<div class="collective-kpi"><b>'+pct(st.local,denom)+'%</b><span>Gana '+esc(m.local)+'</span></div>'+ 
+      '<div class="collective-kpi"><b>'+pct(st.emp,denom)+'%</b><span>Empate</span></div>'+ 
+      '<div class="collective-kpi"><b>'+pct(st.visit,denom)+'%</b><span>Gana '+esc(m.visitante)+'</span></div>'+ 
+    '</div>'+ 
+    '<div class="collective-top-title">📊 Marcadores más votados</div>'+ 
+    '<div class="collective-help">Top 10 de resultados exactos predichos por los '+total+' participantes. Se recalcula solo para el partido que esté en vivo o el próximo pendiente.</div>'+ 
+    '<div class="collective-score-wrap"><table class="collective-score-table"><thead><tr><th>Marcador</th><th>Cantidad</th><th>%</th></tr></thead><tbody>'+(rows||'<tr><td colspan="3">Sin predicciones cargadas para este partido.</td></tr>')+'</tbody><tfoot><tr><td>Total</td><td class="num">'+total+'</td><td></td></tr></tfoot></table></div>';
 }
 function renderChampionCards(){
   const fav=CHAMPIONS[0]||{team:'—',n:0};
