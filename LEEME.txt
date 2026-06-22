@@ -1,0 +1,3 @@
+Sube SOLO index.html a la raíz del repositorio.
+No reemplaces resultados.json, predicciones.json, actualizar_resultados.py ni .github/workflows.
+Así mantienes la automatización anterior que ya estaba funcionando.
