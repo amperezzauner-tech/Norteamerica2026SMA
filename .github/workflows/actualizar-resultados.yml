@@ -42,3 +42,15 @@ jobs:
           git commit -m "Actualizar resultados automáticamente"
           git pull --rebase origin main
           git push origin main
+      - name: Guardar cambios
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull --rebase origin main
+          git add resultados.json
+          if git diff --cached --quiet; then
+            echo "No hay cambios en resultados.json"
+            exit 0
+          fi
+          git commit -m "Actualizar resultados automáticamente"
+          git push origin main
