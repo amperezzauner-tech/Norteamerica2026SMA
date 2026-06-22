@@ -64,6 +64,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .live-badge{display:inline-block;background:#e5253a;color:#fff;border-radius:999px;padding:3px 8px;font-size:.65rem;font-weight:950;margin-bottom:6px;letter-spacing:.4px}
 .time-badge{display:inline-block;background:#084568;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:3px 8px;font-size:.65rem;font-weight:850;margin-top:5px}
 
+
+.quick-award-name{font-size:1.35rem;font-weight:950;color:var(--gold);margin:6px 0}
+.quick-award-score{font-size:1.05rem;font-weight:900}
+.quick-award-desc{font-size:.78rem;color:var(--muted);line-height:1.4;margin-top:7px}
+
 @media(max-width:720px){.hero,.grid2,.grid3{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.leader{min-height:150px}.leader-name{font-size:1.25rem}.leader-points{font-size:2.05rem}.tabs{display:none}.wrap{padding:10px}.brand h1{font-size:.92rem}.pill{font-size:.58rem}.rank-row{grid-template-columns:34px 1fr 62px}.name{font-size:.84rem}.section-title{font-size:.82rem}.bottom button{font-size:.58rem}}
 </style>
 </head>
@@ -92,7 +97,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
   <section id="inicio" class="section act">
     <div class="grid2">
-      <div class="card"><div class="section-title">⭐ Predicción del día <span id="daily-tag" class="chip">auto</span></div><div class="body" id="daily-card"></div></div>
+      <div class="card"><div class="section-title">🎯 Acierto más impresionante <span id="daily-tag" class="chip">auto</span></div><div class="body" id="daily-card"></div></div>
       <div class="card"><div class="section-title">🔥 Sorpresero</div><div class="body" id="surprise-card"></div></div>
     </div>
     <div style="height:10px"></div>
@@ -102,6 +107,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     </div>
     <div style="height:10px"></div>
     <div class="card"><div class="section-title">🎯 Acertómetro top 5</div><div class="body" id="top-meter"></div></div>
+    <div style="height:10px"></div>
+    <div class="grid2">
+      <div class="card"><div class="section-title">👑 Oráculo del Día</div><div class="body" id="oracle-card"></div></div>
+      <div class="card"><div class="section-title">🤡 Turista del Mundial</div><div class="body" id="tourist-card"></div></div>
+    </div>
   </section>
 
   <section id="ranking" class="section"><div class="card"><div class="section-title">🏆 Ranking general <span class="chip">toca un nombre</span></div><div class="body"><input class="search" id="search" placeholder="🔍 Buscar participante..." oninput="renderRanking()"><div id="ranking-list"></div></div></div></section>
@@ -333,7 +343,7 @@ function renderAll(){
   document.getElementById('stat-exact').textContent=exactTop;
   document.getElementById('stat-champ').textContent=fav.team;
   const live=currentLiveMatch();document.getElementById('live-pill').textContent=live?'🔴 EN VIVO: '+live.local+' vs '+live.visitante:'● En vivo';document.getElementById('rbar').innerHTML='<b>Resultados:</b> '+(PLAYED.length?PLAYED.slice(-18).map(m=>esc(m.local.substring(0,3))+'-'+esc(m.visitante.substring(0,3))+' '+m.golesLocal+'-'+m.golesVisitante).join(' · '):'sin partidos finalizados');
-  renderDaily();renderSurprise();renderCollective();renderChampionCards();renderGroupButtons();renderGroupPredictions();renderTopMeter();renderRanking();renderMatches();renderMatchPredictionTable();renderBadges();renderRarest();
+  renderDaily();renderQuickAwards();renderSurprise();renderCollective();renderChampionCards();renderGroupButtons();renderGroupPredictions();renderTopMeter();renderRanking();renderMatches();renderMatchPredictionTable();renderBadges();renderRarest();
 }
 function renderDaily(){
   let best=null;
@@ -346,12 +356,27 @@ function renderDaily(){
   });
   if(!best){document.getElementById('daily-card').innerHTML='<div class="empty">Aún no hay partidos finalizados.</div>';return}
   const m=best.m;
-  let html='<div class="label">'+esc(m.local)+' vs '+esc(m.visitante)+'</div><h2 style="margin:6px 0;color:var(--gold)">'+m.golesLocal+' - '+m.golesVisitante+'</h2>';
-  if(best.exacts.length===1)html+='<p><b>⭐ Único marcador exacto:</b><br>'+esc(best.exacts[0].nombre)+'</p>';
-  else if(best.exacts.length>1)html+='<p><b>🎯 '+best.exacts.length+' personas</b> acertaron el marcador exacto.</p><p class="muted" style="margin-top:6px">'+best.exacts.slice(0,5).map(x=>esc(x.nombre)).join(', ')+(best.exacts.length>5?' +' +(best.exacts.length-5):'')+'</p>';
-  else html+='<p><b>🔥 Partido difícil:</b> nadie tuvo marcador exacto. '+best.hits.length+' acertaron el resultado.</p>';
+  let html='<div class="label">Marcador difícil ya jugado</div><h2 style="margin:6px 0;color:var(--gold)">'+esc(m.local)+' '+m.golesLocal+' - '+m.golesVisitante+' '+esc(m.visitante)+'</h2>';
+  if(best.exacts.length===1)html+='<p><b>🏅 Solo una persona lo tuvo exacto:</b><br>'+esc(best.exacts[0].nombre)+'</p><p class="quick-award-desc">Este bloque premia el marcador exacto más raro entre los partidos ya finalizados.</p>';
+  else if(best.exacts.length>1)html+='<p><b>🎯 '+best.exacts.length+' personas</b> acertaron este marcador exacto.</p><p class="muted" style="margin-top:6px">'+best.exacts.slice(0,5).map(x=>esc(x.nombre)).join(', ')+(best.exacts.length>5?' +' +(best.exacts.length-5):'')+'</p><p class="quick-award-desc">Este bloque destaca uno de los marcadores menos predichos del torneo.</p>';
+  else html+='<p><b>🔥 Partido imposible:</b> nadie tuvo marcador exacto. '+best.hits.length+' acertaron el resultado.</p>';
   document.getElementById('daily-card').innerHTML=html;
 }
+
+function renderQuickAwards(){
+  const jscores=typeof jornadaScores==='function'?jornadaScores():[];
+  const oracle=jscores[0];
+  const tourist=jscores.slice().reverse().find(p=>p.jGames>0)||jscores[jscores.length-1];
+  const oc=document.getElementById('oracle-card');
+  const tc=document.getElementById('tourist-card');
+  if(oc){
+    oc.innerHTML=oracle?'<div class="label">Mejor rendimiento de la jornada reciente</div><div class="quick-award-name">'+esc(oracle.nombre)+'</div><div class="quick-award-score">'+(oracle.jPts??0)+' pts · '+(oracle.jHit??0)+' aciertos · '+(oracle.jExact??0)+' exactos</div><div class="quick-award-desc">El que más puntos hizo en los partidos más recientes evaluados.</div>':'<div class="empty">Aún no hay jornada para calcular.</div>';
+  }
+  if(tc){
+    tc.innerHTML=tourist?'<div class="label">Premio cariñoso de la jornada</div><div class="quick-award-name">'+esc(tourist.nombre)+'</div><div class="quick-award-score">'+(tourist.jPts??0)+' pts · '+(tourist.jHit??0)+' aciertos</div><div class="quick-award-desc">El que menos sumó en la jornada reciente. Sirve para molestar con amor 😄.</div>':'<div class="empty">Aún no hay jornada para calcular.</div>';
+  }
+}
+
 function renderSurprise(){
   if(!SURPRISE||!SURPRISE.surpriseScore){document.getElementById('surprise-card').innerHTML='<div class="empty">Todavía no hay sorpresero.</div>';return}
   const rare=RARE_EVENTS.find(e=>{

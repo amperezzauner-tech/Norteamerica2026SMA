@@ -1,2 +1,1 @@
-Sube SOLO index.html. No reemplaces resultados.json ni actualizar_resultados.py.
-Corrige el orden de próximos partidos y muestra partido en vivo según calendario interno.
+Sube SOLO index.html. Cambia Predicción del día por Acierto más impresionante y agrega Oráculo del Día/Turista del Mundial.
