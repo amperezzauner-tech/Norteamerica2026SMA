@@ -2,9 +2,11 @@
   "_meta": {
     "generado": "2026-06-21",
     "total_partidos": 72,
-    "jugados": 37,
-    "pendientes": 35,
-    "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json."
+    "jugados": 41,
+    "pendientes": 31,
+    "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
+    "ultima_actualizacion_auto": "2026-06-22T15:10:56.535996+00:00",
+    "fuente_auto": "ESPN public scoreboard"
   },
   "partidos": [
     {
@@ -446,10 +448,11 @@
       "visitante": "Cabo Verde",
       "grupo": "H",
       "jornada": 2,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "finalizado",
+      "golesLocal": 2,
+      "golesVisitante": 2,
+      "apifootball_id": null,
+      "espn_id": "760450"
     },
     {
       "id": "p038",
@@ -470,10 +473,11 @@
       "visitante": "Irán",
       "grupo": "G",
       "jornada": 2,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "finalizado",
+      "golesLocal": 0,
+      "golesVisitante": 0,
+      "apifootball_id": null,
+      "espn_id": "760451"
     },
     {
       "id": "p040",
@@ -482,10 +486,11 @@
       "visitante": "Egipto",
       "grupo": "G",
       "jornada": 2,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "finalizado",
+      "golesLocal": 1,
+      "golesVisitante": 3,
+      "apifootball_id": null,
+      "espn_id": "760452"
     },
     {
       "id": "p041",
@@ -614,10 +619,11 @@
       "visitante": "Suiza",
       "grupo": "B",
       "jornada": 3,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "finalizado",
+      "golesLocal": 1,
+      "golesVisitante": 4,
+      "apifootball_id": null,
+      "espn_id": "760439"
     },
     {
       "id": "p052",
