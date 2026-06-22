@@ -3,10 +3,14 @@ name: Actualizar resultados de la polla
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "*/15 * * * *"
 
 permissions:
   contents: write
+
+concurrency:
+  group: actualizar-resultados
+  cancel-in-progress: false
 
 jobs:
   actualizar:
@@ -15,17 +19,15 @@ jobs:
     steps:
       - name: Descargar repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Ejecutar actualización
-        env:
-          API_FOOTBALL_KEY: ${{ secrets.API_FOOTBALL_KEY }}
-          API_FOOTBALL_LEAGUE_ID: "1"
-          API_FOOTBALL_SEASON: "2026"
+      - name: Ejecutar actualización ESPN
         run: python actualizar_resultados.py
 
       - name: Guardar cambios
@@ -33,5 +35,10 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add resultados.json
-          git diff --cached --quiet || git commit -m "Actualizar resultados automáticamente"
-          git push
+          if git diff --cached --quiet; then
+            echo "No hay cambios en resultados.json"
+            exit 0
+          fi
+          git commit -m "Actualizar resultados automáticamente"
+          git pull --rebase origin main
+          git push origin main
