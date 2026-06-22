@@ -1,3 +1,2 @@
-Sube SOLO index.html a la raíz del repositorio.
-No reemplaces resultados.json, predicciones.json, actualizar_resultados.py ni .github/workflows.
-Agrega menú Inicio/Ranking/Partidos/Mundial/Salón, tabla de predicciones por partido y premios explicados.
+Sube SOLO index.html. No reemplaces resultados.json ni actualizar_resultados.py.
+Corrige el orden de próximos partidos y muestra partido en vivo según calendario interno.

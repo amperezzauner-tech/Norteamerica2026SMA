@@ -59,6 +59,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .award-desc{font-size:.72rem;line-height:1.38;color:var(--muted);margin-top:3px}
 .award-rule{font-size:.66rem;color:var(--white);opacity:.9;margin-top:4px}
 
+
+.live-card{border:1px solid #ffd44799;background:linear-gradient(135deg,rgba(229,37,58,.22),rgba(255,212,71,.10),rgba(15,179,109,.14));border-radius:16px;padding:12px;margin-bottom:10px}
+.live-badge{display:inline-block;background:#e5253a;color:#fff;border-radius:999px;padding:3px 8px;font-size:.65rem;font-weight:950;margin-bottom:6px;letter-spacing:.4px}
+.time-badge{display:inline-block;background:#084568;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:3px 8px;font-size:.65rem;font-weight:850;margin-top:5px}
+
 @media(max-width:720px){.hero,.grid2,.grid3{grid-template-columns:1fr}.stats-grid{grid-template-columns:1fr 1fr}.leader{min-height:150px}.leader-name{font-size:1.25rem}.leader-points{font-size:2.05rem}.tabs{display:none}.wrap{padding:10px}.brand h1{font-size:.92rem}.pill{font-size:.58rem}.rank-row{grid-template-columns:34px 1fr 62px}.name{font-size:.84rem}.section-title{font-size:.82rem}.bottom button{font-size:.58rem}}
 </style>
 </head>
@@ -177,6 +182,52 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 <script>
 let PRED,RES,PARTICIPANTES=[],MATCHES=[],PLAYED=[],PENDING=[],RANKING=[],GROUP='A',CHAMPIONS=[],RARE_EVENTS=[],SURPRISE=null;
+
+// Calendario interno para ordenar "en vivo" y "próximos".
+// Horas en UTC. No afecta los resultados ni el ranking.
+const MATCH_SCHEDULE={
+  p001:'2026-06-11T19:00:00Z',p002:'2026-06-12T02:00:00Z',
+  p003:'2026-06-12T19:00:00Z',p004:'2026-06-13T01:00:00Z',
+  p008:'2026-06-13T19:00:00Z',p007:'2026-06-13T22:00:00Z',p005:'2026-06-14T01:00:00Z',
+  p006:'2026-06-14T04:00:00Z',p010:'2026-06-14T17:00:00Z',p011:'2026-06-14T20:00:00Z',p009:'2026-06-14T23:00:00Z',p012:'2026-06-15T02:00:00Z',
+  p014:'2026-06-15T16:00:00Z',p016:'2026-06-15T19:00:00Z',p013:'2026-06-15T22:00:00Z',p015:'2026-06-16T01:00:00Z',
+  p017:'2026-06-16T19:00:00Z',p018:'2026-06-16T22:00:00Z',p019:'2026-06-17T01:00:00Z',
+  p020:'2026-06-17T04:00:00Z',p023:'2026-06-17T17:00:00Z',p022:'2026-06-17T20:00:00Z',p021:'2026-06-17T23:00:00Z',p024:'2026-06-18T02:00:00Z',
+  p025:'2026-06-18T16:00:00Z',p026:'2026-06-18T19:00:00Z',p027:'2026-06-18T22:00:00Z',p028:'2026-06-19T01:00:00Z',
+  p032:'2026-06-19T19:00:00Z',p030:'2026-06-19T22:00:00Z',p029:'2026-06-20T00:30:00Z',p031:'2026-06-20T03:00:00Z',
+  p035:'2026-06-20T17:00:00Z',p033:'2026-06-20T20:00:00Z',p034:'2026-06-21T00:00:00Z',
+  p036:'2026-06-21T04:00:00Z',p038:'2026-06-21T16:00:00Z',p039:'2026-06-21T19:00:00Z',p037:'2026-06-21T22:00:00Z',p040:'2026-06-22T01:00:00Z',
+  p043:'2026-06-22T17:00:00Z',p042:'2026-06-22T21:00:00Z',p041:'2026-06-23T00:00:00Z',p044:'2026-06-23T03:00:00Z',
+  p047:'2026-06-23T17:00:00Z',p045:'2026-06-23T20:00:00Z',p046:'2026-06-23T23:00:00Z',p048:'2026-06-24T02:00:00Z',
+  p051:'2026-06-24T19:00:00Z',p052:'2026-06-24T19:00:00Z',p049:'2026-06-24T22:00:00Z',p050:'2026-06-24T22:00:00Z',p053:'2026-06-25T01:00:00Z',p054:'2026-06-25T01:00:00Z',
+  p056:'2026-06-25T20:00:00Z',p055:'2026-06-25T20:00:00Z',p058:'2026-06-25T23:00:00Z',p057:'2026-06-25T23:00:00Z',p059:'2026-06-26T02:00:00Z',p060:'2026-06-26T02:00:00Z',
+  p061:'2026-06-26T19:00:00Z',p062:'2026-06-26T19:00:00Z',p066:'2026-06-27T00:00:00Z',p065:'2026-06-27T00:00:00Z',p064:'2026-06-27T03:00:00Z',p063:'2026-06-27T03:00:00Z',
+  p067:'2026-06-27T21:00:00Z',p068:'2026-06-27T21:00:00Z',p071:'2026-06-27T23:30:00Z',p072:'2026-06-27T23:30:00Z',p070:'2026-06-28T02:00:00Z',p069:'2026-06-28T02:00:00Z'
+};
+function matchTime(m){return MATCH_SCHEDULE[m.id]?new Date(MATCH_SCHEDULE[m.id]).getTime():((m.matchId||9999)*999999999999)}
+function fmtTime(m){
+  if(!MATCH_SCHEDULE[m.id])return '';
+  return new Date(MATCH_SCHEDULE[m.id]).toLocaleString('es-CO',{weekday:'short',hour:'numeric',minute:'2-digit',hour12:true});
+}
+function currentLiveMatch(){
+  const now=Date.now();
+  return MATCHES
+    .filter(m=>m.estado!=='finalizado'&&MATCH_SCHEDULE[m.id])
+    .find(m=>{
+      const t=matchTime(m);
+      return now>=t && now<=t+(2.35*60*60*1000);
+    });
+}
+function nextScheduledMatch(){
+  const now=Date.now();
+  return MATCHES
+    .filter(m=>m.estado!=='finalizado')
+    .slice()
+    .sort((a,b)=>matchTime(a)-matchTime(b))
+    .find(m=>!MATCH_SCHEDULE[m.id]||matchTime(m)>now-(2.35*60*60*1000));
+}
+function displayFocusMatch(){return currentLiveMatch()||nextScheduledMatch()||MATCHES[MATCHES.length-1]}
+
 const BADGE_DEFS={
   leader:{ico:'👑',title:'Rey del Mundial',desc:'Líder actual de la polla'},
   exact:{ico:'🎯',title:'Francotirador',desc:'Más marcadores exactos'},
@@ -201,7 +252,7 @@ async function loadData(){
     PARTICIPANTES=(p.participantes||[]).filter(x=>x.id!=='alejandro_gonzalex'&&x.nombre!=='Alejandro Gonzalex');
     MATCHES=r.partidos||[];
     PLAYED=MATCHES.filter(m=>m.estado==='finalizado'&&m.golesLocal!==null&&m.golesVisitante!==null);
-    PENDING=MATCHES.filter(m=>!(m.estado==='finalizado'&&m.golesLocal!==null&&m.golesVisitante!==null));
+    PENDING=MATCHES.filter(m=>!(m.estado==='finalizado'&&m.golesLocal!==null&&m.golesVisitante!==null)).sort((a,b)=>matchTime(a)-matchTime(b));
     calculate();renderAll();
   }catch(e){
     document.getElementById('subtitle').textContent='No pude cargar predicciones.json/resultados.json';
@@ -281,7 +332,7 @@ function renderAll(){
   document.getElementById('stat-played').textContent=PLAYED.length+'/'+MATCHES.length;
   document.getElementById('stat-exact').textContent=exactTop;
   document.getElementById('stat-champ').textContent=fav.team;
-  document.getElementById('rbar').innerHTML='<b>Resultados:</b> '+(PLAYED.length?PLAYED.slice(-18).map(m=>esc(m.local.substring(0,3))+'-'+esc(m.visitante.substring(0,3))+' '+m.golesLocal+'-'+m.golesVisitante).join(' · '):'sin partidos finalizados');
+  const live=currentLiveMatch();document.getElementById('live-pill').textContent=live?'🔴 EN VIVO: '+live.local+' vs '+live.visitante:'● En vivo';document.getElementById('rbar').innerHTML='<b>Resultados:</b> '+(PLAYED.length?PLAYED.slice(-18).map(m=>esc(m.local.substring(0,3))+'-'+esc(m.visitante.substring(0,3))+' '+m.golesLocal+'-'+m.golesVisitante).join(' · '):'sin partidos finalizados');
   renderDaily();renderSurprise();renderCollective();renderChampionCards();renderGroupButtons();renderGroupPredictions();renderTopMeter();renderRanking();renderMatches();renderMatchPredictionTable();renderBadges();renderRarest();
 }
 function renderDaily(){
@@ -309,12 +360,14 @@ function renderSurprise(){
   document.getElementById('surprise-card').innerHTML='<div class="label">Más aciertos en marcadores poco predichos</div><h2 style="color:var(--gold);margin:5px 0">'+esc(SURPRISE.nombre)+'</h2><p><b>'+SURPRISE.surpriseHits+' marcadores sorpresa</b> · '+SURPRISE.surpriseScore+' pts de rareza</p>'+(rare?'<p class="muted" style="margin-top:8px">Ejemplo: '+esc(rare.m.local)+' '+rare.m.golesLocal+'-'+rare.m.golesVisitante+' '+esc(rare.m.visitante)+' · solo '+rare.exactCount+' exactos.</p>':'');
 }
 function renderCollective(){
-  const m=PENDING[0]||MATCHES[MATCHES.length-1];if(!m)return;
+  const m=displayFocusMatch();if(!m)return;
   let local=0,emp=0,visit=0;
   PARTICIPANTES.forEach(p=>{const pr=p.predicciones?.[m.id];if(!pr)return;const o=outcome(+pr.golesLocal,+pr.golesVisitante);if(o==='L')local++;else if(o==='V')visit++;else emp++});
   const total=local+emp+visit||1;
+  const live=currentLiveMatch();
+  const title=live&&live.id===m.id?'🔴 Partido en vivo':'⏳ Próximo partido';
   const rows=[[m.local,local,''],['Empate',emp,'ok'],[m.visitante,visit,'violet']];
-  document.getElementById('collective-card').innerHTML='<div class="label">'+(PENDING[0]?'Próximo partido':'Último partido')+'</div><h3 style="margin:5px 0 10px">'+esc(m.local)+' vs '+esc(m.visitante)+'</h3>'+rows.map(r=>'<div class="barrow"><div class="barhead"><span>'+esc(r[0])+'</span><b>'+pct(r[1],total)+'%</b></div><div class="bar"><div class="fill '+r[2]+'" style="width:'+pct(r[1],total)+'%"></div></div></div>').join('');
+  document.getElementById('collective-card').innerHTML='<div class="live-card"><span class="'+(live&&live.id===m.id?'live-badge':'time-badge')+'">'+title+'</span><h3 style="margin:5px 0 4px">'+esc(m.local)+' vs '+esc(m.visitante)+'</h3>'+(fmtTime(m)?'<div class="pred-small">Horario: '+esc(fmtTime(m))+'</div>':'')+'</div>'+rows.map(r=>'<div class="barrow"><div class="barhead"><span>'+esc(r[0])+'</span><b>'+pct(r[1],total)+'%</b></div><div class="bar"><div class="fill '+r[2]+'" style="width:'+pct(r[1],total)+'%"></div></div></div>').join('');
 }
 function renderChampionCards(){
   const fav=CHAMPIONS[0]||{team:'—',n:0};
@@ -355,7 +408,11 @@ function renderGroupPredictions(){
 function predBar(label,n,total,cls){return '<div class="barrow"><div class="barhead"><span>'+esc(label)+'</span><b>'+pct(n,total)+'%</b></div><div class="bar"><div class="fill '+cls+'" style="width:'+pct(n,total)+'%"></div></div></div>'}
 function renderTopMeter(){document.getElementById('top-meter').innerHTML=RANKING.slice(0,5).map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">#'+p.pos+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">'+p.hit+'/'+PLAYED.length+' aciertos</span><span class="chip">'+p.exact+' exactos</span><span class="chip">'+p.pct+'%</span></div></div><div class="pts">'+p.pts+'</div></div>').join('')}
 function renderRanking(){const q=norm(document.getElementById('search')?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span></div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
-function renderMatches(){document.getElementById('played-list').innerHTML=PLAYED.slice().reverse().slice(0,18).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">'+m.golesLocal+' - '+m.golesVisitante+'</div></div>').join('')||'<div class="empty">Sin resultados.</div>';document.getElementById('pending-list').innerHTML=PENDING.slice(0,18).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">⏳</div></div>').join('')||'<div class="empty">No hay pendientes.</div>'}
+function renderMatches(){
+  const live=currentLiveMatch();
+  document.getElementById('played-list').innerHTML=PLAYED.slice().sort((a,b)=>matchTime(b)-matchTime(a)).slice(0,18).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">'+m.golesLocal+' - '+m.golesVisitante+'</div></div>').join('')||'<div class="empty">Sin resultados.</div>';
+  document.getElementById('pending-list').innerHTML=PENDING.slice().sort((a,b)=>matchTime(a)-matchTime(b)).slice(0,18).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">'+(live&&live.id===m.id?'🔴 EN VIVO':'⏳')+'</div></div>').join('')||'<div class="empty">No hay pendientes.</div>';
+}
 
 function showSub(id,btn){
   document.querySelectorAll('.subpanel').forEach(s=>s.classList.remove('act'));
@@ -388,14 +445,14 @@ function matchPredictionStats(m){
 }
 function renderMatchPredictionTable(){
   const tbody=document.getElementById('match-pred-table'); if(!tbody)return;
-  tbody.innerHTML=MATCHES.map(m=>{
+  tbody.innerHTML=MATCHES.slice().sort((a,b)=>matchTime(a)-matchTime(b)).map(m=>{
     const st=matchPredictionStats(m);
     const topScores=st.scores.slice(0,4).map(s=>'<span class="pred-score-chip">'+esc(s.score)+' · '+s.n+'</span>').join(' ');
     const state=m.estado==='finalizado'
       ? '<span class="chip gold">Final: '+m.golesLocal+'-'+m.golesVisitante+'</span><div class="pred-small">✅ '+st.hit+' acertaron resultado · 🎯 '+st.exact+' exactos</div>'
       : '<span class="chip">Pendiente</span><div class="pred-small">'+st.total+' predicciones cargadas</div>';
     const crowd='<div class="pred-winner">'+esc(st.leader.label)+' '+pct(st.leader.n,st.total)+'%</div><div class="pred-small">'+esc(m.local)+': '+pct(st.local,st.total)+'% · Empate: '+pct(st.emp,st.total)+'% · '+esc(m.visitante)+': '+pct(st.visit,st.total)+'%</div>';
-    return '<tr><td><div class="pred-team">'+esc(m.local)+' vs '+esc(m.visitante)+'</div><div class="pred-small">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+' · '+esc(m.id)+'</div></td><td>'+crowd+'</td><td><span class="pred-score-chip">'+esc(st.scores[0]?.score||'—')+' · '+(st.scores[0]?.n||0)+'</span></td><td>'+topScores+'</td><td>'+state+'</td></tr>';
+    return '<tr><td><div class="pred-team">'+esc(m.local)+' vs '+esc(m.visitante)+'</div><div class="pred-small">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+' · '+esc(m.id)+'</div></td><td>'+crowd+'</td><td><span class="pred-score-chip">'+esc(st.scores[0]?.score||'—')+' · '+(st.scores[0]?.n||0)+'</span></td><td>'+topScores+'</td><td>'+state+'</td></tr>';
   }).join('');
 }
 function jornadaKey(m){return 'J'+(m.jornada||'?')+'-'+(m.grupo||'?')}
