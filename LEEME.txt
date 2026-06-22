@@ -1,6 +1,3 @@
-Sube/reemplaza estos 2 archivos:
-1. actualizar_resultados.py
-2. .github/workflows/actualizar-resultados.yml
-
-Luego ve a GitHub → Actions → Actualizar resultados de la polla → Run workflow.
-No necesitas API key. No reemplaces index.html ni predicciones.json.
+Sube SOLO index.html.
+Este cambio hace que el ranking se actualice provisionalmente con partidos en vivo que ya tengan marcador.
+Cuando el actualizador marque el partido como finalizado, el puntaje queda definitivo.

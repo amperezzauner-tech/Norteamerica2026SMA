@@ -220,18 +220,20 @@ function fmtTime(m){
   return new Date(MATCH_SCHEDULE[m.id]).toLocaleString('es-CO',{weekday:'short',hour:'numeric',minute:'2-digit',hour12:true});
 }
 function currentLiveMatch(){
+  const fromData=MATCHES.find(isLive);
+  if(fromData)return fromData;
   const now=Date.now();
   return MATCHES
     .filter(m=>m.estado!=='finalizado'&&MATCH_SCHEDULE[m.id])
     .find(m=>{
       const t=matchTime(m);
-      return now>=t && now<=t+(2.35*60*60*1000);
+      return now>=t && now<=t+(2.05*60*60*1000);
     });
 }
 function nextScheduledMatch(){
   const now=Date.now();
   return MATCHES
-    .filter(m=>m.estado!=='finalizado')
+    .filter(m=>!isScoreable(m))
     .slice()
     .sort((a,b)=>matchTime(a)-matchTime(b))
     .find(m=>!MATCH_SCHEDULE[m.id]||matchTime(m)>now-(2.35*60*60*1000));
@@ -252,6 +254,17 @@ function points(ph,pa,rh,ra){ph=+ph;pa=+pa;rh=+rh;ra=+ra;if(ph===rh&&pa===ra)ret
 function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
 function pct(n,d){return Math.round((n/(d||1))*100)}
 function medal(i){return i===1?'🥇':i===2?'🥈':i===3?'🥉':'#'+i}
+
+function isScoreable(m){
+  return (m.estado==='finalizado'||m.estado==='en_vivo') && m.golesLocal!==null && m.golesVisitante!==null;
+}
+function isFinal(m){
+  return m.estado==='finalizado' && m.golesLocal!==null && m.golesVisitante!==null;
+}
+function isLive(m){
+  return m.estado==='en_vivo' && m.golesLocal!==null && m.golesVisitante!==null;
+}
+
 async function loadData(){
   try{
     const [p,r]=await Promise.all([
@@ -261,8 +274,8 @@ async function loadData(){
     PRED=p;RES=r;
     PARTICIPANTES=(p.participantes||[]).filter(x=>x.id!=='alejandro_gonzalex'&&x.nombre!=='Alejandro Gonzalex');
     MATCHES=r.partidos||[];
-    PLAYED=MATCHES.filter(m=>m.estado==='finalizado'&&m.golesLocal!==null&&m.golesVisitante!==null);
-    PENDING=MATCHES.filter(m=>!(m.estado==='finalizado'&&m.golesLocal!==null&&m.golesVisitante!==null)).sort((a,b)=>matchTime(a)-matchTime(b));
+    PLAYED=MATCHES.filter(isScoreable);
+    PENDING=MATCHES.filter(m=>!isScoreable(m)).sort((a,b)=>matchTime(a)-matchTime(b));
     calculate();renderAll();
   }catch(e){
     document.getElementById('subtitle').textContent='No pude cargar predicciones.json/resultados.json';
@@ -334,12 +347,12 @@ function computeChampions(){
 function renderAll(){
   const leader=RANKING[0]||{}, exactTop=Math.max(0,...RANKING.map(x=>x.exact));
   const fav=CHAMPIONS[0]||{team:'—',n:0};
-  document.getElementById('subtitle').textContent=PARTICIPANTES.length+' participantes · '+PLAYED.length+' partidos jugados · '+PENDING.length+' pendientes';
+  const liveCount=MATCHES.filter(isLive).length;const finalCount=MATCHES.filter(isFinal).length;document.getElementById('subtitle').textContent=PARTICIPANTES.length+' participantes · '+finalCount+' finalizados'+(liveCount?' · '+liveCount+' en vivo':'')+' · '+PENDING.length+' pendientes';
   document.getElementById('leader-name').textContent=leader.nombre||'—';
   document.getElementById('leader-pts').textContent=leader.pts||0;
-  document.getElementById('leader-sub').textContent=(leader.hit||0)+' aciertos · '+(leader.exact||0)+' exactos · '+(leader.pct||0)+'% efectividad';
+  document.getElementById('leader-sub').textContent=(leader.hit||0)+' aciertos · '+(leader.exact||0)+' exactos · '+(leader.pct||0)+'% efectividad'+(liveCount?' · ranking provisional':'');
   document.getElementById('stat-part').textContent=PARTICIPANTES.length;
-  document.getElementById('stat-played').textContent=PLAYED.length+'/'+MATCHES.length;
+  document.getElementById('stat-played').textContent=finalCount+'/'+MATCHES.length+(liveCount?' +'+liveCount+' vivo':'');
   document.getElementById('stat-exact').textContent=exactTop;
   document.getElementById('stat-champ').textContent=fav.team;
   const live=currentLiveMatch();document.getElementById('live-pill').textContent=live?'🔴 EN VIVO: '+live.local+' vs '+live.visitante:'● En vivo';document.getElementById('rbar').innerHTML='<b>Resultados:</b> '+(PLAYED.length?PLAYED.slice(-18).map(m=>esc(m.local.substring(0,3))+'-'+esc(m.visitante.substring(0,3))+' '+m.golesLocal+'-'+m.golesVisitante).join(' · '):'sin partidos finalizados');
@@ -435,7 +448,7 @@ function renderTopMeter(){document.getElementById('top-meter').innerHTML=RANKING
 function renderRanking(){const q=norm(document.getElementById('search')?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span></div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
 function renderMatches(){
   const live=currentLiveMatch();
-  document.getElementById('played-list').innerHTML=PLAYED.slice().sort((a,b)=>matchTime(b)-matchTime(a)).slice(0,18).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">'+m.golesLocal+' - '+m.golesVisitante+'</div></div>').join('')||'<div class="empty">Sin resultados.</div>';
+  document.getElementById('played-list').innerHTML=PLAYED.slice().sort((a,b)=>matchTime(b)-matchTime(a)).slice(0,18).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+(m.estado==='en_vivo'?' · ranking provisional':'')+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">'+(m.estado==='en_vivo'?'🔴 ':'')+m.golesLocal+' - '+m.golesVisitante+'</div></div>').join('')||'<div class="empty">Sin resultados.</div>';
   document.getElementById('pending-list').innerHTML=PENDING.slice().sort((a,b)=>matchTime(a)-matchTime(b)).slice(0,18).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">'+(live&&live.id===m.id?'🔴 EN VIVO':'⏳')+'</div></div>').join('')||'<div class="empty">No hay pendientes.</div>';
 }
 
@@ -475,7 +488,7 @@ function renderMatchPredictionTable(){
     const topScores=st.scores.slice(0,4).map(s=>'<span class="pred-score-chip">'+esc(s.score)+' · '+s.n+'</span>').join(' ');
     const state=m.estado==='finalizado'
       ? '<span class="chip gold">Final: '+m.golesLocal+'-'+m.golesVisitante+'</span><div class="pred-small">✅ '+st.hit+' acertaron resultado · 🎯 '+st.exact+' exactos</div>'
-      : '<span class="chip">Pendiente</span><div class="pred-small">'+st.total+' predicciones cargadas</div>';
+      : (m.estado==='en_vivo' ? '<span class="chip gold">🔴 En vivo: '+m.golesLocal+'-'+m.golesVisitante+'</span><div class="pred-small">Puntaje provisional · ✅ '+st.hit+' resultado · 🎯 '+st.exact+' exactos</div>' : '<span class="chip">Pendiente</span><div class="pred-small">'+st.total+' predicciones cargadas</div>');
     const crowd='<div class="pred-winner">'+esc(st.leader.label)+' '+pct(st.leader.n,st.total)+'%</div><div class="pred-small">'+esc(m.local)+': '+pct(st.local,st.total)+'% · Empate: '+pct(st.emp,st.total)+'% · '+esc(m.visitante)+': '+pct(st.visit,st.total)+'%</div>';
     return '<tr><td><div class="pred-team">'+esc(m.local)+' vs '+esc(m.visitante)+'</div><div class="pred-small">Grupo '+esc(m.grupo)+' · Jornada '+esc(m.jornada)+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+' · '+esc(m.id)+'</div></td><td>'+crowd+'</td><td><span class="pred-score-chip">'+esc(st.scores[0]?.score||'—')+' · '+(st.scores[0]?.n||0)+'</span></td><td>'+topScores+'</td><td>'+state+'</td></tr>';
   }).join('');
