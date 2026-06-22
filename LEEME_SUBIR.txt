@@ -1,0 +1,19 @@
+Sube/reemplaza estos archivos en la raíz del repositorio:
+
+- index.html
+- predicciones.json
+- resultados.json
+- grupos.html
+- actualizar_resultados.py
+- .github/workflows/actualizar-resultados.yml
+
+Qué agrega este index:
+- Predicción por grupos.
+- Predicción de campeón del Mundial.
+- Podio elegido.
+- Sorpresero: más aciertos en marcadores poco predichos.
+- Rey del Mundial: líder general.
+- Resultados menos predichos.
+- Perfil individual con campeón, subcampeón y sorpresas.
+
+La automatización incluida usa ESPN público y no requiere API key.
