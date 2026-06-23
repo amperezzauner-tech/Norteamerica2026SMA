@@ -17,8 +17,8 @@ from urllib.request import Request, urlopen
 
 RESULTADOS_PATH = Path("resultados.json")
 API_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
-START_DATE = date(2026, 6, 11)
-END_DATE = date(2026, 6, 30)
+START_DATE = date.today() - timedelta(days=2)
+END_DATE = date.today() + timedelta(days=2)
 
 FINAL_STATES = {"post", "final", "complete", "completed"}
 LIVE_STATES = {"in", "live", "in progress", "inprogress", "halftime", "half time"}
@@ -174,6 +174,7 @@ def main():
     original_text = RESULTADOS_PATH.read_text(encoding="utf-8")
     data = json.loads(original_text)
     fixtures = all_events()
+    print(f"ESPN eventos leídos: {len(fixtures)} | ventana {START_DATE} a {END_DATE}")
     changed = []
 
     for partido in data.get("partidos", []):
@@ -206,25 +207,21 @@ def main():
     jugados = sum(1 for p in data.get("partidos", []) if p.get("estado") == "finalizado")
     en_vivo = sum(1 for p in data.get("partidos", []) if p.get("estado") == "en_vivo")
 
-    data.setdefault("_meta", {})
-    data["_meta"].update({
-        "total_partidos": total,
-        "jugados": jugados,
-        "pendientes": total - jugados - en_vivo,
-        "en_vivo": en_vivo,
-        "ultima_actualizacion_auto": datetime.now(timezone.utc).isoformat(),
-        "fuente_auto": "ESPN public scoreboard",
-    })
-
-    new_text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
-    if new_text != original_text:
-        RESULTADOS_PATH.write_text(new_text, encoding="utf-8")
-
     if changed:
+        data.setdefault("_meta", {})
+        data["_meta"].update({
+            "total_partidos": total,
+            "jugados": jugados,
+            "pendientes": total - jugados - en_vivo,
+            "en_vivo": en_vivo,
+            "ultima_actualizacion_auto": datetime.now(timezone.utc).isoformat(),
+            "fuente_auto": "ESPN public scoreboard",
+        })
+        RESULTADOS_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print("Partidos actualizados:")
         print("\n".join(changed))
     else:
-        print("Sin cambios: ESPN no reportó cambios nuevos.")
+        print("Sin cambios: ESPN no reportó cambios nuevos. No se crea commit.")
 
 if __name__ == "__main__":
     main()

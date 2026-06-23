@@ -1,0 +1,47 @@
+name: Actualizar resultados V2
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Horarios en UTC. Minutos no redondos para evitar congestión de GitHub Actions.
+    - cron: "7,22,37,52 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-resultados-v2
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sincronizar antes
+        run: git pull --rebase origin main
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Ejecutar actualización ESPN
+        run: python actualizar_resultados.py
+
+      - name: Guardar cambios
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add resultados.json
+          if git diff --cached --quiet; then
+            echo "No hay cambios en resultados.json"
+            exit 0
+          fi
+          git commit -m "Actualizar resultados automáticamente"
+          git push origin main
