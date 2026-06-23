@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Actualiza resultados.json con ESPN público.
-No necesita API key.
-Actualiza partidos finalizados y también partidos en vivo.
+Actualiza resultados.json automáticamente usando el marcador público de ESPN.
+No requiere API key.
+
+Protecciones incluidas:
+- No permite que un mismo evento de ESPN actualice dos partidos distintos.
+- Respeta el orden local/visitante del archivo resultados.json.
+- Evita que partidos futuros queden marcados por error por coincidencias difusas.
 """
 
 import json
@@ -17,6 +21,8 @@ from urllib.request import Request, urlopen
 
 RESULTADOS_PATH = Path("resultados.json")
 API_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
+
+# Ventana móvil: alcanza partidos recientes/futuros sin volver a recorrer todo el torneo.
 START_DATE = date.today() - timedelta(days=2)
 END_DATE = date.today() + timedelta(days=2)
 
@@ -91,7 +97,7 @@ def names_match(ours, api_name):
         return True
     if any(opt and (opt == b or opt in b or b in opt) for opt in options):
         return True
-    return max(SequenceMatcher(None, opt, b).ratio() for opt in options if opt) >= 0.86
+    return max(SequenceMatcher(None, opt, b).ratio() for opt in options if opt) >= 0.90
 
 def fetch_day(day):
     url = f"{API_URL}?dates={day.strftime('%Y%m%d')}&limit=500"
@@ -134,7 +140,7 @@ def extract_event(event):
             return None
 
     return {
-        "id": event.get("id"),
+        "id": str(event.get("id") or ""),
         "home": team_name(home),
         "away": team_name(away),
         "home_score": get_score(home),
@@ -157,28 +163,37 @@ def all_events():
         day += timedelta(days=1)
     return events
 
-def find_match(partido, fixtures):
+def find_match(partido, fixtures, used_espn_ids):
     local, visitante = partido.get("local"), partido.get("visitante")
+    candidates = []
     for fx in fixtures:
-        if names_match(local, fx["home"]) and names_match(visitante, fx["away"]):
-            return fx, False
-        if names_match(local, fx["away"]) and names_match(visitante, fx["home"]):
-            return fx, True
-    return None, False
+        if fx["id"] in used_espn_ids:
+            continue
+        direct = names_match(local, fx["home"]) and names_match(visitante, fx["away"])
+        reverse = names_match(local, fx["away"]) and names_match(visitante, fx["home"])
+        if direct or reverse:
+            # Priorizar coincidencia en el mismo orden. La invertida queda solo como respaldo.
+            candidates.append((0 if direct else 1, fx, reverse))
+    if not candidates:
+        return None, False
+    candidates.sort(key=lambda x: x[0])
+    return candidates[0][1], candidates[0][2]
 
 def main():
     if not RESULTADOS_PATH.exists():
         print("ERROR: no encontré resultados.json en la raíz del repo.", file=sys.stderr)
         sys.exit(1)
 
-    original_text = RESULTADOS_PATH.read_text(encoding="utf-8")
-    data = json.loads(original_text)
+    data = json.loads(RESULTADOS_PATH.read_text(encoding="utf-8"))
     fixtures = all_events()
     print(f"ESPN eventos leídos: {len(fixtures)} | ventana {START_DATE} a {END_DATE}")
+
     changed = []
+    used_espn_ids = set()
+    duplicate_skips = []
 
     for partido in data.get("partidos", []):
-        match, reversed_match = find_match(partido, fixtures)
+        match, reversed_match = find_match(partido, fixtures, used_espn_ids)
         if not match:
             continue
 
@@ -188,11 +203,19 @@ def main():
 
         if estado not in {"finalizado", "en_vivo"}:
             continue
+        if gl is None or gv is None:
+            continue
+
+        if match["id"] in used_espn_ids:
+            duplicate_skips.append(f"{partido.get('id')}: ESPN {match['id']} ya usado")
+            continue
+
+        used_espn_ids.add(match["id"])
 
         updates = {
             "estado": estado,
-            "golesLocal": int(gl) if gl is not None else partido.get("golesLocal"),
-            "golesVisitante": int(gv) if gv is not None else partido.get("golesVisitante"),
+            "golesLocal": int(gl),
+            "golesVisitante": int(gv),
             "espn_id": match["id"],
         }
 
@@ -201,27 +224,34 @@ def main():
         after = {k: partido.get(k) for k in updates}
 
         if before != after:
-            changed.append(f"{partido['id']}: {partido['local']} {partido['golesLocal']}-{partido['golesVisitante']} {partido['visitante']} ({partido['estado']})")
+            changed.append(
+                f"{partido['id']}: {partido['local']} {partido['golesLocal']}-{partido['golesVisitante']} {partido['visitante']} ({partido['estado']})"
+            )
 
     total = len(data.get("partidos", []))
     jugados = sum(1 for p in data.get("partidos", []) if p.get("estado") == "finalizado")
     en_vivo = sum(1 for p in data.get("partidos", []) if p.get("estado") == "en_vivo")
 
+    data.setdefault("_meta", {})
+    data["_meta"].update({
+        "total_partidos": total,
+        "jugados": jugados,
+        "pendientes": total - jugados - en_vivo,
+        "en_vivo": en_vivo,
+        "ultima_revision_auto": datetime.now(timezone.utc).isoformat(),
+        "fuente_auto": "ESPN public scoreboard",
+    })
+
     if changed:
-        data.setdefault("_meta", {})
-        data["_meta"].update({
-            "total_partidos": total,
-            "jugados": jugados,
-            "pendientes": total - jugados - en_vivo,
-            "en_vivo": en_vivo,
-            "ultima_actualizacion_auto": datetime.now(timezone.utc).isoformat(),
-            "fuente_auto": "ESPN public scoreboard",
-        })
+        data["_meta"]["ultima_actualizacion_auto"] = datetime.now(timezone.utc).isoformat()
         RESULTADOS_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print("Partidos actualizados:")
         print("\n".join(changed))
     else:
-        print("Sin cambios: ESPN no reportó cambios nuevos. No se crea commit.")
+        print("Sin cambios nuevos de marcador.")
+        if duplicate_skips:
+            print("Omitidos por protección anti-duplicado:")
+            print("\n".join(duplicate_skips))
 
 if __name__ == "__main__":
     main()

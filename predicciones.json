@@ -3,7 +3,76 @@
     "generado": "2026-06-21",
     "fuente": "Archivos Excel individuales de participantes",
     "total_participantes": 116,
-    "nota": "Archivo limpio: se eliminó participante agregado por error con 0 puntos."
+    "nota": "Archivo limpio: se eliminó participante agregado por error con 0 puntos.",
+    "nota_validacion": "Corregido contra Excel manual 'Resultados 2026 actualizado.xlsx': 11 predicciones puntuales ajustadas para coincidir con el Excel.",
+    "correcciones_predicciones": [
+      {
+        "nombre": "Felipe Gaitan",
+        "pid": "p003",
+        "manual": "2-1",
+        "json": "1-2"
+      },
+      {
+        "nombre": "Felipe Gaitan",
+        "pid": "p026",
+        "manual": "2-0",
+        "json": "1-1"
+      },
+      {
+        "nombre": "Felipe Gaitan",
+        "pid": "p050",
+        "manual": "2-0",
+        "json": "3-0"
+      },
+      {
+        "nombre": "Daniel Gonzalez",
+        "pid": "p007",
+        "manual": "2-2",
+        "json": "3-2"
+      },
+      {
+        "nombre": "Daniel Escobar",
+        "pid": "p006",
+        "manual": "1-2",
+        "json": "2-2"
+      },
+      {
+        "nombre": "Santiago Mejia",
+        "pid": "p060",
+        "manual": "2-1",
+        "json": "2-2"
+      },
+      {
+        "nombre": "Alejandro Arias",
+        "pid": "p055",
+        "manual": "0-1",
+        "json": "0-0"
+      },
+      {
+        "nombre": "Felipe Gaitan",
+        "pid": "p058",
+        "manual": "0-3",
+        "json": "1-3"
+      },
+      {
+        "nombre": "Felipe Gaitan",
+        "pid": "p038",
+        "manual": "4-1",
+        "json": "4-0"
+      },
+      {
+        "nombre": "Felipe Gaitan",
+        "pid": "p041",
+        "manual": "2-0",
+        "json": "2-1"
+      },
+      {
+        "nombre": "Felipe Gaitan",
+        "pid": "p043",
+        "manual": "2-0",
+        "json": "2-1"
+      }
+    ]
   },
   "participantes": [
     {
@@ -2265,7 +2334,7 @@
         },
         "p055": {
           "golesLocal": 0,
-          "golesVisitante": 0
+          "golesVisitante": 1
         },
         "p056": {
           "golesLocal": 1,
@@ -15200,7 +15269,7 @@
           "golesVisitante": 1
         },
         "p006": {
-          "golesLocal": 2,
+          "golesLocal": 1,
           "golesVisitante": 2
         },
         "p032": {
@@ -16038,7 +16107,7 @@
           "golesVisitante": 0
         },
         "p007": {
-          "golesLocal": 3,
+          "golesLocal": 2,
           "golesVisitante": 2
         },
         "p005": {
@@ -23808,16 +23877,16 @@
           "golesVisitante": 2
         },
         "p003": {
-          "golesLocal": 1,
-          "golesVisitante": 2
+          "golesLocal": 2,
+          "golesVisitante": 1
         },
         "p008": {
           "golesLocal": 0,
           "golesVisitante": 2
         },
         "p026": {
-          "golesLocal": 1,
-          "golesVisitante": 1
+          "golesLocal": 2,
+          "golesVisitante": 0
         },
         "p027": {
           "golesLocal": 2,
@@ -23852,7 +23921,7 @@
           "golesVisitante": 3
         },
         "p050": {
-          "golesLocal": 3,
+          "golesLocal": 2,
           "golesVisitante": 0
         },
         "p004": {
@@ -23924,7 +23993,7 @@
           "golesVisitante": 2
         },
         "p058": {
-          "golesLocal": 1,
+          "golesLocal": 0,
           "golesVisitante": 3
         },
         "p016": {
@@ -23961,7 +24030,7 @@
         },
         "p038": {
           "golesLocal": 4,
-          "golesVisitante": 0
+          "golesVisitante": 1
         },
         "p037": {
           "golesLocal": 4,
@@ -23989,7 +24058,7 @@
         },
         "p041": {
           "golesLocal": 2,
-          "golesVisitante": 1
+          "golesVisitante": 0
         },
         "p061": {
           "golesLocal": 1,
@@ -24009,7 +24078,7 @@
         },
         "p043": {
           "golesLocal": 2,
-          "golesVisitante": 1
+          "golesVisitante": 0
         },
         "p044": {
           "golesLocal": 0,
@@ -47253,7 +47322,7 @@
         },
         "p060": {
           "golesLocal": 2,
-          "golesVisitante": 2
+          "golesVisitante": 1
         },
         "p010": {
           "golesLocal": 4,

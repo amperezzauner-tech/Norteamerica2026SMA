@@ -2,12 +2,13 @@
   "_meta": {
     "generado": "2026-06-21",
     "total_partidos": 72,
-    "jugados": 45,
-    "pendientes": 27,
+    "jugados": 44,
+    "pendientes": 28,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-06-23T12:26:41.276489+00:00",
+    "ultima_actualizacion_auto": "2026-06-22T15:21:45.647943+00:00",
     "fuente_auto": "ESPN public scoreboard",
-    "en_vivo": 0
+    "ultima_validacion_manual": "2026-06-23",
+    "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel."
   },
   "partidos": [
     {
@@ -20,8 +21,7 @@
       "estado": "finalizado",
       "golesLocal": 2,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760415"
+      "apifootball_id": null
     },
     {
       "id": "p002",
@@ -33,8 +33,7 @@
       "estado": "finalizado",
       "golesLocal": 2,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760414"
+      "apifootball_id": null
     },
     {
       "id": "p003",
@@ -46,8 +45,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760416"
+      "apifootball_id": null
     },
     {
       "id": "p004",
@@ -71,8 +69,7 @@
       "estado": "finalizado",
       "golesLocal": 0,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760418"
+      "apifootball_id": null
     },
     {
       "id": "p006",
@@ -84,8 +81,7 @@
       "estado": "finalizado",
       "golesLocal": 2,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760421"
+      "apifootball_id": null
     },
     {
       "id": "p007",
@@ -97,8 +93,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760419"
+      "apifootball_id": null
     },
     {
       "id": "p008",
@@ -110,8 +105,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760420"
+      "apifootball_id": null
     },
     {
       "id": "p009",
@@ -123,8 +117,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760423"
+      "apifootball_id": null
     },
     {
       "id": "p010",
@@ -136,8 +129,7 @@
       "estado": "finalizado",
       "golesLocal": 7,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760422"
+      "apifootball_id": null
     },
     {
       "id": "p011",
@@ -149,8 +141,7 @@
       "estado": "finalizado",
       "golesLocal": 2,
       "golesVisitante": 2,
-      "apifootball_id": null,
-      "espn_id": "760425"
+      "apifootball_id": null
     },
     {
       "id": "p012",
@@ -162,8 +153,7 @@
       "estado": "finalizado",
       "golesLocal": 5,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760424"
+      "apifootball_id": null
     },
     {
       "id": "p013",
@@ -175,8 +165,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760429"
+      "apifootball_id": null
     },
     {
       "id": "p014",
@@ -188,8 +177,7 @@
       "estado": "finalizado",
       "golesLocal": 0,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760428"
+      "apifootball_id": null
     },
     {
       "id": "p015",
@@ -201,8 +189,7 @@
       "estado": "finalizado",
       "golesLocal": 2,
       "golesVisitante": 2,
-      "apifootball_id": null,
-      "espn_id": "760427"
+      "apifootball_id": null
     },
     {
       "id": "p016",
@@ -214,8 +201,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760426"
+      "apifootball_id": null
     },
     {
       "id": "p017",
@@ -227,8 +213,7 @@
       "estado": "finalizado",
       "golesLocal": 3,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760432"
+      "apifootball_id": null
     },
     {
       "id": "p018",
@@ -240,8 +225,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 4,
-      "apifootball_id": null,
-      "espn_id": "760430"
+      "apifootball_id": null
     },
     {
       "id": "p019",
@@ -253,8 +237,7 @@
       "estado": "finalizado",
       "golesLocal": 3,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760433"
+      "apifootball_id": null
     },
     {
       "id": "p020",
@@ -266,8 +249,7 @@
       "estado": "finalizado",
       "golesLocal": 3,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760431"
+      "apifootball_id": null
     },
     {
       "id": "p021",
@@ -279,8 +261,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760434"
+      "apifootball_id": null
     },
     {
       "id": "p022",
@@ -292,8 +273,7 @@
       "estado": "finalizado",
       "golesLocal": 4,
       "golesVisitante": 2,
-      "apifootball_id": null,
-      "espn_id": "760437"
+      "apifootball_id": null
     },
     {
       "id": "p023",
@@ -305,8 +285,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760435"
+      "apifootball_id": null
     },
     {
       "id": "p024",
@@ -318,8 +297,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 3,
-      "apifootball_id": null,
-      "espn_id": "760436"
+      "apifootball_id": null
     },
     {
       "id": "p025",
@@ -331,8 +309,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760438"
+      "apifootball_id": null
     },
     {
       "id": "p026",
@@ -344,8 +321,7 @@
       "estado": "finalizado",
       "golesLocal": 4,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760439"
+      "apifootball_id": null
     },
     {
       "id": "p027",
@@ -357,8 +333,7 @@
       "estado": "finalizado",
       "golesLocal": 6,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760440"
+      "apifootball_id": null
     },
     {
       "id": "p028",
@@ -370,8 +345,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760441"
+      "apifootball_id": null
     },
     {
       "id": "p029",
@@ -383,8 +357,7 @@
       "estado": "finalizado",
       "golesLocal": 3,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760444"
+      "apifootball_id": null
     },
     {
       "id": "p030",
@@ -396,8 +369,7 @@
       "estado": "finalizado",
       "golesLocal": 0,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760445"
+      "apifootball_id": null
     },
     {
       "id": "p031",
@@ -409,8 +381,7 @@
       "estado": "finalizado",
       "golesLocal": 0,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760443"
+      "apifootball_id": null
     },
     {
       "id": "p032",
@@ -434,8 +405,7 @@
       "estado": "finalizado",
       "golesLocal": 2,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760448"
+      "apifootball_id": null
     },
     {
       "id": "p034",
@@ -447,8 +417,7 @@
       "estado": "finalizado",
       "golesLocal": 0,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760446"
+      "apifootball_id": null
     },
     {
       "id": "p035",
@@ -460,8 +429,7 @@
       "estado": "finalizado",
       "golesLocal": 5,
       "golesVisitante": 1,
-      "apifootball_id": null,
-      "espn_id": "760447"
+      "apifootball_id": null
     },
     {
       "id": "p036",
@@ -473,8 +441,7 @@
       "estado": "finalizado",
       "golesLocal": 0,
       "golesVisitante": 4,
-      "apifootball_id": null,
-      "espn_id": "760449"
+      "apifootball_id": null
     },
     {
       "id": "p037",
@@ -499,8 +466,7 @@
       "estado": "finalizado",
       "golesLocal": 4,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760453"
+      "apifootball_id": null
     },
     {
       "id": "p039",
@@ -538,8 +504,7 @@
       "estado": "finalizado",
       "golesLocal": 3,
       "golesVisitante": 2,
-      "apifootball_id": null,
-      "espn_id": "760454"
+      "apifootball_id": null
     },
     {
       "id": "p042",
@@ -551,8 +516,7 @@
       "estado": "finalizado",
       "golesLocal": 3,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760457"
+      "apifootball_id": null
     },
     {
       "id": "p043",
@@ -564,8 +528,7 @@
       "estado": "finalizado",
       "golesLocal": 2,
       "golesVisitante": 0,
-      "apifootball_id": null,
-      "espn_id": "760456"
+      "apifootball_id": null
     },
     {
       "id": "p044",
@@ -577,8 +540,7 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 2,
-      "apifootball_id": null,
-      "espn_id": "760455"
+      "apifootball_id": null
     },
     {
       "id": "p045",
@@ -655,21 +617,21 @@
     {
       "id": "p051",
       "matchId": 51,
-      "local": "Bosnia",
-      "visitante": "Suiza",
+      "local": "Suiza",
+      "visitante": "Canadá",
       "grupo": "B",
       "jornada": 3,
-      "estado": "finalizado",
-      "golesLocal": 1,
-      "golesVisitante": 4,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null,
       "apifootball_id": null,
       "espn_id": "760439"
     },
     {
       "id": "p052",
       "matchId": 52,
-      "local": "Qatar",
-      "visitante": "Bosnia",
+      "local": "Bosnia",
+      "visitante": "Qatar",
       "grupo": "B",
       "jornada": 3,
       "estado": "pendiente",
