@@ -270,6 +270,45 @@ function isLive(m){
   return m.estado==='en_vivo' && m.golesLocal!==null && m.golesVisitante!==null;
 }
 
+
+// Corrección de seguridad para el Grupo B:
+// evita que el partido Suiza-Bosnia de jornada 2 se duplique como jornada 3.
+// p026 es Suiza vs Bosnia 4-1; p051 debe ser Suiza vs Canadá; p052 debe ser Bosnia vs Qatar.
+function sanitizeMatches(matches){
+  matches.forEach(m=>{
+    if(m.id==='p051'){
+      const l=norm(m.local), v=norm(m.visitante);
+      const isCorrect=l.includes('suiza') && v.includes('canada');
+      const isDuplicated=(l.includes('bosnia')&&v.includes('suiza'))||(l.includes('suiza')&&v.includes('bosnia'));
+      if(!isCorrect || isDuplicated){
+        m.local='Suiza';
+        m.visitante='Canadá';
+        m.grupo='B';
+        m.jornada=3;
+        m.estado='pendiente';
+        m.golesLocal=null;
+        m.golesVisitante=null;
+      }
+      if(m.espn_id==='760439') delete m.espn_id;
+    }
+    if(m.id==='p052'){
+      const l=norm(m.local), v=norm(m.visitante);
+      const isCorrect=l.includes('bosnia') && v.includes('qatar');
+      if(!isCorrect){
+        m.local='Bosnia';
+        m.visitante='Qatar';
+        m.grupo='B';
+        m.jornada=3;
+        m.estado='pendiente';
+        m.golesLocal=null;
+        m.golesVisitante=null;
+      }
+      if(m.espn_id==='760439') delete m.espn_id;
+    }
+  });
+  return matches;
+}
+
 async function loadData(){
   try{
     const [p,r]=await Promise.all([
@@ -278,7 +317,7 @@ async function loadData(){
     ]);
     PRED=p;RES=r;
     PARTICIPANTES=(p.participantes||[]).filter(x=>x.id!=='alejandro_gonzalex'&&x.nombre!=='Alejandro Gonzalex');
-    MATCHES=r.partidos||[];
+    MATCHES=sanitizeMatches((r.partidos||[]).map(m=>({...m})));
     PLAYED=MATCHES.filter(isScoreable).sort((a,b)=>matchTime(a)-matchTime(b));
     PENDING=MATCHES.filter(m=>!isScoreable(m)).sort((a,b)=>matchTime(a)-matchTime(b));
     calculate();renderAll();
