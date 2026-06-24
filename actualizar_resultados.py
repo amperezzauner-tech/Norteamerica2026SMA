@@ -23,8 +23,8 @@ RESULTADOS_PATH = Path("resultados.json")
 API_URL = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard"
 
 # Ventana móvil: alcanza partidos recientes/futuros sin volver a recorrer todo el torneo.
-START_DATE = date.today() - timedelta(days=2)
-END_DATE = date.today() + timedelta(days=2)
+START_DATE = date.today() - timedelta(days=10)
+END_DATE = date.today() + timedelta(days=10)
 
 FINAL_STATES = {"post", "final", "complete", "completed"}
 LIVE_STATES = {"in", "live", "in progress", "inprogress", "halftime", "half time"}
