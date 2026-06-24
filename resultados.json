@@ -2,15 +2,15 @@
   "_meta": {
     "generado": "2026-06-21",
     "total_partidos": 72,
-    "jugados": 47,
-    "pendientes": 25,
+    "jugados": 48,
+    "pendientes": 24,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-06-24T01:13:48.975985+00:00",
+    "ultima_actualizacion_auto": "2026-06-24T04:20:16.609121+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-06-24T01:13:48.975954+00:00"
+    "ultima_revision_auto": "2026-06-24T04:20:16.609096+00:00"
   },
   "partidos": [
     {
@@ -596,10 +596,11 @@
       "visitante": "Congo",
       "grupo": "K",
       "jornada": 2,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "finalizado",
+      "golesLocal": 1,
+      "golesVisitante": 0,
+      "apifootball_id": null,
+      "espn_id": "760459"
     },
     {
       "id": "p049",
