@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>⚽ Polla Mundial 2026</title>
 <style>
 :root{--bg:#061b35;--panel:#073763;--panel2:#0b4f7a;--line:#1f7a8c;--gold:#ffd447;--gold2:#f4b400;--txt:#fffaf0;--muted:#b8e6ff;--ok:#26d07c;--bad:#ef3e36;--blue:#00a6ff;--violet:#8d5cff;--red:#e5253a;--green:#0fb36d;--white:#fff7e6}
@@ -312,8 +315,8 @@ function sanitizeMatches(matches){
 async function loadData(){
   try{
     const [p,r]=await Promise.all([
-      fetch('predicciones.json?ts='+Date.now()).then(x=>{if(!x.ok)throw new Error('No cargó predicciones.json');return x.json()}),
-      fetch('resultados.json?ts='+Date.now()).then(x=>{if(!x.ok)throw new Error('No cargó resultados.json');return x.json()})
+      fetch('predicciones.json?ts='+Date.now(), {cache:'no-store'}).then(x=>{if(!x.ok)throw new Error('No cargó predicciones.json');return x.json()}),
+      fetch('resultados.json?ts='+Date.now(), {cache:'no-store'}).then(x=>{if(!x.ok)throw new Error('No cargó resultados.json');return x.json()})
     ]);
     PRED=p;RES=r;
     PARTICIPANTES=(p.participantes||[]).filter(x=>x.id!=='alejandro_gonzalex'&&x.nombre!=='Alejandro Gonzalex');
@@ -374,19 +377,31 @@ function computeRarity(){
   RARE_EVENTS.sort((a,b)=>(a.exactCount-b.exactCount)||(a.outcomeCount-b.outcomeCount));
   SURPRISE=RANKING.slice().sort((a,b)=>(b.surpriseScore||0)-(a.surpriseScore||0)||b.exact-a.exact)[0];
 }
+function cleanHonorTeam(value){
+  const raw=String(value||'').trim();
+  if(!raw)return '';
+  // Algunas celdas de Excel exportaron códigos internos de la llave (W101, L101, 1K)
+  // en vez del país. No deben mostrarse como equipos favoritos.
+  if(/^W\d+$/i.test(raw) || /^L\d+$/i.test(raw) || /^\d+[A-Z]$/i.test(raw))return '';
+  return raw;
+}
+function addVote(obj,value){
+  const team=cleanHonorTeam(value);
+  if(team)obj[team]=(obj[team]||0)+1;
+}
 function computeChampions(){
   const count={};
   const sub={};
   const third={};
   PARTICIPANTES.forEach(p=>{
     const h=p.honor||{};
-    if(h.campeon)count[h.campeon]=(count[h.campeon]||0)+1;
-    if(h.subcampeon)sub[h.subcampeon]=(sub[h.subcampeon]||0)+1;
-    if(h.tercer_puesto)third[h.tercer_puesto]=(third[h.tercer_puesto]||0)+1;
+    addVote(count,h.campeon);
+    addVote(sub,h.subcampeon);
+    addVote(third,h.tercer_puesto);
   });
   CHAMPIONS=Object.entries(count).map(([team,n])=>({team,n})).sort((a,b)=>b.n-a.n||a.team.localeCompare(b.team));
-  window.SUBS=Object.entries(sub).map(([team,n])=>({team,n})).sort((a,b)=>b.n-a.n);
-  window.THIRDS=Object.entries(third).map(([team,n])=>({team,n})).sort((a,b)=>b.n-a.n);
+  window.SUBS=Object.entries(sub).map(([team,n])=>({team,n})).sort((a,b)=>b.n-a.n||a.team.localeCompare(b.team));
+  window.THIRDS=Object.entries(third).map(([team,n])=>({team,n})).sort((a,b)=>b.n-a.n||a.team.localeCompare(b.team));
 }
 function renderAll(){
   const leader=RANKING[0]||{}, exactTop=Math.max(0,...RANKING.map(x=>x.exact));
@@ -618,7 +633,7 @@ function openProfile(id){
   const p=RANKING.find(x=>x.id===id);if(!p)return;
   document.getElementById('prof-name').textContent=medal(p.pos)+' '+p.nombre;
   document.getElementById('prof-grid').innerHTML=[
-    ['Posición','#'+p.pos],['Puntos',p.pts],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',p.honor?.campeon||'—'],['Subcampeón',p.honor?.subcampeon||'—'],['Sorpresas',p.surpriseHits||0]
+    ['Posición','#'+p.pos],['Puntos',p.pts],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',cleanHonorTeam(p.honor?.campeon)||'—'],['Subcampeón',cleanHonorTeam(p.honor?.subcampeon)||'—'],['Sorpresas',p.surpriseHits||0]
   ].map(r=>'<div class="prof-stat"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>').join('');
   document.getElementById('prof-matches').innerHTML=p.last.slice(0,10).map(x=>'<div class="match-card"><div><b>'+esc(x.m.local)+' '+x.m.golesLocal+'-'+x.m.golesVisitante+' '+esc(x.m.visitante)+'</b><div class="muted" style="font-size:.68rem">Predijo '+x.pr.golesLocal+'-'+x.pr.golesVisitante+(x.exact?' · exacto':x.ok?' · resultado':'')+'</div></div><div class="score">+'+x.s+'</div></div>').join('')||'<div class="empty">Sin partidos evaluados.</div>';
   document.getElementById('profile').classList.add('act');
@@ -627,7 +642,13 @@ function closeProfile(){document.getElementById('profile').classList.remove('act
 function show(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act');document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('act'));btn?.classList.add('act');syncBottom(id)}
 function showMobile(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act');document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('act'));btn?.classList.add('act');document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('act'))}
 function syncBottom(id){const buttons=[...document.querySelectorAll('.bottom button')];buttons.forEach(b=>b.classList.remove('act'));const idx={inicio:0,ranking:1,partidos:2,preds:3,salon:4}[id];if(idx!==undefined)buttons[idx].classList.add('act')}
+
 loadData();
+// Refresca automáticamente los JSON sin recargar la página.
+// Así, cuando GitHub Actions actualice resultados.json, la tabla cambia sola.
+setInterval(()=>{
+  loadData();
+}, 3*60*1000);
 </script>
 </body>
 </html>
