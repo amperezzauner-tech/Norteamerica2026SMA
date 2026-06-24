@@ -2,15 +2,15 @@
   "_meta": {
     "generado": "2026-06-21",
     "total_partidos": 72,
-    "jugados": 48,
-    "pendientes": 24,
+    "jugados": 50,
+    "pendientes": 20,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-06-24T04:20:16.609121+00:00",
+    "ultima_actualizacion_auto": "2026-06-24T22:10:49.527707+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
-    "en_vivo": 0,
-    "ultima_revision_auto": "2026-06-24T04:20:16.609096+00:00"
+    "en_vivo": 2,
+    "ultima_revision_auto": "2026-06-24T22:10:49.527681+00:00"
   },
   "partidos": [
     {
@@ -609,10 +609,11 @@
       "visitante": "Brasil",
       "grupo": "C",
       "jornada": 3,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "en_vivo",
+      "golesLocal": 0,
+      "golesVisitante": 1,
+      "apifootball_id": null,
+      "espn_id": "760465"
     },
     {
       "id": "p050",
@@ -621,10 +622,11 @@
       "visitante": "Haití",
       "grupo": "C",
       "jornada": 3,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "en_vivo",
+      "golesLocal": 0,
+      "golesVisitante": 0,
+      "apifootball_id": null,
+      "espn_id": "760464"
     },
     {
       "id": "p051",
@@ -633,11 +635,11 @@
       "visitante": "Canadá",
       "grupo": "B",
       "jornada": 3,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
+      "estado": "finalizado",
+      "golesLocal": 2,
+      "golesVisitante": 1,
       "apifootball_id": null,
-      "espn_id": "760439"
+      "espn_id": "760463"
     },
     {
       "id": "p052",
@@ -646,10 +648,11 @@
       "visitante": "Qatar",
       "grupo": "B",
       "jornada": 3,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "finalizado",
+      "golesLocal": 3,
+      "golesVisitante": 1,
+      "apifootball_id": null,
+      "espn_id": "760462"
     },
     {
       "id": "p053",
