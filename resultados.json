@@ -3,14 +3,14 @@
     "generado": "2026-06-21",
     "total_partidos": 72,
     "jugados": 52,
-    "pendientes": 20,
+    "pendientes": 18,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-06-25T00:11:47.829854+00:00",
+    "ultima_actualizacion_auto": "2026-06-25T01:37:19.107347+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
-    "en_vivo": 0,
-    "ultima_revision_auto": "2026-06-25T00:11:47.829833+00:00"
+    "en_vivo": 2,
+    "ultima_revision_auto": "2026-06-25T01:37:19.107322+00:00"
   },
   "partidos": [
     {
@@ -683,10 +683,11 @@
       "visitante": "México",
       "grupo": "A",
       "jornada": 3,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "en_vivo",
+      "golesLocal": 0,
+      "golesVisitante": 0,
+      "apifootball_id": null,
+      "espn_id": "760467"
     },
     {
       "id": "p054",
@@ -695,10 +696,11 @@
       "visitante": "Corea del Sur",
       "grupo": "A",
       "jornada": 3,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "en_vivo",
+      "golesLocal": 0,
+      "golesVisitante": 0,
+      "apifootball_id": null,
+      "espn_id": "760466"
     },
     {
       "id": "p055",
