@@ -2,15 +2,15 @@
   "_meta": {
     "generado": "2026-06-21",
     "total_partidos": 72,
-    "jugados": 54,
-    "pendientes": 18,
+    "jugados": 56,
+    "pendientes": 16,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-06-25T00:11:47.829854+00:00",
+    "ultima_actualizacion_auto": "2026-06-25T22:57:27.498164+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-06-25T00:11:47.829833+00:00",
+    "ultima_revision_auto": "2026-06-25T22:57:27.498141+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur."
   },
   "partidos": [
@@ -687,7 +687,8 @@
       "estado": "finalizado",
       "golesLocal": 0,
       "golesVisitante": 3,
-      "apifootball_id": null
+      "apifootball_id": null,
+      "espn_id": "760467"
     },
     {
       "id": "p054",
@@ -699,7 +700,8 @@
       "estado": "finalizado",
       "golesLocal": 1,
       "golesVisitante": 0,
-      "apifootball_id": null
+      "apifootball_id": null,
+      "espn_id": "760466"
     },
     {
       "id": "p055",
@@ -708,10 +710,11 @@
       "visitante": "C. de Marfil",
       "grupo": "E",
       "jornada": 3,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "finalizado",
+      "golesLocal": 0,
+      "golesVisitante": 2,
+      "apifootball_id": null,
+      "espn_id": "760473"
     },
     {
       "id": "p056",
@@ -720,10 +723,11 @@
       "visitante": "Alemania",
       "grupo": "E",
       "jornada": 3,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "apifootball_id": null
+      "estado": "finalizado",
+      "golesLocal": 2,
+      "golesVisitante": 1,
+      "apifootball_id": null,
+      "espn_id": "760468"
     },
     {
       "id": "p057",
