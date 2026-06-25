@@ -566,14 +566,23 @@ function actualQualifiers(){
   return {teams:qualified,closed,total:groupLetters().length};
 }
 function qualifierRanking(){
-  const actual=actualQualifiers();
-  const realSet=new Set(actual.teams.map(norm));
+  // Esta tabla NO suma simplemente equipos clasificados.
+  // Usa la regla de puntos que definiste para cierre de grupos:
+  // 1.º exacto = 4 pts, 2.º exacto = 3 pts, 3.º exacto = 1 pt, 4.º exacto = 1 pt.
+  // Solo se evalúan grupos con sus 6 partidos finalizados para evitar asignar puntos provisionales.
   return RANKING.map(p=>{
-    const pred=predictedQualifiers(p);
-    const hits=pred.filter(t=>realSet.has(norm(t)));
-    const misses=pred.filter(t=>!realSet.has(norm(t)));
-    return {p,pred,hits,misses,hit:hits.length,total:actual.teams.length||32,pct:actual.teams.length?pct(hits.length,actual.teams.length):0};
-  }).sort((a,b)=>b.hit-a.hit||b.pct-a.pct||a.p.nombre.localeCompare(b.p.nombre));
+    const bonus=groupPositionBonus(p);
+    return {
+      p,
+      pts:bonus.total,
+      hit:bonus.hits,
+      closed:bonus.closed,
+      detail:bonus.detail,
+      total:bonus.closed*4,
+      maxPts:bonus.closed*9,
+      pct:bonus.closed?pct(bonus.total, bonus.closed*9):0
+    };
+  }).sort((a,b)=>b.pts-a.pts||b.hit-a.hit||a.p.nombre.localeCompare(b.p.nombre));
 }
 function renderKORank(phase,elementId){
   const played=phaseMatches(phase).filter(isScoreable).length;
@@ -587,20 +596,20 @@ function renderQualifierModule(){
   const actual=actualQualifiers();
   const rows=qualifierRanking();
   const complete=actual.closed===actual.total;
-  let intro='<p class="ko-status">Grupos cerrados: '+actual.closed+'/'+actual.total+'. '+(complete?'Ya se evalúan top 2 y mejores terceros para los 32 clasificados.':'Por ahora se evalúan los dos primeros de cada grupo cerrado; los mejores terceros se activarán cuando cierren todos los grupos.')+'</p>';
+  let intro='<p class="ko-status">Grupos cerrados: '+actual.closed+'/'+actual.total+'. Se asignan puntos solo cuando un grupo tiene sus 6 partidos finalizados: 1.º exacto = 4 pts, 2.º exacto = 3 pts, 3.º exacto = 1 pt y 4.º exacto = 1 pt.</p>';
   let pills='';
   if(actual.teams.length){pills='<div class="ko-phase-title">Clasificados reales ya evaluables</div>'+actual.teams.map(t=>'<span class="ko-pill ok">'+esc(t)+'</span>').join('');}
-  document.getElementById('ko-16-content').innerHTML=intro+pills+'<div class="ko-phase-title">Ranking de aciertos a 16avos</div>'+
-    (actual.teams.length?rows.slice(0,40).map((r,i)=>'<div class="ko-rank-row" onclick="openProfile(\''+r.p.id+'\')"><div class="pos">'+medal(i+1)+'</div><div><div class="name">'+esc(r.p.nombre)+'</div><div class="ko-detail">✅ '+r.hit+'/'+actual.teams.length+' clasificados · '+r.pct+'%</div></div><div class="pts">'+r.hit+'/'+(actual.teams.length||32)+'</div></div>').join(''):'<div class="empty">Aún no hay grupos cerrados para comparar clasificados.</div>');
+  document.getElementById('ko-16-content').innerHTML=intro+pills+'<div class="ko-phase-title">Ranking de puntos por posiciones de grupo</div>'+
+    (actual.closed?rows.slice(0,40).map((r,i)=>'<div class="ko-rank-row" onclick="openProfile(\''+r.p.id+'\')"><div class="pos">'+medal(i+1)+'</div><div><div class="name">'+esc(r.p.nombre)+'</div><div class="ko-detail">✅ '+r.hit+'/'+r.total+' posiciones exactas · máximo '+r.maxPts+' pts · '+r.pct+'%</div></div><div class="pts">'+r.pts+' pts</div></div>').join(''):'<div class="empty">Aún no hay grupos cerrados para asignar puntos de posiciones.</div>');
 }
 function renderKOResumen(){
   const actual=actualQualifiers();
   const bestQ=qualifierRanking()[0];
   const cards=['16avos','8vos','Cuartos','Semis','Final'].map(ph=>{
-    const played=ph==='16avos'?actual.teams.length:phaseMatches(ph).filter(isScoreable).length;
+    const played=ph==='16avos'?actual.closed:phaseMatches(ph).filter(isScoreable).length;
     const top=ph==='16avos'?bestQ:phaseRanking(ph)[0];
-    const label=ph==='16avos'?'Clasificados':KO_PHASES[ph].label;
-    const value=ph==='16avos'?(played?((top?.hit||0)+'/'+played):'0/32'):(played?((top?.hit||0)+'/'+played):'0/'+KO_PHASES[ph].ids.length);
+    const label=ph==='16avos'?'Puntos grupos':KO_PHASES[ph].label;
+    const value=ph==='16avos'?(played?((top?.pts||0)+' pts'):'0 pts'):(played?((top?.hit||0)+'/'+played):'0/'+KO_PHASES[ph].ids.length);
     const name=top?.p?.nombre||'—';
     return '<div class="ko-card"><span>'+esc(label)+'</span><b>'+esc(value)+'</b><div class="ko-detail">Líder: '+esc(name)+'</div></div>';
   }).join('');
