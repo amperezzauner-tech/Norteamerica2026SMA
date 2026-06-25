@@ -2,9 +2,12 @@ name: Actualizar resultados V2
 
 on:
   workflow_dispatch:
+
   schedule:
-    # Horarios en UTC. Minutos no redondos para evitar congestión de GitHub Actions.
-    - cron: "7,22,37,52 * * * *"
+    # Cada 20 minutos entre 11:00 a.m. y 11:40 p.m. hora Colombia (UTC-5)
+    # Equivale a 16:00-23:40 UTC y 00:00-04:40 UTC del día siguiente.
+    - cron: "0,20,40 16-23 * * *"
+    - cron: "0,20,40 0-4 * * *"
 
 permissions:
   contents: write
@@ -38,10 +41,14 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add resultados.json
+
+          git add resultados.json index.html
+
           if git diff --cached --quiet; then
-            echo "No hay cambios en resultados.json"
+            echo "No hay cambios para publicar"
             exit 0
           fi
+
           git commit -m "Actualizar resultados automáticamente"
+          git pull --rebase origin main
           git push origin main
