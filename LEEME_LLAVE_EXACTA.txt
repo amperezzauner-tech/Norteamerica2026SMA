@@ -1,0 +1,9 @@
+Corrección agregada:
+
+1. La página sigue calculando automáticamente la tabla real de cada grupo desde resultados.json.
+2. Las posiciones predichas de cada participante se toman de predicciones.json.
+3. Se suma la regla de grupos: 1.º = 4 pts, 2.º = 3 pts, 3.º = 1 pt, 4.º = 1 pt.
+4. Se agregó bonificación de llave exacta de 16avos: +2 puntos por cada cruce correcto.
+5. El cruce se compara sin importar local/visitante: Sudáfrica vs Canadá y Canadá vs Sudáfrica cuentan igual.
+6. No hay que volver a subir Exceles; el Excel solo sirve para auditoría manual.
+7. Verificación puntual: Felipe Gaitán queda con 23 puntos en grupos A+B+C antes de sumar cualquier bono de llave exacta.

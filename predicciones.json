@@ -72,7 +72,12 @@
         "manual": "2-0",
         "json": "2-1"
       }
-    ]
+    ],
+    "grupos_desde_excel": "Posiciones explícitas P:S extraídas de Resultados Real 2.xlsx.",
+    "nota_puntuacion_grupos": "La página usa p.grupos para puntuar 1.º=4, 2.º=3, 3.º=1, 4.º=1, evitando diferencias por desempates al recalcular desde marcadores.",
+    "correccion_felipe_gaitan_grupo_j": "Argentina, Argelia, Austria, Jordania",
+    "version": "V4.3-felipe-validado",
+    "validacion_felipe_gaitan": "Felipe Gaitan tiene grupos A+B+C = 23 puntos: A=5, B=9, C=9. Grupo J corregido: Argentina, Argelia, Austria, Jordania."
   },
   "participantes": [
     {
@@ -500,6 +505,80 @@
         "campeon": "Alemania",
         "subcampeon": "Argentina",
         "tercer_puesto": "Portugal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Panamá",
+          "Ghana"
+        ]
       }
     },
     {
@@ -927,6 +1006,80 @@
         "campeon": "Francia",
         "subcampeon": "Inglaterra",
         "tercer_puesto": "Portugal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Irán",
+          "Egipto"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -1354,6 +1507,80 @@
         "campeon": "Francia",
         "subcampeon": "Inglaterra",
         "tercer_puesto": "Portugal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -1781,6 +2008,80 @@
         "campeon": "Alemania",
         "subcampeon": "Inglaterra",
         "tercer_puesto": "Colombia"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -2214,6 +2515,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "vinicius jr",
         "balon_bronce": "mbappe"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "Sudáfrica",
+          "México",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Bosnia",
+          "Suiza",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Arabia Saudita",
+          "Uruguay",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Croacia",
+          "Ghana",
+          "Inglaterra",
+          "Panamá"
+        ]
       }
     },
     {
@@ -2641,6 +3016,80 @@
         "campeon": "Portugal",
         "subcampeon": "Francia",
         "tercer_puesto": "España"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Egipto",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -3068,6 +3517,80 @@
         "campeon": "Argentina",
         "subcampeon": "Francia",
         "tercer_puesto": "Inglaterra"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -3501,6 +4024,80 @@
         "balon_oro": "LEONEL MESSI",
         "balon_plata": "LAMINE YAMAL",
         "balon_bronce": "LUIS DIAZ"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Haití",
+          "Marruecos"
+        ],
+        "D": [
+          "Paraguay",
+          "Australia",
+          "EE.UU.",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Egipto",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -3934,6 +4531,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Mbappé",
         "balon_bronce": "Erling Haland"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -4361,6 +5032,80 @@
         "campeon": "Colombia",
         "subcampeon": "Francia",
         "tercer_puesto": "España"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -4794,6 +5539,80 @@
         "balon_oro": "Vitinha",
         "balon_plata": "Kilian Mbappe",
         "balon_bronce": "Harry Kane"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Australia",
+          "EE.UU.",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -5227,6 +6046,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Kylian Mbappé",
         "balon_bronce": "Pedri"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "Australia",
+          "EE.UU."
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Túnez",
+          "Japón"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "Uruguay",
+          "España",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -5660,6 +6553,80 @@
         "balon_oro": "Kylian Mbappe",
         "balon_plata": "Harry Kane",
         "balon_bronce": "Vitinha"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Irán",
+          "Egipto"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -6093,6 +7060,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Cristiano Ronaldo",
         "balon_bronce": "Harry Kane"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Sudáfrica",
+          "Corea del Sur",
+          "Chequia"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Haití",
+          "Escocia"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Túnez",
+          "Suecia",
+          "Japón"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Panamá",
+          "Ghana"
+        ]
       }
     },
     {
@@ -6526,6 +7567,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Vinicius Jr.",
         "balon_bronce": "Lionel Messi"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -6959,6 +8074,80 @@
         "balon_oro": "Harry Kane",
         "balon_plata": "Kylian Mbappe",
         "balon_bronce": "Julian Alvarez"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -7392,6 +8581,80 @@
         "balon_oro": "LAMINE YAMAL",
         "balon_plata": "VITINHA",
         "balon_bronce": "DOUE"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "Chequia",
+          "México",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -7825,6 +9088,80 @@
         "balon_oro": "LAMINE YAMAL",
         "balon_plata": "HARRY KANE",
         "balon_bronce": "LIONEL MESSI"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -8258,6 +9595,80 @@
         "balon_oro": "Lamin Yamal",
         "balon_plata": "Kane",
         "balon_bronce": "Mbappe"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -8691,6 +10102,80 @@
         "balon_oro": "HARRY KANE",
         "balon_plata": "MBAPPE",
         "balon_bronce": "Messi"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Australia",
+          "EE.UU.",
+          "Turquía",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -9124,6 +10609,80 @@
         "balon_oro": "Cristiano Ronaldo",
         "balon_plata": "Aurelien Tchouameni",
         "balon_bronce": "Kylian Mbappe"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -9557,6 +11116,80 @@
         "balon_oro": "Michael Olise",
         "balon_plata": "Lamine Yamal",
         "balon_bronce": "Vinicius Junior"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -9990,6 +11623,80 @@
         "balon_oro": "Cristiano Ronaldo",
         "balon_plata": "Rodri",
         "balon_bronce": "Lamine Yamal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Ghana",
+          "Croacia",
+          "Panamá"
+        ]
       }
     },
     {
@@ -10423,6 +12130,80 @@
         "balon_oro": "Mbappe",
         "balon_plata": "Vinicius Jr",
         "balon_bronce": "Messi"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Australia",
+          "EE.UU.",
+          "Paraguay",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -10856,6 +12637,80 @@
         "balon_oro": "Mbappe",
         "balon_plata": "Cristiano",
         "balon_bronce": "Lamine Yamal"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Bosnia",
+          "Suiza",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Panamá",
+          "Ghana"
+        ]
       }
     },
     {
@@ -11289,6 +13144,80 @@
         "balon_oro": "Michael Olise",
         "balon_plata": "Lamine Yamal",
         "balon_bronce": "Harry Kane"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Egipto",
+          "Bélgica",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -11722,6 +13651,80 @@
         "balon_oro": "vitinha",
         "balon_plata": "dembelé",
         "balon_bronce": "olise"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Congo",
+          "Colombia",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -12155,6 +14158,80 @@
         "balon_oro": "MBAPPE",
         "balon_plata": "KANE",
         "balon_bronce": "MESSI"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -12588,6 +14665,80 @@
         "balon_oro": "CRISTIANO RONALDO",
         "balon_plata": "LIONEL MESSI",
         "balon_bronce": "LAMINE YAMAL"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Bosnia",
+          "Canadá",
+          "Suiza",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "Australia",
+          "EE.UU."
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Cabo Verde",
+          "Arabia Saudita",
+          "Uruguay"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Panamá",
+          "Ghana"
+        ]
       }
     },
     {
@@ -13021,6 +15172,80 @@
         "balon_oro": "HARRY KANE",
         "balon_plata": "KYLIAN MBAPPE",
         "balon_bronce": "LUCHO DIAZ"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "Corea del Sur",
+          "México",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -13454,6 +15679,80 @@
         "balon_oro": "Florian Wirtz",
         "balon_plata": "Luis Diaz",
         "balon_bronce": "Lamine Yamal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -13887,6 +16186,80 @@
         "balon_oro": "lamine yamal",
         "balon_plata": "bellingan",
         "balon_bronce": "bruno fernandez"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Ecuador",
+          "Alemania",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Japón",
+          "P. Bajos",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -14320,6 +16693,80 @@
         "balon_oro": "Memphis Depay",
         "balon_plata": "Cristiano Ronaldo",
         "balon_bronce": "Nico Williams"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -14753,6 +17200,80 @@
         "balon_oro": "Bruno Fernandes",
         "balon_plata": "Lamin Yamal",
         "balon_bronce": "Hakim Ziyech"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Marruecos",
+          "Brasil",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "Australia",
+          "EE.UU."
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -15186,6 +17707,80 @@
         "balon_oro": "ousmane dembele",
         "balon_plata": "harry kane",
         "balon_bronce": "lamine yamal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Australia",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Japón",
+          "P. Bajos",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -15619,6 +18214,80 @@
         "balon_oro": "LAMINE YAMAL",
         "balon_plata": "JULIAN ALVAREZ",
         "balon_bronce": "DEMBELE"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "Sudáfrica",
+          "México",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -16052,6 +18721,80 @@
         "balon_oro": "Lionel Messi",
         "balon_plata": "Kylian Mbappé",
         "balon_bronce": "Jude Bellingham"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -16485,6 +19228,80 @@
         "balon_oro": "Bruno Fernandes",
         "balon_plata": "Joshua Kimmich",
         "balon_bronce": "Virgil Van Djik"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Japón",
+          "P. Bajos",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -16918,6 +19735,80 @@
         "balon_oro": "HARRY KANE",
         "balon_plata": "LIONEL MESSI",
         "balon_bronce": "CRISTIANO RONALDO"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "Chequia",
+          "México",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Suecia",
+          "P. Bajos",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Senegal",
+          "Francia",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -17351,6 +20242,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Ousmane Dembélé",
         "balon_bronce": "Pedri"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Australia",
+          "Turquía",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Croacia",
+          "Inglaterra",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -17784,6 +20749,80 @@
         "balon_oro": "Kylian Mbappe",
         "balon_plata": "Lamine Yamal",
         "balon_bronce": "Virgil van Dijk"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -18217,6 +21256,80 @@
         "balon_oro": "Michael Olise",
         "balon_plata": "Leonel Messi",
         "balon_bronce": "Lamine Yamal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -18650,6 +21763,80 @@
         "balon_oro": "Dembele",
         "balon_plata": "Harry Kane",
         "balon_bronce": "Yamin Yamal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -19083,6 +22270,80 @@
         "balon_oro": "kylian mbappe",
         "balon_plata": "lionel messi",
         "balon_bronce": "vinicius junior"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -19516,6 +22777,80 @@
         "balon_oro": "Mbappe",
         "balon_plata": "Messi",
         "balon_bronce": "Vinicius JR"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Australia",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -19949,6 +23284,80 @@
         "balon_oro": "Klian Mbappé",
         "balon_plata": "Jude Bellingan",
         "balon_bronce": "ousname Dembelé"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -20382,6 +23791,80 @@
         "balon_oro": "LAMINE YAMAL",
         "balon_plata": "VINICIUS JR",
         "balon_bronce": "PEDRI"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Túnez",
+          "Japón"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -20815,6 +24298,80 @@
         "balon_oro": "Bruno Fernandes",
         "balon_plata": "Pedri",
         "balon_bronce": "Vitinha"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -21248,6 +24805,80 @@
         "balon_oro": "Mbappe",
         "balon_plata": "Bruno Fernandez",
         "balon_bronce": "Rodri"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Sudáfrica",
+          "Chequia",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -21681,6 +25312,80 @@
         "balon_oro": "Kylian Mbappe",
         "balon_plata": "Neymar",
         "balon_bronce": "Pedri"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "Corea del Sur",
+          "México",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -22114,6 +25819,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Kylian Mbappé",
         "balon_bronce": "Vitinha"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Túnez",
+          "Suecia"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -22547,6 +26326,80 @@
         "balon_oro": "Lamin Yamal",
         "balon_plata": "Lautaro Martínez",
         "balon_bronce": "Mbappé"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "N. Zelanda",
+          "Egipto"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -22980,6 +26833,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Vitinha",
         "balon_bronce": "Luis Diaz"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -23413,6 +27340,80 @@
         "balon_oro": "Kylian Mbappé",
         "balon_plata": "Luis Diaz",
         "balon_bronce": "Lionel Messi"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Australia",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Panamá",
+          "Croacia",
+          "Ghana"
+        ]
       }
     },
     {
@@ -23846,6 +27847,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Kylian Mbappe",
         "balon_bronce": "Vinicius Jr."
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -24279,6 +28354,80 @@
         "balon_oro": "Yamal (Spain)",
         "balon_plata": "Messi (Argentina)",
         "balon_bronce": "Mbappé (France)"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -24712,6 +28861,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Jude Bellingham",
         "balon_bronce": "Luis Diaz"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Sudáfrica",
+          "Corea del Sur",
+          "Chequia"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -25145,6 +29368,80 @@
         "balon_oro": "Bruno Fernandes",
         "balon_plata": "Kylian Mbappe",
         "balon_bronce": "Lamine Yamal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "Curazao",
+          "C. de Marfil"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -25578,6 +29875,80 @@
         "balon_oro": "Yamal",
         "balon_plata": "Enzo Fernandez",
         "balon_bronce": "Mbappe"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Irak",
+          "Noruega"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -26011,6 +30382,80 @@
         "balon_oro": "Ronaldo",
         "balon_plata": "Mbappe",
         "balon_bronce": "Vinisius"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "Curazao",
+          "C. de Marfil"
+        ],
+        "F": [
+          "Suecia",
+          "P. Bajos",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Irán",
+          "Egipto"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Croacia",
+          "Inglaterra",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -26444,6 +30889,80 @@
         "balon_oro": "Ousmane Dembele",
         "balon_plata": "Kilyan Mbappe",
         "balon_bronce": "Harry Kane"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -26877,6 +31396,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Kiliam Embape",
         "balon_bronce": "Michael Olise"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -27310,6 +31903,80 @@
         "balon_oro": "HARRY KANE",
         "balon_plata": "LUIS DIAZ",
         "balon_bronce": "MBAPE"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica",
+          "México"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Australia",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Suecia",
+          "Japón",
+          "P. Bajos",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Irán",
+          "Egipto"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Austria",
+          "Argentina",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -27743,6 +32410,80 @@
         "balon_oro": "Frenkie de Jong",
         "balon_plata": "Luka Modric",
         "balon_bronce": "Lamine Yamal"
+      },
+      "grupos": {
+        "A": [
+          "Sudáfrica",
+          "México",
+          "Chequia",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Bosnia",
+          "Canadá",
+          "Suiza",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Haití",
+          "Escocia"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "Uruguay",
+          "España",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Irak",
+          "Noruega"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Jordania",
+          "Austria"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Panamá",
+          "Ghana"
+        ]
       }
     },
     {
@@ -28176,6 +32917,80 @@
         "balon_oro": "kylian mbappe",
         "balon_plata": "julian alvarez",
         "balon_bronce": "lamine yamal"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Bosnia",
+          "Suiza",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -28609,6 +33424,80 @@
         "balon_oro": "Mbappé",
         "balon_plata": "Pedri",
         "balon_bronce": "Vitinha"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -29042,6 +33931,80 @@
         "balon_oro": "Mbappe",
         "balon_plata": "Luis Diaz",
         "balon_bronce": "Pedri"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Bosnia",
+          "Suiza",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -29475,6 +34438,80 @@
         "balon_oro": "Kyliam Mbappe",
         "balon_plata": "Bakayo Saka",
         "balon_bronce": "Vinicious Junior"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Irán",
+          "Egipto"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Panamá",
+          "Ghana"
+        ]
       }
     },
     {
@@ -29908,6 +34945,80 @@
         "balon_oro": "Bruno Fernandes",
         "balon_plata": "Yamal",
         "balon_bronce": "Haaland"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "Corea del Sur",
+          "México",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Qatar",
+          "Canadá"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Egipto",
+          "Bélgica",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Noruega",
+          "Francia",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Ghana",
+          "Panamá",
+          "Croacia"
+        ]
       }
     },
     {
@@ -30341,6 +35452,80 @@
         "balon_oro": "Kylian Mbappe",
         "balon_plata": "Lionel Messi",
         "balon_bronce": "Luis Diaz"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Croacia",
+          "Inglaterra",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -30774,6 +35959,80 @@
         "balon_oro": "Kylian Mbappe",
         "balon_plata": "Harry Kane",
         "balon_bronce": "Ousmane Dembele"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -31207,6 +36466,80 @@
         "balon_oro": "Rafael Leão (Portugal)",
         "balon_plata": "Kylian Mbappé (Francia)",
         "balon_bronce": "Luis Díaz (Colombia)"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Australia",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "Uruguay",
+          "España",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -31640,6 +36973,80 @@
         "balon_oro": "Harry Kane",
         "balon_plata": "Lamine Yamal",
         "balon_bronce": "Kylian Mbappé"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -32073,6 +37480,80 @@
         "balon_oro": "Dembele",
         "balon_plata": "Luis Diaz",
         "balon_bronce": "Yamal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Bosnia",
+          "Suiza",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Ecuador",
+          "Alemania",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -32506,6 +37987,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Harry Kane",
         "balon_bronce": "Kylian Mbappé"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -32939,6 +38494,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Vitinha",
         "balon_bronce": "Kylian Mbappe"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -33372,6 +39001,80 @@
         "balon_oro": "Florian Wirtz",
         "balon_plata": "Dani Olmo",
         "balon_bronce": "Rodri"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -33805,6 +39508,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Fenan Torres",
         "balon_bronce": "Luis Diaz"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Bosnia",
+          "Suiza",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Túnez",
+          "Japón"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -34238,6 +40015,80 @@
         "balon_oro": "Kane",
         "balon_plata": "Cristiano",
         "balon_bronce": "Lamine Yamal"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Egipto",
+          "Bélgica",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "Uruguay",
+          "España",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Croacia",
+          "Inglaterra",
+          "Panamá",
+          "Ghana"
+        ]
       }
     },
     {
@@ -34671,6 +40522,80 @@
         "balon_oro": "Mbapeé",
         "balon_plata": "Lamine Yamal",
         "balon_bronce": "Harry Kane"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "Chequia",
+          "México",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Túnez",
+          "Suecia"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Egipto",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Ghana",
+          "Croacia",
+          "Panamá"
+        ]
       }
     },
     {
@@ -35104,6 +41029,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Jude Bellingham",
         "balon_bronce": "Lionel Messi"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Japón",
+          "P. Bajos",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -35537,6 +41536,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Kylian Mbappé",
         "balon_bronce": "Harry Kane"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -35970,6 +42043,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Kilian Mbappe",
         "balon_bronce": "Vinicius junior"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -36403,6 +42550,80 @@
         "balon_oro": "Vitinha",
         "balon_plata": "Lamine Y",
         "balon_bronce": "C Ronaldo"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -36836,6 +43057,80 @@
         "balon_oro": "KYLIAN MPAPPE",
         "balon_plata": "LAMINE YABAL",
         "balon_bronce": "LEONEL MESSI"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Irak",
+          "Senegal"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -37269,6 +43564,80 @@
         "balon_oro": "LUIS DIAZ",
         "balon_plata": "OLISE",
         "balon_bronce": "YAMAL"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -37702,6 +44071,80 @@
         "balon_oro": "Jamal Musiala",
         "balon_plata": "harry kane",
         "balon_bronce": "lamine yamal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -38135,6 +44578,80 @@
         "balon_oro": "LIONEL MESSI",
         "balon_plata": "LAMIN YAMAL",
         "balon_bronce": "KYLIAN MBAPPE"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Australia",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -38568,6 +45085,80 @@
         "balon_oro": "PEDRI GONZALEZ",
         "balon_plata": "RODRI",
         "balon_bronce": "RYAN CHERKI"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Ecuador",
+          "Alemania",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Egipto",
+          "Bélgica",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -39001,6 +45592,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Vitinha",
         "balon_bronce": "Raphinha"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Suecia",
+          "P. Bajos",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Croacia",
+          "Inglaterra",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -39434,6 +46099,80 @@
         "balon_oro": "Neymar",
         "balon_plata": "Lamine Yamal",
         "balon_bronce": "Bruno Fernandez"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Australia",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Túnez",
+          "Suecia"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -39867,6 +46606,80 @@
         "balon_oro": "Kylian Mbappe",
         "balon_plata": "Dembele",
         "balon_bronce": "Harry Kane"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Australia",
+          "EE.UU.",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Irán",
+          "Egipto"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -40300,6 +47113,80 @@
         "balon_oro": "Pedri",
         "balon_plata": "Vitinha",
         "balon_bronce": "Vin Dijk"
+      },
+      "grupos": {
+        "A": [
+          "Sudáfrica",
+          "México",
+          "Corea del Sur",
+          "Chequia"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -40733,6 +47620,80 @@
         "balon_oro": "Bruno Fernandes",
         "balon_plata": "Yamal",
         "balon_bronce": "Luis Diaz"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Bosnia",
+          "Suiza",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Túnez",
+          "Suecia"
+        ],
+        "G": [
+          "Egipto",
+          "Irán",
+          "Bélgica",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -41166,6 +48127,80 @@
         "balon_oro": "Kylian Mbappé",
         "balon_plata": "Lamine Yamal",
         "balon_bronce": "Cristiano Ronaldo"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "Curazao",
+          "C. de Marfil"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Túnez",
+          "Suecia"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -41599,6 +48634,80 @@
         "balon_oro": "Olise",
         "balon_plata": "Kane",
         "balon_bronce": "Mbape"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -42032,6 +49141,80 @@
         "balon_oro": "Kylian Mbappe",
         "balon_plata": "Julian Alvarez",
         "balon_bronce": "Rodri"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "Curazao",
+          "C. de Marfil"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Egipto",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Irak",
+          "Senegal"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Jordania",
+          "Argelia"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Panamá",
+          "Ghana"
+        ]
       }
     },
     {
@@ -42465,6 +49648,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Kylian Mbappe",
         "balon_bronce": "Michael Olise"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "Australia",
+          "EE.UU."
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -42898,6 +50155,80 @@
         "balon_oro": "Kylian Mbappe",
         "balon_plata": "Harry Kane",
         "balon_bronce": "Brahim Diaz"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -43331,6 +50662,80 @@
         "balon_oro": "LAMINE YAMAL",
         "balon_plata": "RONALDO",
         "balon_bronce": "BERNARDO SILVA"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -43764,6 +51169,74 @@
         "balon_oro": "LAMINE YAMAL",
         "balon_plata": "PEDRI",
         "balon_bronce": "BERNARDO SILVA"
+      },
+      "grupos": {
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -44197,6 +51670,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Haaland",
         "balon_bronce": "Mbappe"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -44630,6 +52177,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Kiliam Mbape",
         "balon_bronce": "Luis Diaz"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Sudáfrica",
+          "Corea del Sur"
+        ],
+        "B": [
+          "Bosnia",
+          "Suiza",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Túnez",
+          "Japón"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -45063,6 +52684,80 @@
         "balon_oro": "Havertz",
         "balon_plata": "Luis Diaz",
         "balon_bronce": "Harry Kane"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Canadá",
+          "Qatar",
+          "Bosnia",
+          "Suiza"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "Australia",
+          "Paraguay",
+          "Turquía",
+          "EE.UU."
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "Curazao",
+          "C. de Marfil"
+        ],
+        "F": [
+          "Japón",
+          "P. Bajos",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "N. Zelanda",
+          "Egipto",
+          "Irán",
+          "Bélgica"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Panamá",
+          "Ghana",
+          "Croacia"
+        ]
       }
     },
     {
@@ -45496,6 +53191,80 @@
         "balon_oro": "Mbappe",
         "balon_plata": "Pacho",
         "balon_bronce": "Javier Alvarez"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Australia",
+          "Turquía"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Japón",
+          "P. Bajos",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Ghana",
+          "Croacia",
+          "Panamá"
+        ]
       }
     },
     {
@@ -45929,6 +53698,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Cody Gakpo",
         "balon_bronce": "Bruno Fernandes"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "EE.UU.",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -46362,6 +54205,80 @@
         "balon_oro": "Yamin Lamal",
         "balon_plata": "Luis Diaz",
         "balon_bronce": "Messi"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Colombia",
+          "Portugal",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -46789,6 +54706,80 @@
         "campeon": "Inglaterra",
         "subcampeon": "Francia",
         "tercer_puesto": "España"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Qatar",
+          "Bosnia"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -47222,6 +55213,80 @@
         "balon_oro": "MICHAEL OLISE",
         "balon_plata": "VITINHA",
         "balon_bronce": "LAMINE YAMAL"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "Paraguay",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Senegal",
+          "Noruega",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -47655,6 +55720,80 @@
         "balon_oro": "Joao Neves",
         "balon_plata": "Lamine Yamal",
         "balon_bronce": "Michael Olise"
+      },
+      "grupos": {
+        "A": [
+          "Chequia",
+          "México",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Paraguay",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "C. de Marfil",
+          "Ecuador",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -48088,6 +56227,80 @@
         "balon_oro": "Lamine",
         "balon_plata": "Dembele",
         "balon_bronce": "Odegaard"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Chequia",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Japón",
+          "P. Bajos",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Irán",
+          "Egipto",
+          "Bélgica",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Arabia Saudita",
+          "Cabo Verde",
+          "Uruguay"
+        ],
+        "I": [
+          "Noruega",
+          "Senegal",
+          "Francia",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Congo",
+          "Colombia",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -48521,6 +56734,80 @@
         "balon_oro": "Pedri",
         "balon_plata": "Harry Kane",
         "balon_bronce": "Lamine Yamal"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Escocia",
+          "Marruecos",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "Suecia",
+          "P. Bajos",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Irán",
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Jordania",
+          "Austria"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Panamá",
+          "Ghana"
+        ]
       }
     },
     {
@@ -48954,6 +57241,80 @@
         "balon_oro": "Cristiano Ronaldo",
         "balon_plata": "Luis Diaz",
         "balon_bronce": "Endrick"
+      },
+      "grupos": {
+        "A": [
+          "Corea del Sur",
+          "México",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Suiza",
+          "Canadá",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Turquía",
+          "EE.UU.",
+          "Australia",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Suecia",
+          "Japón",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "Irán",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -49387,6 +57748,80 @@
         "balon_oro": "Lamine Yamal",
         "balon_plata": "Kylian Mbappé",
         "balon_bronce": "Bruno Fernandes"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Corea del Sur",
+          "Sudáfrica",
+          "Chequia"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Turquía",
+          "Australia",
+          "Paraguay"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Irán",
+          "Egipto",
+          "N. Zelanda"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Argelia",
+          "Austria",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Uzbekistán",
+          "Congo"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -49820,6 +58255,80 @@
         "balon_oro": "Yamal",
         "balon_plata": "Vitinha",
         "balon_bronce": "Mbappe"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Suiza",
+          "Bosnia",
+          "Canadá",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "Paraguay",
+          "Turquía",
+          "EE.UU.",
+          "Australia"
+        ],
+        "E": [
+          "Ecuador",
+          "C. de Marfil",
+          "Alemania",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "N. Zelanda",
+          "Egipto",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Cabo Verde",
+          "Arabia Saudita"
+        ],
+        "I": [
+          "Noruega",
+          "Francia",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     },
     {
@@ -50253,6 +58762,80 @@
         "balon_oro": "Harry Kane",
         "balon_plata": "Dembele",
         "balon_bronce": "Boukayo Saka"
+      },
+      "grupos": {
+        "A": [
+          "México",
+          "Chequia",
+          "Corea del Sur",
+          "Sudáfrica"
+        ],
+        "B": [
+          "Canadá",
+          "Suiza",
+          "Bosnia",
+          "Qatar"
+        ],
+        "C": [
+          "Brasil",
+          "Marruecos",
+          "Escocia",
+          "Haití"
+        ],
+        "D": [
+          "EE.UU.",
+          "Paraguay",
+          "Turquía",
+          "Australia"
+        ],
+        "E": [
+          "Alemania",
+          "Ecuador",
+          "C. de Marfil",
+          "Curazao"
+        ],
+        "F": [
+          "P. Bajos",
+          "Japón",
+          "Suecia",
+          "Túnez"
+        ],
+        "G": [
+          "Bélgica",
+          "Egipto",
+          "N. Zelanda",
+          "Irán"
+        ],
+        "H": [
+          "España",
+          "Uruguay",
+          "Arabia Saudita",
+          "Cabo Verde"
+        ],
+        "I": [
+          "Francia",
+          "Noruega",
+          "Senegal",
+          "Irak"
+        ],
+        "J": [
+          "Argentina",
+          "Austria",
+          "Argelia",
+          "Jordania"
+        ],
+        "K": [
+          "Portugal",
+          "Colombia",
+          "Congo",
+          "Uzbekistán"
+        ],
+        "L": [
+          "Inglaterra",
+          "Croacia",
+          "Ghana",
+          "Panamá"
+        ]
       }
     }
   ]
