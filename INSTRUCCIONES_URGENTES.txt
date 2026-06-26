@@ -1,0 +1,19 @@
+ANA, IMPORTANTE:
+
+1. NO subas el ZIP como archivo al repositorio.
+2. Abre el ZIP y sube/reemplaza estos archivos en la raíz del repo:
+   - resultados.json
+   - actualizar_resultados.py
+   - index.html
+3. Además reemplaza este archivo dentro de GitHub:
+   - .github/workflows/actualizar-resultados.yml
+
+Verificación incluida:
+- p059 = Turquía 3-2 EE.UU.
+- estado = finalizado
+- el script trae una corrección manual fija para que ESPN no lo deje pendiente.
+
+Si estás usando GitHub web:
+- Entra al repo.
+- NO arrastres la carpeta completa "Norteamerica2026SMA-main".
+- Entra a esa carpeta en tu computador y arrastra los archivos SUELTOS a la raíz del repo.

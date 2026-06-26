@@ -43,6 +43,7 @@ ALIASES = {
     "haiti": ["haiti", "haití", "hti"],
     "escocia": ["scotland", "sco", "escocia"],
     "eeuu": ["united states", "usa", "united states of america", "eeuu", "ee uu"],
+    "ee uu": ["united states", "usa", "united states of america", "eeuu", "ee uu", "ee.uu."],
     "paraguay": ["paraguay", "par"],
     "australia": ["australia", "aus"],
     "turquia": ["turkey", "turkiye", "türkiye", "turquia", "turquía"],
@@ -179,12 +180,36 @@ def find_match(partido, fixtures, used_espn_ids):
     candidates.sort(key=lambda x: x[0])
     return candidates[0][1], candidates[0][2]
 
+
+def aplicar_correcciones_manuales(data):
+    """Correcciones confirmadas que no deben depender del matching automático."""
+    manuales = {
+        "p059": {
+            "estado": "finalizado",
+            "golesLocal": 3,
+            "golesVisitante": 2,
+            "espn_id": "66456948",
+            "nota_manual": "Corrección manual: Turquía 3-2 EE.UU. (25 junio 2026)",
+        }
+    }
+    cambios = []
+    for partido in data.get("partidos", []):
+        mid = partido.get("id")
+        if mid in manuales:
+            antes = {k: partido.get(k) for k in manuales[mid]}
+            partido.update(manuales[mid])
+            despues = {k: partido.get(k) for k in manuales[mid]}
+            if antes != despues:
+                cambios.append(f"{mid}: corrección manual aplicada")
+    return cambios
+
 def main():
     if not RESULTADOS_PATH.exists():
         print("ERROR: no encontré resultados.json en la raíz del repo.", file=sys.stderr)
         sys.exit(1)
 
     data = json.loads(RESULTADOS_PATH.read_text(encoding="utf-8"))
+    manual_changes = aplicar_correcciones_manuales(data)
     fixtures = all_events()
     print(f"ESPN eventos leídos: {len(fixtures)} | ventana {START_DATE} a {END_DATE}")
 
@@ -227,6 +252,9 @@ def main():
             changed.append(
                 f"{partido['id']}: {partido['local']} {partido['golesLocal']}-{partido['golesVisitante']} {partido['visitante']} ({partido['estado']})"
             )
+
+    manual_changes += aplicar_correcciones_manuales(data)
+    changed.extend(manual_changes)
 
     total = len(data.get("partidos", []))
     jugados = sum(1 for p in data.get("partidos", []) if p.get("estado") == "finalizado")
