@@ -499,6 +499,8 @@ function renderAll(){
   document.getElementById('stat-champ').textContent=fav.team;
   const liveMatches=currentLiveMatches();document.getElementById('live-pill').textContent=liveMatches.length>1?'🔴 '+liveMatches.length+' PARTIDOS EN VIVO':(liveMatches.length===1?'🔴 EN VIVO: '+liveMatches[0].local+' vs '+liveMatches[0].visitante:'● En vivo');document.getElementById('rbar').innerHTML='<b>Resultados:</b> '+(PLAYED.length?PLAYED.slice(-18).map(m=>esc(m.local.substring(0,3))+'-'+esc(m.visitante.substring(0,3))+' '+m.golesLocal+'-'+m.golesVisitante).join(' · '):'sin partidos finalizados');
   renderDaily();renderQuickAwards();renderSurprise();renderCollective();renderChampionCards();renderGroupButtons();renderGroupPredictions();renderTopMeter();renderRanking();renderMatches();renderMatchPredictionTable();renderEliminatorias();renderBadges();renderRarest();
+  // 🏆 Actualizar Camino al Campeonato cuando hay datos nuevos
+  if(typeof refreshBracket==='function') refreshBracket('bracket-section-body');
 }
 function renderDaily(){
   let best=null;

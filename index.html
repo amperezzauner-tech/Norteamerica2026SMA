@@ -87,6 +87,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 @media(max-width:700px){.ko-summary{grid-template-columns:1fr 1fr}.hero,.grid2,.grid3{grid-template-columns:1fr}.tabs{top:56px}.pred-table{min-width:680px}}
 
 </style>
+<link rel="stylesheet" href="bracket.css">
 </head>
 <body>
 <header class="header"><div class="brand"><h1>⚽ Polla Mundial 2026</h1><p id="subtitle">Cargando datos...</p></div><span class="pill" id="live-pill">● En vivo</span></header>
@@ -108,6 +109,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     <button class="tabbtn" onclick="show('ranking',this)">🏆 Ranking</button>
     <button class="tabbtn" onclick="show('partidos',this)">⚽ Partidos</button>
     <button class="tabbtn" onclick="show('eliminatorias',this)">🏆 Eliminatorias</button>
+    <button class="tabbtn" onclick="show('bracket',this)">🏆 Llave</button>
     <button class="tabbtn" onclick="show('preds',this)">🔮 Mundial</button>
     <button class="tabbtn" onclick="show('salon',this)">🏅 Salón</button>
   </nav>
@@ -152,6 +154,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
         <div id="sub-ko-2" class="subpanel"><div id="ko-2-content"></div></div>
         <div id="sub-ko-final" class="subpanel"><div id="ko-final-content"></div></div>
         <div id="sub-ko-resumen" class="subpanel"><div id="ko-resumen-content"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       🏆 CAMINO AL CAMPEONATO — bracket.js
+       Todo el renderizado es dinámico. No editar manualmente.
+       ═══════════════════════════════════════════════════════ -->
+  <section id="bracket" class="section">
+    <div class="card" style="overflow:hidden;padding:0">
+      <div id="bracket-section-body">
+        <!-- bracket.js inyecta aquí el árbol completo -->
+        <div class="br-loading">
+          <div class="br-loading-spinner"></div><br>Cargando llave…
+        </div>
       </div>
     </div>
   </section>
@@ -224,6 +241,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   <button class="act" onclick="showMobile('inicio',this)"><b>🏠</b>Inicio</button>
   <button onclick="showMobile('ranking',this)"><b>🏆</b>Ranking</button>
   <button onclick="showMobile('partidos',this)"><b>⚽</b>Partidos</button>
+  <button onclick="showMobile('bracket',this)"><b>🏆</b>Llave</button>
   <button onclick="showMobile('eliminatorias',this)"><b>🏆</b>Elim.</button>
   <button onclick="showMobile('preds',this)"><b>🔮</b>Mundial</button>
   <button onclick="showMobile('salon',this)"><b>🏅</b>Salón</button>
@@ -965,14 +983,20 @@ function openProfile(id){
 function closeProfile(){document.getElementById('profile').classList.remove('act')}
 function show(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act');document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('act'));btn?.classList.add('act');syncBottom(id)}
 function showMobile(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('act'));document.getElementById(id).classList.add('act');document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('act'));btn?.classList.add('act');document.querySelectorAll('.tabbtn').forEach(b=>b.classList.remove('act'))}
-function syncBottom(id){const buttons=[...document.querySelectorAll('.bottom button')];buttons.forEach(b=>b.classList.remove('act'));const idx={inicio:0,ranking:1,partidos:2,eliminatorias:3,preds:4,salon:5}[id];if(idx!==undefined)buttons[idx].classList.add('act')}
+function syncBottom(id){const buttons=[...document.querySelectorAll('.bottom button')];buttons.forEach(b=>b.classList.remove('act'));const idx={inicio:0,ranking:1,partidos:2,eliminatorias:3,bracket:4,preds:5,salon:6}[id];if(idx!==undefined)buttons[idx].classList.add('act')}
 
 loadData();
 // Refresca automáticamente los JSON sin recargar la página.
 // Así, cuando GitHub Actions actualice resultados.json, la tabla cambia sola.
 setInterval(()=>{
   loadData();
+  // Actualizar el bracket si está visible
+  if(document.getElementById('bracket')?.classList.contains('act')){
+    refreshBracket('bracket-section-body');
+  }
 }, 60*1000);
 </script>
+<!-- 🏆 Camino al Campeonato: módulo independiente -->
+<script src="bracket.js"></script>
 </body>
 </html>
