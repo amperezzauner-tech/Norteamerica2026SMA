@@ -134,7 +134,13 @@ const R32_SLOTS=[
 ];
 
 const R32_IDS=R32_SLOTS.map((_,i)=>`p${String(73+i).padStart(3,'0')}`);
+// Orden real del Excel en la sección Dieciseisavos.
+// IMPORTANTE: este orden manda para mostrar "Yo vs el grupo" y apuestas KO,
+// aunque la llave oficial/real tenga equipos diferentes o se actualice por clasificados.
+const EXCEL_R32_ORDER=['p073','p076','p074','p075','p078','p077','p079','p080','p082','p081','p084','p083','p085','p088','p086','p087'];
+function isSameIdSet(a,b){const A=[...a].sort().join('|'), B=[...b].sort().join('|');return A===B}
 function predictionOrderIds(p, allowedIds=null){
+  if(allowedIds && isSameIdSet(allowedIds,R32_IDS)) return EXCEL_R32_ORDER.filter(id=>allowedIds.includes(id));
   const allowed=allowedIds?new Set(allowedIds):null;
   const source=(p&&p.predicciones)||PARTICIPANTES[0]?.predicciones||{};
   const fromFile=Object.keys(source).filter(id=>!allowed||allowed.has(id));
@@ -143,7 +149,9 @@ function predictionOrderIds(p, allowedIds=null){
 }
 function r32PredictionOrderIds(p){return predictionOrderIds(p,R32_IDS)}
 function sortMatchesByPredictionOrder(ms,p=null){
-  const order=predictionOrderIds(p,ms.map(m=>m.id));
+  const ids=ms.map(m=>m.id);
+  const isOnlyR32=ids.length&&ids.every(id=>R32_IDS.includes(id));
+  const order=isOnlyR32?EXCEL_R32_ORDER:predictionOrderIds(p,ids);
   const idx=new Map(order.map((id,i)=>[id,i]));
   return ms.slice().sort((a,b)=>(idx.get(a.id)??9999)-(idx.get(b.id)??9999)||mt(a)-mt(b));
 }
