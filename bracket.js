@@ -145,6 +145,10 @@ function brIsLive(m) {
   return m && m.estado === 'en_vivo';
 }
 
+function brScoreLocal(match){return match?.golesLocal90??match?.golesLocalReglamentario??match?.marcador90?.local??match?.golesLocal}
+function brScoreVisitante(match){return match?.golesVisitante90??match?.golesVisitanteReglamentario??match?.marcador90?.visitante??match?.golesVisitante}
+function brAdvanceField(match){return match?.ganador||match?.ganadorLlave||match?.clasificado||match?.winner||null}
+
 /* ── calculateQualifiedTeams ─────────────────────────────────── */
 
 /**
@@ -288,13 +292,14 @@ function brSlotLabel(slot) {
  */
 function advanceWinner(match) {
   if (!brIsFinished(match)) return null;
+  // La llave se define por quien avanza, aunque sea por alargue o penales.
+  // Para eso se debe usar ganador / ganadorLlave / clasificado cuando exista.
+  const explicit = brAdvanceField(match);
+  if (explicit) return explicit;
+  // Fallback: si no hay campo explícito, se usa el marcador final disponible.
   const gl = +match.golesLocal, gv = +match.golesVisitante;
-  // En eliminatorias no hay empates; si los goles son iguales se asume penales
-  // y el ganador debe estar marcado. Por ahora asumimos que golesLocal > golesVisitante
-  // o viceversa (el json ya refleja el resultado final incluido penales).
   if (gl > gv) return match.local;
   if (gv > gl) return match.visitante;
-  // Empate exacto → partido no resuelto aún (fase grupos) o penales no marcados
   return null;
 }
 
@@ -326,8 +331,8 @@ function buildBracketState() {
           idx,
           teamA,   teamB,
           sourceA, sourceB,
-          scoreA: real?.golesLocal    ?? null,
-          scoreB: real?.golesVisitante ?? null,
+          scoreA: real ? brScoreLocal(real) : null,
+          scoreB: real ? brScoreVisitante(real) : null,
           estado: real?.estado || 'pendiente',
           winner: advanceWinner(real),
         };
@@ -341,8 +346,8 @@ function buildBracketState() {
         teamB: real?.visitante  || null,
         sourceA: null,
         sourceB: null,
-        scoreA: real?.golesLocal    ?? null,
-        scoreB: real?.golesVisitante ?? null,
+        scoreA: real ? brScoreLocal(real) : null,
+        scoreB: real ? brScoreVisitante(real) : null,
         estado: real?.estado || 'pendiente',
         winner: advanceWinner(real),
       };

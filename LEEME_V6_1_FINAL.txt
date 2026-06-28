@@ -17,3 +17,22 @@ Notas de puntos preservadas:
 - Llave exacta de 16avos: +2 pts por cruce correcto, sin importar orden local/visitante.
 - 16avos/8vos/cuartos/semis/final aparecen como Pendiente hasta que haya resultados oficiales.
 - Botín de Oro y Balón de Oro salen de las predicciones cargadas por los participantes.
+
+
+REGLA TIEMPO REGULAR / ALARGUE / PENALES
+- Para puntos de marcador se toma SOLO el marcador a los 90 minutos reglamentarios.
+- Los goles del alargue NO suman para marcador, exacto ni resultado.
+- Los penales NO suman para marcador, exacto ni resultado.
+- Para puntos de llave sí cuenta quién avanza, aunque avance por alargue o penales.
+
+Si un partido de eliminatoria termina empatado en los 90 y se define en alargue o penales, en resultados.json usa estos campos:
+{
+  "golesLocal90": 1,
+  "golesVisitante90": 1,
+  "golesLocal": 2,
+  "golesVisitante": 1,
+  "ganador": "Canadá",
+  "formaDefinicion": "alargue" // o "penales"
+}
+
+La página usa golesLocal90/golesVisitante90 para puntuar marcador, y ganador para definir la llave.
