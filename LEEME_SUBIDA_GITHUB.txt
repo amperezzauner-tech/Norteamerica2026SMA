@@ -1,27 +1,28 @@
-V3.2 FULL AUTO - SUBIR COMPLETO
+V4 FINAL - SUBIR COMPLETO
 
-Sube TODO el contenido del ZIP al repositorio, incluyendo la carpeta oculta .github.
+Sube TODO el contenido de este ZIP al repositorio.
 
 Debe quedar así en la raíz del repo:
 - index.html
 - grupos.html
-- bracket.css
 - script.js
+- bracket.css
 - bracket.js
 - resultados.json
 - predicciones.json
 - actualizar_resultados.py
 - .github/workflows/actualizar-resultados.yml
 
-En GitHub Actions NO aparece actualizar_resultados.py.
-Debe aparecer el workflow llamado: Actualizar resultados.
+En GitHub Actions debe aparecer el workflow llamado: Actualizar resultados.
 
-Cambios V3.2:
-- Una sola cargada completa con todos los archivos.
-- Gráfica del ranking top 10.
-- Cartas FIFA top 3 y carta FIFA en perfil.
-- Bloque 'Qué necesito para ganar' en cada perfil.
-- Mapa del Mundial por equipos: clasificados / pendientes / eliminados.
-- Feed de actividad ampliado.
-- Botón compartir/copiar para WhatsApp en cada perfil.
-- No muestra predicciones de octavos/cuartos/semis/final hasta tener cruces definidos.
+Cambios V4:
+- Carga robusta sin depender de funciones antiguas.
+- Dashboard inicial.
+- Ranking completo y gráfica top 10.
+- Partidos y eliminatorias.
+- Estadísticas reales calculadas desde los JSON.
+- Mapa del Mundial: clasificados / en disputa / eliminados.
+- Feed de actividad.
+- Perfil con carta FIFA.
+- Bloque “qué necesito para ganar”.
+- Botón compartir/copiar para WhatsApp.
