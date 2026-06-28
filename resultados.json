@@ -1,20 +1,22 @@
 {
   "_meta": {
     "generado": "2026-06-21",
-    "total_partidos": 72,
+    "total_partidos": 88,
     "jugados": 72,
-    "pendientes": 0,
+    "pendientes": 16,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-06-28T16:50:33.202177+00:00",
+    "ultima_actualizacion_auto": "2026-06-28T15:28:41.627737+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-06-28T16:50:33.202148+00:00",
+    "ultima_revision_auto": "2026-06-28T15:28:41.627737+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
-    "correccion_manual_p059": "Turquía 3-2 EE.UU."
+    "correccion_manual_p059": "Turquía 3-2 EE.UU.",
+    "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
+    "nota_auto": "p079 México None-None Ecuador [pendiente]"
   },
   "partidos": [
     {
@@ -941,6 +943,183 @@
       "golesVisitante": 1,
       "apifootball_id": null,
       "espn_id": "760482"
+    },
+    {
+      "id": "p073",
+      "matchId": 73,
+      "local": "Sudáfrica",
+      "visitante": "Canadá",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p074",
+      "matchId": 74,
+      "local": "Brasil",
+      "visitante": "Japón",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p075",
+      "matchId": 75,
+      "local": "Alemania",
+      "visitante": "Paraguay",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p076",
+      "matchId": 76,
+      "local": "P. Bajos",
+      "visitante": "Marruecos",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p077",
+      "matchId": 77,
+      "local": "C. de Marfil",
+      "visitante": "Noruega",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p078",
+      "matchId": 78,
+      "local": "Francia",
+      "visitante": "Suecia",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p079",
+      "matchId": 79,
+      "local": "México",
+      "visitante": "Ecuador",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null,
+      "espn_id": "760491"
+    },
+    {
+      "id": "p080",
+      "matchId": 80,
+      "local": "Inglaterra",
+      "visitante": "Congo",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p081",
+      "matchId": 81,
+      "local": "Bélgica",
+      "visitante": "Senegal",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p082",
+      "matchId": 82,
+      "local": "EE.UU.",
+      "visitante": "Bosnia",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p083",
+      "matchId": 83,
+      "local": "España",
+      "visitante": "Austria",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p084",
+      "matchId": 84,
+      "local": "Portugal",
+      "visitante": "Croacia",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p085",
+      "matchId": 85,
+      "local": "Suiza",
+      "visitante": "Argelia",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p086",
+      "matchId": 86,
+      "local": "Australia",
+      "visitante": "Egipto",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p087",
+      "matchId": 87,
+      "local": "Argentina",
+      "visitante": "Cabo Verde",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
+    },
+    {
+      "id": "p088",
+      "matchId": 88,
+      "local": "Colombia",
+      "visitante": "Ghana",
+      "fase": "16avos",
+      "jornada": 1,
+      "estado": "pendiente",
+      "golesLocal": null,
+      "golesVisitante": null
     }
   ]
 }
