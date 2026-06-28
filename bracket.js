@@ -137,17 +137,17 @@ function brFindMatch(id) {
 
 /** Determina si un partido ya tiene resultado definitivo */
 function brIsFinished(m) {
-  return m && m.estado === 'finalizado' && m.golesLocal != null && m.golesVisitante != null;
+  if (!m || m.estado !== 'finalizado') return false;
+  if (typeof isFinal === 'function') return isFinal(m);
+  return m.golesLocal != null && m.golesVisitante != null;
 }
 
 /** Determina si un partido está en juego */
 function brIsLive(m) {
-  return m && m.estado === 'en_vivo';
+  if (!m || m.estado !== 'en_vivo') return false;
+  if (typeof isLive === 'function') return isLive(m);
+  return true;
 }
-
-function brScoreLocal(match){return match?.golesLocal90??match?.golesLocalReglamentario??match?.marcador90?.local??match?.golesLocal}
-function brScoreVisitante(match){return match?.golesVisitante90??match?.golesVisitanteReglamentario??match?.marcador90?.visitante??match?.golesVisitante}
-function brAdvanceField(match){return match?.ganador||match?.ganadorLlave||match?.clasificado||match?.winner||null}
 
 /* ── calculateQualifiedTeams ─────────────────────────────────── */
 
@@ -172,7 +172,8 @@ function brGroupStanding(group) {
       if (!teams[t]) teams[t] = { team: t, pts: 0, gf: 0, gc: 0, gd: 0, pj: 0 };
     });
     if (!brIsFinished(m)) return;
-    const gl = +m.golesLocal, gv = +m.golesVisitante;
+    const gl = (typeof scoreLocal === 'function') ? +scoreLocal(m) : +m.golesLocal;
+    const gv = (typeof scoreVisitante === 'function') ? +scoreVisitante(m) : +m.golesVisitante;
     teams[m.local].gf += gl; teams[m.local].gc += gv; teams[m.local].pj++;
     teams[m.visitante].gf += gv; teams[m.visitante].gc += gl; teams[m.visitante].pj++;
     if (gl > gv)      { teams[m.local].pts += 3; }
@@ -292,11 +293,11 @@ function brSlotLabel(slot) {
  */
 function advanceWinner(match) {
   if (!brIsFinished(match)) return null;
-  // La llave se define por quien avanza, aunque sea por alargue o penales.
-  // Para eso se debe usar ganador / ganadorLlave / clasificado cuando exista.
-  const explicit = brAdvanceField(match);
-  if (explicit) return explicit;
-  // Fallback: si no hay campo explícito, se usa el marcador final disponible.
+  // Regla oficial: para avanzar en la llave sí cuenta quien pasa por alargue o penales.
+  // Si script.js definió advanceTeam(), usamos ganador/ganadorLlave/clasificado antes que el marcador.
+  if (typeof advanceTeam === 'function') return advanceTeam(match);
+  const declared = match.ganador || match.ganadorLlave || match.clasificado || match.winner;
+  if (declared) return declared;
   const gl = +match.golesLocal, gv = +match.golesVisitante;
   if (gl > gv) return match.local;
   if (gv > gl) return match.visitante;
@@ -331,8 +332,8 @@ function buildBracketState() {
           idx,
           teamA,   teamB,
           sourceA, sourceB,
-          scoreA: real ? brScoreLocal(real) : null,
-          scoreB: real ? brScoreVisitante(real) : null,
+          scoreA: real?.golesLocal    ?? null,
+          scoreB: real?.golesVisitante ?? null,
           estado: real?.estado || 'pendiente',
           winner: advanceWinner(real),
         };
@@ -346,8 +347,8 @@ function buildBracketState() {
         teamB: real?.visitante  || null,
         sourceA: null,
         sourceB: null,
-        scoreA: real ? brScoreLocal(real) : null,
-        scoreB: real ? brScoreVisitante(real) : null,
+        scoreA: real?.golesLocal    ?? null,
+        scoreB: real?.golesVisitante ?? null,
         estado: real?.estado || 'pendiente',
         winner: advanceWinner(real),
       };

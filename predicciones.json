@@ -77,7 +77,9 @@
     "nota_puntuacion_grupos": "La página usa p.grupos para puntuar 1.º=4, 2.º=3, 3.º=1, 4.º=1, evitando diferencias por desempates al recalcular desde marcadores.",
     "correccion_felipe_gaitan_grupo_j": "Argentina, Argelia, Austria, Jordania",
     "version": "V4.3-felipe-validado",
-    "validacion_felipe_gaitan": "Felipe Gaitan tiene grupos A+B+C = 23 puntos: A=5, B=9, C=9. Grupo J corregido: Argentina, Argelia, Austria, Jordania."
+    "validacion_felipe_gaitan": "Felipe Gaitan tiene grupos A+B+C = 23 puntos: A=5, B=9, C=9. Grupo J corregido: Argentina, Argelia, Austria, Jordania.",
+    "correccion_felipe_gaitan_partidos": "Corregido desde Excel original: p038=4-0, p041=2-1, p050=3-0, p058=1-3",
+    "correcciones_vs_excel_original": "28jun2026: Corregido desde Excel individual: Felipe Gaitan p038,p041,p050,p058; Alejandro Arias p055; Daniel Escobar p006; Daniel Gonzalez p007; Santiago Mejia p060"
   },
   "participantes": [
     {
@@ -2709,7 +2711,7 @@
         },
         "p055": {
           "golesLocal": 0,
-          "golesVisitante": 1
+          "golesVisitante": 0
         },
         "p056": {
           "golesLocal": 1,
@@ -17864,7 +17866,7 @@
           "golesVisitante": 1
         },
         "p006": {
-          "golesLocal": 1,
+          "golesLocal": 2,
           "golesVisitante": 2
         },
         "p032": {
@@ -18850,7 +18852,7 @@
           "golesVisitante": 0
         },
         "p007": {
-          "golesLocal": 2,
+          "golesLocal": 3,
           "golesVisitante": 2
         },
         "p005": {
@@ -27996,7 +27998,7 @@
           "golesVisitante": 3
         },
         "p050": {
-          "golesLocal": 2,
+          "golesLocal": 3,
           "golesVisitante": 0
         },
         "p004": {
@@ -28068,7 +28070,7 @@
           "golesVisitante": 2
         },
         "p058": {
-          "golesLocal": 0,
+          "golesLocal": 1,
           "golesVisitante": 3
         },
         "p016": {
@@ -28105,7 +28107,7 @@
         },
         "p038": {
           "golesLocal": 4,
-          "golesVisitante": 1
+          "golesVisitante": 0
         },
         "p037": {
           "golesLocal": 4,
@@ -28133,7 +28135,7 @@
         },
         "p041": {
           "golesLocal": 2,
-          "golesVisitante": 0
+          "golesVisitante": 1
         },
         "p061": {
           "golesLocal": 1,
@@ -55387,7 +55389,7 @@
         },
         "p060": {
           "golesLocal": 2,
-          "golesVisitante": 1
+          "golesVisitante": 2
         },
         "p010": {
           "golesLocal": 4,

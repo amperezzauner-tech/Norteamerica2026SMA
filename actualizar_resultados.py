@@ -159,6 +159,33 @@ def apply_event(partido: dict, ev: dict) -> bool:
         if partido.get("golesVisitante") != visitante_score:
             partido["golesVisitante"] = visitante_score
             changed = True
+
+        # Regla 90 minutos / llave:
+        # - golesLocal/golesVisitante se conservan como marcador informado por ESPN.
+        # - si el partido se define por penales o alargue y hay empate a los 90,
+        #   se puede llenar manualmente golesLocal90/golesVisitante90 en resultados.json.
+        # - para la llave guardamos el ganador declarado por ESPN cuando exista.
+        if status == "finalizado" and int(partido.get("matchId") or 0) >= 73:
+            winner_name = None
+            for info in teams.values():
+                if info.get("winner") is True:
+                    if local_n in info["norms"]:
+                        winner_name = partido.get("local")
+                    elif visit_n in info["norms"]:
+                        winner_name = partido.get("visitante")
+            if winner_name and partido.get("ganador") != winner_name:
+                partido["ganador"] = winner_name
+                changed = True
+            detail = (((ev.get("status") or {}).get("type") or {}).get("detail") or "")
+            low_detail = detail.lower()
+            forma = None
+            if "pen" in low_detail or "penal" in low_detail:
+                forma = "penales"
+            elif "aet" in low_detail or "extra" in low_detail or "alarg" in low_detail:
+                forma = "alargue"
+            if forma and partido.get("formaDefinicion") != forma:
+                partido["formaDefinicion"] = forma
+                changed = True
     if not partido.get("espn_id") and ev.get("id"):
         partido["espn_id"] = str(ev.get("id"))
         changed = True

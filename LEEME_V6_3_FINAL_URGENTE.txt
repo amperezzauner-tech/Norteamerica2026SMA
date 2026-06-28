@@ -1,0 +1,32 @@
+V6.3 FINAL URGENTE — Orden 16avos + regla 90 minutos
+
+Sube/reemplaza estos archivos en la raíz del repositorio:
+- index.html
+- script.js
+- bracket.js
+- bracket.css
+- grupos.html
+- predicciones.json
+- resultados.json
+- actualizar_resultados.py
+- .github/workflows/actualizar-resultados.yml
+
+Cambios importantes:
+1. Marcadores: se puntúan SOLO con el resultado de los 90 minutos.
+   - Si existe golesLocal90/golesVisitante90, esos son los que usa para puntuar.
+   - Goles del alargue y penales NO suman para marcador/exacto/resultado.
+
+2. Llaves: sí cuenta quién avanza.
+   - Para avanzar usa ganador / ganadorLlave / clasificado cuando existe.
+   - Si no existe, usa el marcador final disponible.
+
+3. 16avos: los marcadores se muestran en el mismo orden en que fueron pronosticados en el Excel.
+   - Ejemplo: si en el Excel la persona diligenció p073, luego p076, luego p074, así se muestran.
+   - Esto NO cambia los puntos; solo corrige el orden visual para evitar confusiones.
+
+4. Llave exacta de 16avos:
+   - +2 por cada cruce correcto.
+   - El cruce cuenta sin importar local/visitante.
+
+5. Predicciones:
+   - Se conserva el predicciones.json corregido por Ana.
