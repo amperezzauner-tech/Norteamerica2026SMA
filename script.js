@@ -162,12 +162,12 @@ function renderWorld(){
 }
 function renderStats(){
  const champ=countBy(PARTICIPANTES.map(p=>p.honor?.campeon).filter(Boolean)).slice(0,8);
- const topExact=RANKING.slice().sort((a,b)=>b.exact-a.exact||b.pts-a.pts).slice(0,5);
- const topHit=RANKING.slice().sort((a,b)=>b.hit-a.hit||b.pts-a.pts).slice(0,5);
+ const botin=countBy(PARTICIPANTES.map(p=>p.honor?.botin_oro).filter(Boolean)).slice(0,8);
+ const balon=countBy(PARTICIPANTES.map(p=>p.honor?.balon_oro).filter(Boolean)).slice(0,8);
  $('stats-grid').innerHTML=`
   <div class="card"><h3>🏆 Campeón más votado</h3>${bars(champ,PARTICIPANTES.length)}</div>
-  <div class="card"><h3>🎯 Botín de oro</h3>${miniList(topExact,p=>`${p.exact} exactos`)}</div>
-  <div class="card"><h3>⚽ Balón de oro</h3>${miniList(topHit,p=>`${p.hit} aciertos`)}</div>
+  <div class="card"><h3>🥅 Botín de oro más votado</h3>${bars(botin,PARTICIPANTES.length)}</div>
+  <div class="card"><h3>⭐ Balón de oro más votado</h3>${bars(balon,PARTICIPANTES.length)}</div>
   <div class="card"><h3>📊 Acertómetro top 5</h3>${miniList(RANKING.slice().sort((a,b)=>b.pct-a.pct).slice(0,5),p=>`${p.pct}%`)}</div>`;
  const focus=PENDING[0]||MATCHES.find(isLive)||PLAYED[PLAYED.length-1];
  $('collective').innerHTML=focus?collectiveForMatch(focus):'<div class="empty">Sin partido de referencia.</div>';
