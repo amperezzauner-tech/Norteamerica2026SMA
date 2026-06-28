@@ -1,0 +1,19 @@
+V6.1 FINAL — subir TODO el contenido a la raíz del repositorio.
+
+Archivos principales:
+- index.html
+- script.js
+- grupos.html
+- bracket.css
+- bracket.js
+- resultados.json
+- predicciones.json
+- actualizar_resultados.py
+- .github/workflows/actualizar-resultados.yml
+
+Notas de puntos preservadas:
+- Marcadores: se mantiene la regla original de puntos.
+- Posiciones de grupo: 1.º=4 pts, 2.º=3 pts, 3.º=1 pt, 4.º=1 pt.
+- Llave exacta de 16avos: +2 pts por cruce correcto, sin importar orden local/visitante.
+- 16avos/8vos/cuartos/semis/final aparecen como Pendiente hasta que haya resultados oficiales.
+- Botín de Oro y Balón de Oro salen de las predicciones cargadas por los participantes.
