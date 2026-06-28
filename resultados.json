@@ -945,16 +945,16 @@
       "espn_id": "760482"
     },
     {
-      "id": "p073",
-      "matchId": 73,
-      "local": "Sudáfrica",
-      "visitante": "Canadá",
-      "fase": "16avos",
-      "jornada": 1,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null
-    },
+  "id": "p073",
+  "matchId": 73,
+  "local": "Sudáfrica",
+  "visitante": "Canadá",
+  "fase": "16avos",
+  "jornada": 1,
+  "estado": "finalizado",
+  "golesLocal": 0,
+  "golesVisitante": 1
+}
     {
       "id": "p074",
       "matchId": 74,
