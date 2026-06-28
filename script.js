@@ -1,5 +1,5 @@
 let PRED, RES, PARTICIPANTES=[], MATCHES=[], PLAYED=[], PENDING=[], RANKING=[];
-const TABS=[['inicio','🏠 Inicio'],['ranking','🏆 Ranking'],['partidos','⚽ Partidos'],['llave','🏆 Llave'],['mundial','🌎 Mundial'],['salon','🥇 Salón']];
+const TABS=[['inicio','🏠 Inicio'],['ranking','🏆 Ranking'],['partidos','⚽ Partidos'],['llave','🏆 Llave'],['camino','🧭 Camino'],['mundial','🌎 Mundial'],['salon','🥇 Salón']];
 const FLAGS={'México':'🇲🇽','Sudáfrica':'🇿🇦','Corea del Sur':'🇰🇷','Chequia':'🇨🇿','Canadá':'🇨🇦','Bosnia':'🇧🇦','Qatar':'🇶🇦','Suiza':'🇨🇭','Haití':'🇭🇹','Escocia':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Brasil':'🇧🇷','Marruecos':'🇲🇦','EE.UU.':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Turquía':'🇹🇷','C. de Marfil':'🇨🇮','Ecuador':'🇪🇨','Alemania':'🇩🇪','Curazao':'🇨🇼','P. Bajos':'🇳🇱','Japón':'🇯🇵','Suecia':'🇸🇪','Túnez':'🇹🇳','Egipto':'🇪🇬','Irán':'🇮🇷','Bélgica':'🇧🇪','N. Zelanda':'🇳🇿','España':'🇪🇸','Uruguay':'🇺🇾','Cabo Verde':'🇨🇻','Arabia Saudita':'🇸🇦','Francia':'🇫🇷','Noruega':'🇳🇴','Senegal':'🇸🇳','Irak':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Argelia':'🇩🇿','Jordania':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','Congo':'🇨🇩','Uzbekistán':'🇺🇿','Inglaterra':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croacia':'🇭🇷','Panamá':'🇵🇦'};
 const MATCH_SCHEDULE={p001:'2026-06-11T19:00:00Z',p002:'2026-06-12T02:00:00Z',p003:'2026-06-12T19:00:00Z',p004:'2026-06-13T01:00:00Z',p008:'2026-06-13T19:00:00Z',p007:'2026-06-13T22:00:00Z',p005:'2026-06-14T01:00:00Z',p006:'2026-06-14T04:00:00Z',p010:'2026-06-14T17:00:00Z',p011:'2026-06-14T20:00:00Z',p009:'2026-06-14T23:00:00Z',p012:'2026-06-15T02:00:00Z',p014:'2026-06-15T16:00:00Z',p016:'2026-06-15T19:00:00Z',p013:'2026-06-15T22:00:00Z',p015:'2026-06-16T01:00:00Z',p017:'2026-06-16T19:00:00Z',p018:'2026-06-16T22:00:00Z',p019:'2026-06-17T01:00:00Z',p020:'2026-06-17T04:00:00Z',p023:'2026-06-17T17:00:00Z',p022:'2026-06-17T20:00:00Z',p021:'2026-06-17T23:00:00Z',p024:'2026-06-18T02:00:00Z',p025:'2026-06-18T16:00:00Z',p026:'2026-06-18T19:00:00Z',p027:'2026-06-18T22:00:00Z',p028:'2026-06-19T01:00:00Z',p032:'2026-06-19T19:00:00Z',p030:'2026-06-19T22:00:00Z',p029:'2026-06-20T00:30:00Z',p031:'2026-06-20T03:00:00Z',p035:'2026-06-20T17:00:00Z',p033:'2026-06-20T20:00:00Z',p034:'2026-06-21T00:00:00Z',p036:'2026-06-21T04:00:00Z',p038:'2026-06-21T16:00:00Z',p039:'2026-06-21T19:00:00Z',p037:'2026-06-21T22:00:00Z',p040:'2026-06-22T01:00:00Z',p043:'2026-06-22T17:00:00Z',p042:'2026-06-22T21:00:00Z',p041:'2026-06-23T00:00:00Z',p044:'2026-06-23T03:00:00Z',p047:'2026-06-23T17:00:00Z',p045:'2026-06-23T20:00:00Z',p046:'2026-06-23T23:00:00Z',p048:'2026-06-24T02:00:00Z',p051:'2026-06-24T19:00:00Z',p052:'2026-06-24T19:00:00Z',p049:'2026-06-24T22:00:00Z',p050:'2026-06-24T22:00:00Z',p053:'2026-06-25T01:00:00Z',p054:'2026-06-25T01:00:00Z',p056:'2026-06-25T20:00:00Z',p055:'2026-06-25T20:00:00Z',p058:'2026-06-25T23:00:00Z',p057:'2026-06-25T23:00:00Z',p059:'2026-06-26T02:00:00Z',p060:'2026-06-26T02:00:00Z',p061:'2026-06-26T19:00:00Z',p062:'2026-06-26T19:00:00Z',p066:'2026-06-27T00:00:00Z',p065:'2026-06-27T00:00:00Z',p064:'2026-06-27T03:00:00Z',p063:'2026-06-27T03:00:00Z',p067:'2026-06-27T21:00:00Z',p068:'2026-06-27T21:00:00Z',p071:'2026-06-27T23:30:00Z',p072:'2026-06-27T23:30:00Z',p070:'2026-06-28T02:00:00Z',p069:'2026-06-28T02:00:00Z',p073:'2026-06-28T19:00:00Z',p074:'2026-06-29T17:00:00Z',p075:'2026-06-29T20:30:00Z',p076:'2026-06-30T01:00:00Z',p077:'2026-06-30T17:00:00Z',p078:'2026-06-30T21:00:00Z',p079:'2026-07-01T01:00:00Z',p080:'2026-07-01T16:00:00Z',p081:'2026-07-01T20:00:00Z',p082:'2026-07-02T00:00:00Z',p083:'2026-07-02T19:00:00Z',p084:'2026-07-02T23:00:00Z',p085:'2026-07-03T03:00:00Z',p086:'2026-07-03T18:00:00Z',p087:'2026-07-03T22:00:00Z',p088:'2026-07-04T01:30:00Z'};
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -101,7 +101,7 @@ function koProfileDetails(p){const items=[];Object.entries(p.koByRound||{}).forE
 function openProfile(id){const p=RANKING.find(x=>x.id===id);if(!p)return;document.getElementById('profileContent').innerHTML=`<div class="prof-grid"><div>${playerCard(p)}<br><button class="btn" onclick="sharePlayer('${p.id}')">📲 Copiar para WhatsApp</button></div><div><h2 style="color:var(--gold);font-size:1.7rem">${esc(p.nombre)}</h2><p class="subtle">Puesto #${p.pos} · ${p.pts} puntos</p><div class="mini-stats"><div class="mini"><span>Aciertos</span><b>${p.hit}</b></div><div class="mini"><span>Exactos</span><b>${p.exact}</b></div><div class="mini"><span>Llaves</span><b>${p.koPts} pts</b></div></div><div class="need-box"><h4>🤖 ¿Qué necesito para ganar?</h4><p class="subtle">${esc(needToWin(p))}</p></div><h3 class="profile-section-title">🏆 Puntos por llaves</h3>${koProfileSummary(p)}<h3 class="profile-section-title">Detalle de llaves</h3>${koProfileDetails(p)}<h3 class="profile-section-title">Últimos puntos</h3>${p.last.slice(0,8).map(x=>`<div class="feed-row"><div class="feed-ico">${x.ex?'🎯':x.ok?'✅':'⚽'}</div><div><div class="feed-title">${esc(x.m.local)} ${scoreLabel(x.m)} ${esc(x.m.visitante)} <span class="pill-small">+${x.s}</span></div><div class="feed-sub">Tu predicción: ${x.pr.golesLocal}-${x.pr.golesVisitante}</div></div></div>`).join('')}</div></div>`;document.getElementById('profile').classList.add('act')}
 function closeProfile(){document.getElementById('profile').classList.remove('act')}
 function sharePlayer(id){const p=RANKING.find(x=>x.id===id);const txt=`🏆 Polla Mundial 2026\n${p.nombre}\nPuesto #${p.pos}\n${p.pts} puntos\n🎯 ${p.exact} exactos\n⚽ ${p.hit} aciertos\n👑 Campeón elegido: ${p.honor?.campeon||'-'}`;navigator.clipboard?.writeText(txt);const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
-function renderAll(){document.getElementById('subtitle').textContent=`${PARTICIPANTES.length} participantes · ${PLAYED.length}/${MATCHES.length} partidos · ${new Date(RES?._meta?.ultima_revision_auto||Date.now()).toLocaleString('es-CO',{dateStyle:'short',timeStyle:'short'})}`;renderDashboard();renderRanking();renderPartidos();renderLlave();renderMundial();renderSalon();showTab('inicio')}
+function renderAll(){document.getElementById('subtitle').textContent=`${PARTICIPANTES.length} participantes · ${PLAYED.length}/${MATCHES.length} partidos · ${new Date(RES?._meta?.ultima_revision_auto||Date.now()).toLocaleString('es-CO',{dateStyle:'short',timeStyle:'short'})}`;renderDashboard();renderRanking();renderPartidos();renderLlave();renderCamino();renderMundial();renderSalon();showTab('inicio')}
 async function loadData(){try{const [p,r]=await Promise.all([fetch('predicciones.json?ts='+Date.now(),{cache:'no-store'}).then(x=>x.json()),fetch('resultados.json?ts='+Date.now(),{cache:'no-store'}).then(x=>x.json())]);PRED=p;RES=r;PARTICIPANTES=(p.participantes||[]).filter(x=>x.nombre&&x.id!=='alejandro_gonzalex');MATCHES=(r.partidos||[]).map(m=>({...m}));calculate();renderAll()}catch(e){document.getElementById('subtitle').textContent='No pude cargar los datos';document.getElementById('inicio').innerHTML=`<div class="card"><div class="cb empty">Error cargando JSON: ${esc(e.message)}</div></div>`}}
 
 
@@ -176,5 +176,88 @@ function bestDay(p){const by={};p.last.forEach(x=>{const day=(MATCH_SCHEDULE[x.m
 function renderSalon(){const leader=RANKING[0],second=RANKING[1],third=RANKING[2];const exact=RANKING.slice().sort((a,b)=>b.exact-a.exact||b.pts-a.pts)[0];const pulpo=RANKING.slice().sort((a,b)=>b.pct-a.pct||b.pts-a.pts)[0];const grupos=RANKING.slice().sort((a,b)=>b.groupPts-a.groupPts||b.groupHits-a.groupHits)[0];const llaves=RANKING.slice().sort((a,b)=>(b.r32Pts+b.koPts)-(a.r32Pts+a.koPts)||b.r32Hits-a.r32Hits)[0];const aciertos=RANKING.slice().sort((a,b)=>b.hit-a.hit||b.exact-a.exact)[0];const brave=RANKING.slice().sort((a,b)=>b.r32Hits-a.r32Hits||b.groupHits-a.groupHits)[0];const jornada=RANKING.map(p=>({p,best:bestDay(p)})).sort((a,b)=>b.best[1]-a.best[1])[0];const awards=[awardCard('👑','Campeón actual',leader,`${leader?.pts||0} puntos`),awardCard('🥈','Segundo lugar',second,`${second?.pts||0} puntos`),awardCard('🥉','Tercer lugar',third,`${third?.pts||0} puntos`),awardCard('🎯','Rey de los exactos',exact,`${exact?.exact||0} marcadores exactos`),awardCard('⚽','Rey de los aciertos',aciertos,`${aciertos?.hit||0} resultados acertados`),awardCard('📊','Mayor porcentaje',pulpo,`${pulpo?.pct||0}% de acierto`),awardCard('🌍','Visionario de grupos',grupos,`${grupos?.groupPts||0} pts · ${grupos?.groupHits||0} posiciones`),awardCard('🌳','Maestro de llaves',llaves,`${(llaves?.r32Pts||0)+(llaves?.koPts||0)} pts · ${llaves?.r32Hits||0} cruces exactos`),awardCard('🔥','Mejor jornada',jornada?.p,`${jornada?.best?.[1]||0} puntos en un día`),awardCard('🎲','Contra la corriente',brave,`${brave?.r32Hits||0} cruces exactos de 16avos`),awardCard('🏅','MVP del Mundial',leader,`${leader?.exact||0} exactos · ${leader?.hit||0} aciertos`),awardCard('👑','Fiel a su campeón',leader,`${flag(leader?.honor?.campeon)} ${leader?.honor?.campeon||'-'}`)].join('');document.getElementById('salon').innerHTML=`<div class="card"><div class="ch"><h2>🏛️ Salón de la fama</h2></div><div class="cb"><div class="award-grid">${awards}</div></div></div><br><div class="grid2"><div class="card"><div class="ch"><h2>🥇 Top general</h2></div><div class="cb">${RANKING.slice(0,10).map(p=>`<div class="badge-row rank-row" onclick="openProfile('${p.id}')"><div class="pos">${medal(p.pos)}</div><div><div class="nm">${esc(p.nombre)}</div><div class="subtle">${p.exact} exactos · ${p.hit} aciertos · ${p.groupPts} pts grupos · ${p.r32Pts+p.koPts} pts llaves</div></div><div class="pts">${p.pts}</div></div>`).join('')}</div></div><div class="card"><div class="ch"><h2>🏆 Top llaves</h2></div><div class="cb">${koLeaderboard()}</div></div></div>`}
 function openProfile(id){const p=RANKING.find(x=>x.id===id);if(!p)return;document.getElementById('profileContent').innerHTML=`<div class="prof-grid"><div>${playerCard(p)}<br><button class="btn" onclick="sharePlayer('${p.id}')">📲 Copiar para WhatsApp</button></div><div><h2 style="color:var(--gold);font-size:1.7rem">${esc(p.nombre)}</h2><p class="subtle">Puesto #${p.pos} · ${p.pts} puntos</p><div class="mini-stats"><div class="mini"><span>Aciertos</span><b>${p.hit}</b></div><div class="mini"><span>Exactos</span><b>${p.exact}</b></div><div class="mini"><span>Llaves</span><b>${p.r32Pts+p.koPts} pts</b></div></div><div class="need-box"><h4>🤖 ¿Qué necesito para ganar?</h4><p class="subtle">${esc(needToWin(p))}</p></div><h3 class="profile-section-title">🧮 Desglose de puntos</h3>${pointsBreakdown(p)}<h3 class="profile-section-title">🔥 Yo vs el grupo</h3>${playerVsGroup(p)}<h3 class="profile-section-title">🏆 Llaves y clasificados</h3>${koProfileSummary(p)}<h3 class="profile-section-title">Detalle de llaves</h3>${koProfileDetails(p)}<h3 class="profile-section-title">Últimos puntos</h3>${p.last.slice(0,8).map(x=>`<div class="feed-row"><div class="feed-ico">${x.ex?'🎯':x.ok?'✅':'⚽'}</div><div><div class="feed-title">${esc(x.m.local)} ${scoreLabel(x.m)} ${esc(x.m.visitante)} <span class="pill-small">+${x.s}</span></div><div class="feed-sub">Tu predicción: ${x.pr.golesLocal}-${x.pr.golesVisitante}</div></div></div>`).join('')}</div></div>`;document.getElementById('profile').classList.add('act')}
 function sharePlayer(id){const p=RANKING.find(x=>x.id===id);const txt=`🏆 Polla Mundial 2026\n${p.nombre}\nPuesto #${p.pos}\n${p.pts} puntos\n⚽ Marcadores: ${p.matchPts} pts\n🌍 Grupos: ${p.groupPts} pts\n🌳 Llaves: ${p.r32Pts+p.koPts} pts\n🎯 ${p.exact} exactos\n✅ ${p.hit} aciertos\n👑 Campeón elegido: ${p.honor?.campeon||'-'}`;navigator.clipboard?.writeText(txt);const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+
+
+
+/* ============================================================
+   V6.5 — Apartado Camino / Algoritmo del Mundial
+   Explica de dónde sale cada equipo y cómo se arma la llave.
+   ============================================================ */
+function sourceLabel(side){
+  if(!side)return 'Por definir';
+  if(side.group)return `${side.pos}° Grupo ${side.group}`;
+  if(side.third)return `3° mejor grupo (${side.third.join('/')})`;
+  if(side.winner)return `Ganador ${side.winner}`;
+  return 'Por definir';
+}
+function r32SlotInfo(slot){
+  const used=new Set();
+  const a=resolveR32Slot(slot.a,null,used);
+  const b=resolveR32Slot(slot.b,null,used);
+  return {id:slot.id,aTeam:a?.team||null,bTeam:b?.team||null,aSource:sourceLabel(slot.a),bSource:sourceLabel(slot.b)};
+}
+function matchById(id){return MATCHES.find(m=>m.id===id)||null}
+function matchWinnerOrSource(id,label){
+  const m=matchById(id);
+  if(m&&isFinal(m)){const w=advanceTeam(m);if(w)return {team:w,source:`Ganador ${id}`}}
+  return {team:null,source:label||`Ganador ${id}`}
+}
+function caminoTeamCell(team,src,cls=''){
+  return `<div class="camino-team ${cls}"><b>${team?flag(team)+' '+esc(team):'⏳ Por definir'}</b><small>${esc(src||'')}</small></div>`
+}
+function caminoGroupCards(){
+  const groups=groupLetters();
+  return groups.map(g=>{
+    const st=standings(g); const closed=actualGroupStanding(g)!=null;
+    return `<div class="camino-group"><div class="camino-group-head"><b>Grupo ${g}</b><span>${closed?'Cerrado':'En juego'}</span></div>${st.map((t,i)=>`<div class="camino-pos ${i<2?'qual':''}"><span>${i+1}</span><b>${flag(t.team)} ${esc(t.team)}</b><small>${t.pts} pts · DG ${t.gd}</small></div>`).join('')}</div>`
+  }).join('')
+}
+function caminoQualifiedSummary(){
+  const groups=groupLetters();
+  return `<div class="camino-qualified-grid">${groups.map(g=>{const st=standings(g);return `<div><b>Grupo ${g}</b><small>${st.slice(0,2).map(t=>`${flag(t.team)} ${esc(t.team)}`).join('<br>')||'Pendiente'}</small></div>`}).join('')}</div>`
+}
+function caminoR32Cards(){
+  return R32_SLOTS.map((slot,i)=>{
+    const real=r32SlotInfo(slot);
+    const mid=`p${String(73+i).padStart(3,'0')}`; const m=matchById(mid);
+    const a=m?.local||real.aTeam; const b=m?.visitante||real.bTeam;
+    return `<div class="camino-match"><div class="camino-match-title"><span>${mid}</span><b>16avos ${i+1}</b></div>${caminoTeamCell(a,real.aSource,'a')}${caminoTeamCell(b,real.bSource,'b')}<div class="camino-rule">El ganador pasa al camino de 8avos. El marcador de la polla se puntúa a 90 minutos.</div></div>`
+  }).join('')
+}
+function caminoFutureRound(title,ids,prevIds){
+  return `<div class="camino-round"><h3>${esc(title)}</h3>${ids.map((id,i)=>{const m=matchById(id);let left,right;
+    if(m){left={team:m.local,source:'Cruce confirmado'};right={team:m.visitante,source:'Cruce confirmado'}}
+    else{left=matchWinnerOrSource(prevIds[i*2],`Ganador ${prevIds[i*2]}`);right=matchWinnerOrSource(prevIds[i*2+1],`Ganador ${prevIds[i*2+1]}`)}
+    return `<div class="camino-match compact"><div class="camino-match-title"><span>${id}</span><b>${esc(title)} ${i+1}</b></div>${caminoTeamCell(left.team,left.source,'a')}${caminoTeamCell(right.team,right.source,'b')}</div>`
+  }).join('')}</div>`
+}
+function caminoFinalRounds(){
+  const r32=['p073','p074','p075','p076','p077','p078','p079','p080','p081','p082','p083','p084','p085','p086','p087','p088'];
+  const r16=['p089','p090','p091','p092','p093','p094','p095','p096'];
+  const qf=['p097','p098','p099','p100'];
+  const sf=['p101','p102'];
+  const fin=['p103'];
+  return `<div class="camino-rounds">${caminoFutureRound('8avos',r16,r32)}${caminoFutureRound('Cuartos',qf,r16)}${caminoFutureRound('Semifinales',sf,qf)}${caminoFutureRound('Final',fin,sf)}</div>`
+}
+function caminoTabsHtml(){
+  return `<div class="camino-tabs"><button class="act" onclick="caminoSubtab('resumen',this)">Resumen</button><button onclick="caminoSubtab('grupos',this)">Fase de grupos</button><button onclick="caminoSubtab('dieciseis',this)">16avos</button><button onclick="caminoSubtab('caminoFinal',this)">8avos → Final</button><button onclick="caminoSubtab('reglasCamino',this)">Cómo se puntúa</button></div>`
+}
+function caminoSubtab(id,btn){
+  document.querySelectorAll('.camino-panel').forEach(x=>x.classList.toggle('act',x.id===id));
+  document.querySelectorAll('.camino-tabs button').forEach(x=>x.classList.remove('act'));
+  btn?.classList.add('act');
+}
+function renderCamino(){
+  const el=document.getElementById('camino'); if(!el)return;
+  el.innerHTML=`<div class="camino-hero"><div class="card"><div class="ch"><h2>🧭 El camino del Mundial</h2></div><div class="cb"><p class="subtle">Aquí puedes ver cómo quedó la fase de grupos, de dónde sale cada equipo de 16avos y cómo se va armando el camino hacia 8avos, cuartos, semifinal y final.</p>${caminoTabsHtml()}</div></div><div class="card"><div class="ch"><h2>💡 Cómo leerlo</h2></div><div class="cb"><p class="subtle"><b>Llave:</b> cuenta quién avanza, incluso por alargue o penales.<br><b>Marcador:</b> siempre se puntúa con el resultado a los 90 minutos. Si no atinaste el cruce, todavía puedes sumar por marcador.</p></div></div></div>
+  <div id="resumen" class="camino-panel act"><div class="grid2"><div class="card"><div class="ch"><h2>📊 Así quedaron los grupos</h2></div><div class="cb">${caminoQualifiedSummary()}</div></div><div class="card"><div class="ch"><h2>🏆 Así nacen los 16avos</h2></div><div class="cb"><p class="subtle">Cada cruce usa una regla: 1° de grupo, 2° de grupo o uno de los mejores terceros.</p>${R32_SLOTS.slice(0,8).map((s,i)=>{const r=r32SlotInfo(s);return `<div class="camino-mini-line"><b>p${String(73+i).padStart(3,'0')}</b><span>${esc(r.aSource)} vs ${esc(r.bSource)}</span></div>`}).join('')}<p class="subtle" style="margin-top:8px">En la pestaña 16avos está el listado completo.</p></div></div></div></div>
+  <div id="grupos" class="camino-panel"><div class="card"><div class="ch"><h2>📋 Fase de grupos completa</h2></div><div class="cb"><div class="camino-groups">${caminoGroupCards()}</div></div></div></div>
+  <div id="dieciseis" class="camino-panel"><div class="card"><div class="ch"><h2>🏁 Llaves de 16avos y de dónde sale cada equipo</h2></div><div class="cb"><div class="camino-r32">${caminoR32Cards()}</div></div></div></div>
+  <div id="caminoFinal" class="camino-panel"><div class="card"><div class="ch"><h2>🌳 Camino desde 8avos hasta la final</h2></div><div class="cb"><p class="subtle">Mientras no se juegue la ronda anterior, verás “Ganador p0XX”. Cuando haya resultados, se reemplaza automáticamente por el equipo clasificado.</p>${caminoFinalRounds()}</div></div></div>
+  <div id="reglasCamino" class="camino-panel"><div class="card"><div class="ch"><h2>🧮 Cómo se puntúa esta fase</h2></div><div class="cb"><div class="breakdown"><div class="break-row"><span>Marcador de partidos KO</span><b>90 min</b></div><div class="break-row"><span>Alargue y penales</span><b>No suman marcador</b></div><div class="break-row"><span>Quién avanza en llave</span><b>Sí cuenta</b></div><div class="break-row"><span>Llave exacta de 16avos</span><b>+2 por cruce</b></div></div><p class="subtle" style="margin-top:10px">Ejemplo: si el partido queda 1-1 en 90 minutos y Canadá pasa por penales, para marcador se usa 1-1, pero para la llave avanza Canadá.</p></div></div></div>`;
+}
+
+// Reemplazo final para incluir la pestaña Camino
+function renderAll(){document.getElementById('subtitle').textContent=`${PARTICIPANTES.length} participantes · ${PLAYED.length}/${MATCHES.length} partidos · ${new Date(RES?._meta?.ultima_revision_auto||Date.now()).toLocaleString('es-CO',{dateStyle:'short',timeStyle:'short'})}`;renderDashboard();renderRanking();renderPartidos();renderLlave();renderCamino();renderMundial();renderSalon();showTab('inicio')}
 
 initNav();loadData();

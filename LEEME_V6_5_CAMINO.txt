@@ -1,0 +1,13 @@
+V6.5 — Camino del Mundial
+
+Agrega la pestaña 🧭 Camino.
+
+Qué muestra:
+- Cómo quedó cada grupo.
+- De dónde sale cada equipo de 16avos: 1° grupo, 2° grupo o mejor tercero.
+- La llave de 16avos completa.
+- El camino de 8avos, cuartos, semifinales y final usando “Ganador p0XX” mientras no se juegue la ronda previa.
+- Explicación de puntuación: marcador a 90 minutos; alargue/penales solo definen quién avanza.
+
+Subir/reemplazar todo el contenido del ZIP en la raíz del repositorio.
+Abrir la página con ?v=65 para evitar caché.

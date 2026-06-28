@@ -137,16 +137,12 @@ function brFindMatch(id) {
 
 /** Determina si un partido ya tiene resultado definitivo */
 function brIsFinished(m) {
-  if (!m || m.estado !== 'finalizado') return false;
-  if (typeof isFinal === 'function') return isFinal(m);
-  return m.golesLocal != null && m.golesVisitante != null;
+  return m && m.estado === 'finalizado' && m.golesLocal != null && m.golesVisitante != null;
 }
 
 /** Determina si un partido está en juego */
 function brIsLive(m) {
-  if (!m || m.estado !== 'en_vivo') return false;
-  if (typeof isLive === 'function') return isLive(m);
-  return true;
+  return m && m.estado === 'en_vivo';
 }
 
 /* ── calculateQualifiedTeams ─────────────────────────────────── */
@@ -172,8 +168,7 @@ function brGroupStanding(group) {
       if (!teams[t]) teams[t] = { team: t, pts: 0, gf: 0, gc: 0, gd: 0, pj: 0 };
     });
     if (!brIsFinished(m)) return;
-    const gl = (typeof scoreLocal === 'function') ? +scoreLocal(m) : +m.golesLocal;
-    const gv = (typeof scoreVisitante === 'function') ? +scoreVisitante(m) : +m.golesVisitante;
+    const gl = +m.golesLocal, gv = +m.golesVisitante;
     teams[m.local].gf += gl; teams[m.local].gc += gv; teams[m.local].pj++;
     teams[m.visitante].gf += gv; teams[m.visitante].gc += gl; teams[m.visitante].pj++;
     if (gl > gv)      { teams[m.local].pts += 3; }
@@ -293,14 +288,13 @@ function brSlotLabel(slot) {
  */
 function advanceWinner(match) {
   if (!brIsFinished(match)) return null;
-  // Regla oficial: para avanzar en la llave sí cuenta quien pasa por alargue o penales.
-  // Si script.js definió advanceTeam(), usamos ganador/ganadorLlave/clasificado antes que el marcador.
-  if (typeof advanceTeam === 'function') return advanceTeam(match);
-  const declared = match.ganador || match.ganadorLlave || match.clasificado || match.winner;
-  if (declared) return declared;
   const gl = +match.golesLocal, gv = +match.golesVisitante;
+  // En eliminatorias no hay empates; si los goles son iguales se asume penales
+  // y el ganador debe estar marcado. Por ahora asumimos que golesLocal > golesVisitante
+  // o viceversa (el json ya refleja el resultado final incluido penales).
   if (gl > gv) return match.local;
   if (gv > gl) return match.visitante;
+  // Empate exacto → partido no resuelto aún (fase grupos) o penales no marcados
   return null;
 }
 
