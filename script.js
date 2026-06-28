@@ -239,8 +239,64 @@ function caminoFinalRounds(){
   const fin=['p103'];
   return `<div class="camino-rounds">${caminoFutureRound('8avos',r16,r32)}${caminoFutureRound('Cuartos',qf,r16)}${caminoFutureRound('Semifinales',sf,qf)}${caminoFutureRound('Final',fin,sf)}</div>`
 }
+
+function caminoSourceClass(src){
+  src=String(src||'').toLowerCase();
+  if(src.startsWith('1°'))return 'src-one';
+  if(src.startsWith('2°'))return 'src-two';
+  if(src.startsWith('3°'))return 'src-third';
+  if(src.includes('ganador'))return 'src-win';
+  return 'src-pending';
+}
+function caminoVisualTeam(team,src){
+  const cls=caminoSourceClass(src);
+  return `<div class="visual-team ${cls}"><div class="visual-team-name"><span>${team?flag(team):'⏳'}</span><b>${team?esc(team):'Por definir'}</b></div><small>${esc(src||'Por definir')}</small></div>`
+}
+function caminoVisualMatch(id,title,left,right){
+  const m=matchById(id);
+  let score='vs';
+  if(m&&isScoreable(m)) score=scoreLabel(m);
+  const status=m&&isFinal(m)?decisionLabel(m):(m&&isLive(m)?'En vivo':'Pendiente');
+  return `<div class="visual-match"><div class="visual-match-head"><span>${esc(id)}</span><b>${esc(title)}</b></div><div class="visual-match-body">${caminoVisualTeam(left.team,left.source)}<div class="visual-vs">${score}</div>${caminoVisualTeam(right.team,right.source)}</div><div class="visual-status">${esc(status)}</div></div>`
+}
+function caminoVisualR32Matches(){
+  return R32_SLOTS.map((slot,i)=>{
+    const id=`p${String(73+i).padStart(3,'0')}`;
+    const real=r32SlotInfo(slot);
+    const m=matchById(id);
+    const left={team:m?.local||real.aTeam,source:real.aSource};
+    const right={team:m?.visitante||real.bTeam,source:real.bSource};
+    return caminoVisualMatch(id,`16avos ${i+1}`,left,right)
+  }).join('')
+}
+function caminoVisualRound(title,ids,prevIds){
+  return ids.map((id,i)=>{
+    const m=matchById(id);
+    let left,right;
+    if(m&&m.local&&m.visitante){
+      left={team:m.local,source:`Ganador ${prevIds[i*2]||''}`};
+      right={team:m.visitante,source:`Ganador ${prevIds[i*2+1]||''}`};
+    }else{
+      left=matchWinnerOrSource(prevIds[i*2],`Ganador ${prevIds[i*2]}`);
+      right=matchWinnerOrSource(prevIds[i*2+1],`Ganador ${prevIds[i*2+1]}`);
+    }
+    return caminoVisualMatch(id,`${title} ${i+1}`,left,right)
+  }).join('')
+}
+function caminoVisualGroups(){
+  return `<div class="visual-groups-grid">${groupLetters().map(g=>{const st=standings(g);const closed=actualGroupStanding(g)!=null;return `<div class="visual-group-card"><div class="visual-group-head"><b>Grupo ${g}</b><span>${closed?'Cerrado':'En juego'}</span></div>${st.map((t,i)=>`<div class="visual-group-row ${i<2?'qual':''}"><span>${i+1}</span><b>${flag(t.team)} ${esc(t.team)}</b><small>${t.pts} pts</small></div>`).join('')}</div>`}).join('')}</div>`
+}
+function caminoVisualBoard(){
+  const r32=['p073','p074','p075','p076','p077','p078','p079','p080','p081','p082','p083','p084','p085','p086','p087','p088'];
+  const r16=['p089','p090','p091','p092','p093','p094','p095','p096'];
+  const qf=['p097','p098','p099','p100'];
+  const sf=['p101','p102'];
+  const fin=['p103'];
+  return `<div class="visual-legend"><span class="src-one">1.º grupo</span><span class="src-two">2.º grupo</span><span class="src-third">3.º mejor</span><span class="src-win">Ganador ronda anterior</span></div><div class="camino-visual"><div class="visual-left"><h3>Fase de grupos</h3><p class="subtle">Así quedaron los grupos y de aquí salen los clasificados.</p>${caminoVisualGroups()}</div><div class="visual-bracket-scroll"><div class="visual-bracket"><div class="visual-col wide"><h3>16avos</h3><p>Debajo ves de dónde sale cada equipo.</p>${caminoVisualR32Matches()}</div><div class="visual-col"><h3>8avos</h3><p>Ganadores de 16avos.</p>${caminoVisualRound('8avos',r16,r32)}</div><div class="visual-col"><h3>Cuartos</h3><p>Ganadores de 8avos.</p>${caminoVisualRound('Cuartos',qf,r16)}</div><div class="visual-col"><h3>Semis</h3><p>Ganadores de cuartos.</p>${caminoVisualRound('Semis',sf,qf)}</div><div class="visual-col final-col"><h3>Final</h3><p>Una sola copa.</p>${caminoVisualRound('Final',fin,sf)}<div class="visual-trophy">🏆<small>Campeón Mundial 2026</small></div></div></div></div></div><div class="visual-note"><b>Cómo leerlo:</b> cada equipo muestra su origen: 1.º de grupo, 2.º de grupo, mejor 3.º o ganador de una ronda anterior. Esta vista se actualiza sola cuando cambia <code>resultados.json</code>.</div>`
+}
+
 function caminoTabsHtml(){
-  return `<div class="camino-tabs"><button class="act" onclick="caminoSubtab('resumen',this)">Resumen</button><button onclick="caminoSubtab('grupos',this)">Fase de grupos</button><button onclick="caminoSubtab('dieciseis',this)">16avos</button><button onclick="caminoSubtab('caminoFinal',this)">8avos → Final</button><button onclick="caminoSubtab('reglasCamino',this)">Cómo se puntúa</button></div>`
+  return `<div class="camino-tabs"><button class="act" onclick="caminoSubtab('resumen',this)">Resumen</button><button onclick="caminoSubtab('visualCamino',this)">Vista visual</button><button onclick="caminoSubtab('grupos',this)">Fase de grupos</button><button onclick="caminoSubtab('dieciseis',this)">16avos</button><button onclick="caminoSubtab('caminoFinal',this)">8avos → Final</button><button onclick="caminoSubtab('reglasCamino',this)">Cómo se puntúa</button></div>`
 }
 function caminoSubtab(id,btn){
   document.querySelectorAll('.camino-panel').forEach(x=>x.classList.toggle('act',x.id===id));
@@ -251,6 +307,7 @@ function renderCamino(){
   const el=document.getElementById('camino'); if(!el)return;
   el.innerHTML=`<div class="camino-hero"><div class="card"><div class="ch"><h2>🧭 El camino del Mundial</h2></div><div class="cb"><p class="subtle">Aquí puedes ver cómo quedó la fase de grupos, de dónde sale cada equipo de 16avos y cómo se va armando el camino hacia 8avos, cuartos, semifinal y final.</p>${caminoTabsHtml()}</div></div><div class="card"><div class="ch"><h2>💡 Cómo leerlo</h2></div><div class="cb"><p class="subtle"><b>Llave:</b> cuenta quién avanza, incluso por alargue o penales.<br><b>Marcador:</b> siempre se puntúa con el resultado a los 90 minutos. Si no atinaste el cruce, todavía puedes sumar por marcador.</p></div></div></div>
   <div id="resumen" class="camino-panel act"><div class="grid2"><div class="card"><div class="ch"><h2>📊 Así quedaron los grupos</h2></div><div class="cb">${caminoQualifiedSummary()}</div></div><div class="card"><div class="ch"><h2>🏆 Así nacen los 16avos</h2></div><div class="cb"><p class="subtle">Cada cruce usa una regla: 1° de grupo, 2° de grupo o uno de los mejores terceros.</p>${R32_SLOTS.slice(0,8).map((s,i)=>{const r=r32SlotInfo(s);return `<div class="camino-mini-line"><b>p${String(73+i).padStart(3,'0')}</b><span>${esc(r.aSource)} vs ${esc(r.bSource)}</span></div>`}).join('')}<p class="subtle" style="margin-top:8px">En la pestaña 16avos está el listado completo.</p></div></div></div></div>
+  <div id="visualCamino" class="camino-panel"><div class="card"><div class="ch"><h2>🗺️ Vista visual: de dónde sale cada equipo</h2></div><div class="cb">${caminoVisualBoard()}</div></div></div>
   <div id="grupos" class="camino-panel"><div class="card"><div class="ch"><h2>📋 Fase de grupos completa</h2></div><div class="cb"><div class="camino-groups">${caminoGroupCards()}</div></div></div></div>
   <div id="dieciseis" class="camino-panel"><div class="card"><div class="ch"><h2>🏁 Llaves de 16avos y de dónde sale cada equipo</h2></div><div class="cb"><div class="camino-r32">${caminoR32Cards()}</div></div></div></div>
   <div id="caminoFinal" class="camino-panel"><div class="card"><div class="ch"><h2>🌳 Camino desde 8avos hasta la final</h2></div><div class="cb"><p class="subtle">Mientras no se juegue la ronda anterior, verás “Ganador p0XX”. Cuando haya resultados, se reemplaza automáticamente por el equipo clasificado.</p>${caminoFinalRounds()}</div></div></div>

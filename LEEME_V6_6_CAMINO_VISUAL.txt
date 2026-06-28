@@ -1,0 +1,21 @@
+V6.6 CAMINO VISUAL
+
+Qué agrega:
+- Nueva subpestaña dentro de 🧭 Camino: "Vista visual".
+- Muestra fase de grupos, 16avos, 8avos, cuartos, semifinales y final en formato gráfico.
+- Cada equipo muestra de dónde sale: 1.º Grupo, 2.º Grupo, 3.º mejor grupo o Ganador de ronda anterior.
+- Se actualiza sola leyendo resultados.json.
+- Mantiene la regla de 90 minutos: marcador a 90 min; alargue/penales solo definen quién avanza.
+
+Subir/reemplazar en GitHub:
+- index.html
+- script.js
+- bracket.js
+- bracket.css
+- grupos.html
+- predicciones.json
+- resultados.json
+- actualizar_resultados.py
+- .github/workflows/actualizar-resultados.yml
+
+Después abrir con ?v=66 para evitar caché.
