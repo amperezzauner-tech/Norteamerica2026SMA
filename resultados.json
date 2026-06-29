@@ -2,21 +2,22 @@
   "_meta": {
     "generado": "2026-06-21",
     "total_partidos": 88,
-    "jugados": 73,
-    "pendientes": 15,
+    "jugados": 74,
+    "pendientes": 14,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-06-29T19:48:25.748944+00:00",
+    "ultima_actualizacion_auto": "2026-06-29T20:22:24.614102+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-06-29T20:15:47.174000+00:00",
+    "ultima_revision_auto": "2026-06-29T20:22:24.614102+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
     "correccion_manual_p059": "Turquía 3-2 EE.UU.",
     "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
-    "nota_auto": "p087 ESPN 760500 Argentina None-None Cabo Verde [pendiente] antes=None-None; p088 ESPN 760501 Colombia None-None Ghana [pendiente] antes=None-None"
+    "nota_auto": "p073 Sudáfrica 0-1 Canadá [finalizado] ESPN:760486; p074 Brasil 2-1 Japón [finalizado] ESPN:760487; p075 Alemania None-None Paraguay [pendiente] ESPN:760489; p076 P. Bajos None-None Marruecos [pendiente] ESPN:760488; p077 C. de Marfil None-None Noruega [pendiente] ESPN:760490; p078 Francia None-None Suecia [pendiente] ESPN:760492; p080 Inglaterra None-None Congo [pendiente] ESPN:760495; p081 Bélgica None-None Senegal [pendiente] ESPN:760493; p082 EE.UU. None-None Bosnia [pendiente] ESPN:760494; p083 España None-None Austria [pendiente] ESPN:760497; p084 Portugal None-None Croacia [pendiente] ESPN:760496; p085 Suiza None-None Argelia [pendiente] ESPN:760498",
+    "diagnostico_auto": "actualizados=12; encontrados_sin_cambio=7; pendientes_no_encontrados=3"
   },
   "partidos": [
     {
@@ -953,7 +954,9 @@
       "jornada": 1,
       "estado": "finalizado",
       "golesLocal": 0,
-      "golesVisitante": 1
+      "golesVisitante": 1,
+      "ganador": "Canadá",
+      "espn_id": "760486"
     },
     {
       "id": "p074",
@@ -962,9 +965,11 @@
       "visitante": "Japón",
       "fase": "16avos",
       "jornada": 1,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null
+      "estado": "finalizado",
+      "golesLocal": 2,
+      "golesVisitante": 1,
+      "ganador": "Brasil",
+      "espn_id": "760487"
     },
     {
       "id": "p075",
@@ -975,7 +980,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760489"
     },
     {
       "id": "p076",
@@ -986,7 +992,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760488"
     },
     {
       "id": "p077",
@@ -997,7 +1004,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760490"
     },
     {
       "id": "p078",
@@ -1008,7 +1016,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760492"
     },
     {
       "id": "p079",
@@ -1031,7 +1040,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760495"
     },
     {
       "id": "p081",
@@ -1042,7 +1052,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760493"
     },
     {
       "id": "p082",
@@ -1053,7 +1064,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760494"
     },
     {
       "id": "p083",
@@ -1064,7 +1076,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760497"
     },
     {
       "id": "p084",
@@ -1075,7 +1088,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760496"
     },
     {
       "id": "p085",
@@ -1086,7 +1100,8 @@
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
-      "golesVisitante": null
+      "golesVisitante": null,
+      "espn_id": "760498"
     },
     {
       "id": "p086",
