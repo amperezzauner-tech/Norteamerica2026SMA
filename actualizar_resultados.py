@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Actualiza resultados.json desde el marcador público de ESPN.
 No toca predicciones.json ni la lógica de puntajes.
+
+V5: corrige actualización de 16avos usando los IDs reales de ESPN
+(matchId 73-88) y deja diagnóstico claro en el log.
 """
 from __future__ import annotations
 
@@ -19,31 +22,73 @@ RESULTADOS = Path("resultados.json")
 ESPN_LEAGUE = "fifa.world"
 BASE = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{ESPN_LEAGUE}/scoreboard"
 
+# IDs ESPN de 16avos. Estos son los IDs del calendario de eliminatorias,
+# distintos a los 760xxx usados en fase de grupos.
+ESPN_ID_BY_MATCH_ID = {
+    73: "53452545",  # Sudáfrica vs Canadá
+    74: "53452557",  # Brasil vs Japón
+    75: "53452541",  # Alemania vs Paraguay
+    76: "53452547",  # P. Bajos vs Marruecos
+    77: "53452561",  # C. de Marfil vs Noruega
+    78: "53452543",  # Francia vs Suecia
+    79: "53452563",  # México vs Ecuador
+    80: "53452565",  # Inglaterra vs Congo
+    81: "53452555",  # Bélgica vs Senegal
+    82: "53452553",  # EE.UU. vs Bosnia
+    83: "53452551",  # España vs Austria
+    84: "53452549",  # Portugal vs Croacia
+    85: "53452505",  # Suiza vs Argelia
+    86: "53452503",  # Australia vs Egipto
+    87: "53452569",  # Argentina vs Cabo Verde
+    88: "53452507",  # Colombia vs Ghana
+}
+
 ALIASES = {
     "ee uu": "estados unidos",
     "eeuu": "estados unidos",
     "eua": "estados unidos",
     "usa": "estados unidos",
     "us": "estados unidos",
+    "united states": "estados unidos",
     "estados unidos": "estados unidos",
     "u s a": "estados unidos",
     "p bajos": "paises bajos",
     "paises bajos": "paises bajos",
     "países bajos": "paises bajos",
+    "netherlands": "paises bajos",
     "holanda": "paises bajos",
     "n zelanda": "nueva zelanda",
+    "nueva zelanda": "nueva zelanda",
     "new zealand": "nueva zelanda",
     "c de marfil": "costa de marfil",
     "costa marfil": "costa de marfil",
+    "costa de marfil": "costa de marfil",
     "ivory coast": "costa de marfil",
     "czechia": "chequia",
     "czech republic": "chequia",
     "corea sur": "corea del sur",
+    "corea del sur": "corea del sur",
     "south korea": "corea del sur",
     "saudi arabia": "arabia saudita",
+    "arabia saudita": "arabia saudita",
     "cape verde": "cabo verde",
+    "cabo verde": "cabo verde",
     "uzbekistan": "uzbekistan",
     "uzbekistán": "uzbekistan",
+    "turkiye": "turquia",
+    "turkey": "turquia",
+    "turquia": "turquia",
+    "turquía": "turquia",
+    "dr congo": "congo",
+    "d r congo": "congo",
+    "rd congo": "congo",
+    "r d congo": "congo",
+    "democratic republic of congo": "congo",
+    "congo dr": "congo",
+    "congo": "congo",
+    "bosnia and herzegovina": "bosnia",
+    "bosnia y herzegovina": "bosnia",
+    "bosnia": "bosnia",
 }
 
 
@@ -68,10 +113,9 @@ def fetch_json(url: str) -> dict | None:
 
 
 def espn_event_dates() -> list[str]:
-    # GitHub Actions corre en UTC. Revisa ayer, hoy, mañana y pasado mañana
-    # para cubrir partidos nocturnos y cambios de zona horaria.
+    # Revisa desde ayer hasta 6 días adelante para cubrir toda la ronda de 16avos.
     now = datetime.now(timezone.utc)
-    days = [now + timedelta(days=d) for d in range(-1, 3)]
+    days = [now + timedelta(days=d) for d in range(-1, 7)]
     return [d.strftime("%Y%m%d") for d in days]
 
 
@@ -95,10 +139,20 @@ def event_teams(ev: dict) -> dict:
     out = {}
     for c in comps:
         team = c.get("team") or {}
-        names = [team.get("displayName"), team.get("name"), team.get("shortDisplayName"), team.get("abbreviation")]
+        names = [
+            team.get("displayName"),
+            team.get("name"),
+            team.get("shortDisplayName"),
+            team.get("abbreviation"),
+        ]
         side = c.get("homeAway")
+        raw_score = c.get("score")
+        try:
+            score = int(raw_score) if raw_score not in (None, "") else 0
+        except Exception:
+            score = 0
         out[side] = {
-            "score": int(c.get("score") or 0),
+            "score": score,
             "winner": c.get("winner"),
             "names": [n for n in names if n],
             "norms": {norm(n) for n in names if n},
@@ -116,11 +170,16 @@ def event_status(ev: dict) -> str:
 
 
 def match_event(partido: dict, events: list[dict]) -> dict | None:
-    espn_id = str(partido.get("espn_id") or "").strip()
-    if espn_id:
+    # Para 16avos, usa primero el ID oficial por matchId.
+    match_id = int(partido.get("matchId") or 0)
+    preferred_espn_id = ESPN_ID_BY_MATCH_ID.get(match_id) or str(partido.get("espn_id") or "").strip()
+
+    if preferred_espn_id:
         for ev in events:
-            if str(ev.get("id")) == espn_id:
+            if str(ev.get("id")) == str(preferred_espn_id):
                 return ev
+
+    # Fallback por nombres, útil si no hay espn_id o ESPN cambia un ID.
     a, b = norm(partido.get("local")), norm(partido.get("visitante"))
     if not a or not b:
         return None
@@ -140,11 +199,15 @@ def apply_event(partido: dict, ev: dict) -> bool:
     local_n = norm(partido.get("local"))
     visit_n = norm(partido.get("visitante"))
     local_score = visitante_score = None
+
     for info in teams.values():
         if local_n in info["norms"]:
             local_score = info["score"]
         if visit_n in info["norms"]:
             visitante_score = info["score"]
+
+    # Si emparejó por ESPN ID pero los nombres de ESPN todavía salen como TBD,
+    # no podemos asignar goles de forma segura por lado.
     if local_score is None or visitante_score is None:
         return False
 
@@ -152,6 +215,7 @@ def apply_event(partido: dict, ev: dict) -> bool:
     if partido.get("estado") != status:
         partido["estado"] = status
         changed = True
+
     if status in {"finalizado", "en_vivo"}:
         if partido.get("golesLocal") != local_score:
             partido["golesLocal"] = local_score
@@ -160,11 +224,7 @@ def apply_event(partido: dict, ev: dict) -> bool:
             partido["golesVisitante"] = visitante_score
             changed = True
 
-        # Regla 90 minutos / llave:
-        # - golesLocal/golesVisitante se conservan como marcador informado por ESPN.
-        # - si el partido se define por penales o alargue y hay empate a los 90,
-        #   se puede llenar manualmente golesLocal90/golesVisitante90 en resultados.json.
-        # - para la llave guardamos el ganador declarado por ESPN cuando exista.
+        # Guardar ganador de llaves cuando ESPN lo indique.
         if status == "finalizado" and int(partido.get("matchId") or 0) >= 73:
             winner_name = None
             for info in teams.values():
@@ -176,6 +236,7 @@ def apply_event(partido: dict, ev: dict) -> bool:
             if winner_name and partido.get("ganador") != winner_name:
                 partido["ganador"] = winner_name
                 changed = True
+
             detail = (((ev.get("status") or {}).get("type") or {}).get("detail") or "")
             low_detail = detail.lower()
             forma = None
@@ -186,9 +247,13 @@ def apply_event(partido: dict, ev: dict) -> bool:
             if forma and partido.get("formaDefinicion") != forma:
                 partido["formaDefinicion"] = forma
                 changed = True
-    if not partido.get("espn_id") and ev.get("id"):
-        partido["espn_id"] = str(ev.get("id"))
+
+    # Actualiza espn_id si faltaba o si estaba viejo/incorrecto.
+    ev_id = str(ev.get("id") or "")
+    if ev_id and partido.get("espn_id") != ev_id:
+        partido["espn_id"] = ev_id
         changed = True
+
     return changed
 
 
@@ -196,22 +261,41 @@ def main() -> int:
     if not RESULTADOS.exists():
         print("ERROR: no existe resultados.json en la raíz del repo", file=sys.stderr)
         return 1
+
     data = json.loads(RESULTADOS.read_text(encoding="utf-8"))
     before = deepcopy(data)
     events = read_events()
     print(f"Eventos ESPN encontrados: {len(events)}")
 
+    event_ids = sorted(str(ev.get("id")) for ev in events if ev.get("id"))
+    print("IDs ESPN encontrados:", ", ".join(event_ids[:40]))
+
     updates = []
+    matched_no_change = []
+    not_found = []
+
     for p in data.get("partidos", []):
         ev = match_event(p, events)
-        if ev and apply_event(p, ev):
-            updates.append(f"{p.get('id')} {p.get('local')} {p.get('golesLocal')}-{p.get('golesVisitante')} {p.get('visitante')} [{p.get('estado')}]")
+        if ev:
+            old = f"{p.get('golesLocal')}-{p.get('golesVisitante')}"
+            if apply_event(p, ev):
+                new = f"{p.get('golesLocal')}-{p.get('golesVisitante')}"
+                updates.append(
+                    f"{p.get('id')} ESPN {ev.get('id')} {p.get('local')} {new} {p.get('visitante')} [{p.get('estado')}] antes={old}"
+                )
+            else:
+                matched_no_change.append(f"{p.get('id')} ESPN {ev.get('id')} {p.get('local')} vs {p.get('visitante')}")
+        else:
+            # Solo reporta pendientes/en vivo para no llenar el log con partidos viejos.
+            if p.get("estado") in {"pendiente", "en_vivo"}:
+                not_found.append(f"{p.get('id')} {p.get('local')} vs {p.get('visitante')}")
 
     meta = data.setdefault("_meta", {})
     partidos = data.get("partidos", [])
     meta["jugados"] = sum(1 for p in partidos if p.get("estado") == "finalizado")
     meta["pendientes"] = sum(1 for p in partidos if p.get("estado") == "pendiente")
     meta["en_vivo"] = sum(1 for p in partidos if p.get("estado") == "en_vivo")
+
     now_iso = datetime.now(timezone.utc).isoformat()
     meta["ultima_revision_auto"] = now_iso
     if updates:
@@ -226,6 +310,13 @@ def main() -> int:
             print(" -", u)
     else:
         print("Sin cambios en resultados.json")
+
+    print(f"Resumen: actualizados={len(updates)} | encontrados_sin_cambio={len(matched_no_change)} | pendientes_no_encontrados={len(not_found)}")
+    if not_found[:20]:
+        print("Pendientes no encontrados en ESPN:")
+        for x in not_found[:20]:
+            print(" -", x)
+
     return 0
 
 
