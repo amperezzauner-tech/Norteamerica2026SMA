@@ -2,22 +2,22 @@
   "_meta": {
     "generado": "2026-06-21",
     "total_partidos": 88,
-    "jugados": 76,
-    "pendientes": 11,
+    "jugados": 77,
+    "pendientes": 10,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-06-30T17:29:14.300149+00:00",
+    "ultima_actualizacion_auto": "2026-06-30T22:05:07.451705+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 1,
-    "ultima_revision_auto": "2026-06-30T17:29:14.300149+00:00",
+    "ultima_revision_auto": "2026-06-30T22:05:07.451705+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
     "correccion_manual_p059": "Turquía 3-2 EE.UU.",
     "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
-    "nota_auto": "p077 C. de Marfil 0-0 Noruega [en_vivo] ESPN:760490",
-    "diagnostico_auto": "actualizados=1; encontrados_sin_cambio=15; pendientes_no_encontrados=0"
+    "nota_auto": "p077 C. de Marfil 1-2 Noruega [finalizado] ESPN:760490; p078 Francia 1-0 Suecia [en_vivo] ESPN:760492",
+    "diagnostico_auto": "actualizados=2; encontrados_sin_cambio=14; pendientes_no_encontrados=0"
   },
   "partidos": [
     {
@@ -1006,10 +1006,11 @@
       "visitante": "Noruega",
       "fase": "16avos",
       "jornada": 1,
-      "estado": "en_vivo",
-      "golesLocal": 0,
-      "golesVisitante": 0,
-      "espn_id": "760490"
+      "estado": "finalizado",
+      "golesLocal": 1,
+      "golesVisitante": 2,
+      "espn_id": "760490",
+      "ganador": "Noruega"
     },
     {
       "id": "p078",
@@ -1018,9 +1019,9 @@
       "visitante": "Suecia",
       "fase": "16avos",
       "jornada": 1,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
+      "estado": "en_vivo",
+      "golesLocal": 1,
+      "golesVisitante": 0,
       "espn_id": "760492"
     },
     {
