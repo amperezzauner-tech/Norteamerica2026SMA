@@ -1,3 +1,0 @@
-Sube SOLO index.html.
-Este cambio hace que el ranking se actualice provisionalmente con partidos en vivo que ya tengan marcador.
-Cuando el actualizador marque el partido como finalizado, el puntaje queda definitivo.
