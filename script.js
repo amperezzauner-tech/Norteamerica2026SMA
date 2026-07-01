@@ -128,6 +128,8 @@ function pairKey(a,b){return [teamKey(a),teamKey(b)].sort().join('::')}
 const R32_EXACT_MATCHUP_BONUS=2;
 const R32_IDS=Array.from({length:16},(_,i)=>`p${String(73+i).padStart(3,'0')}`);
 const EXCEL_R32_ORDER=['p073','p074','p075','p076','p077','p078','p079','p080','p081','p082','p083','p084','p085','p086','p087','p088'];
+// Cruces manuales oficiales de 16avos; usados por la pestaña Camino y la visual.
+const R32_SLOTS=EXCEL_R32_ORDER.map(id=>({id,aSource:'Cruce manual oficial',bSource:'Cruce manual oficial'}));
 function isSameIdSet(a,b){const A=[...a].sort().join('|'), B=[...b].sort().join('|');return A===B}
 function predictionOrderIds(p, allowedIds=null){
   if(allowedIds && isSameIdSet(allowedIds,R32_IDS)) return EXCEL_R32_ORDER.filter(id=>allowedIds.includes(id));
@@ -249,10 +251,15 @@ function sourceLabel(side){
   return 'Por definir';
 }
 function r32SlotInfo(slot){
-  const used=new Set();
-  const a=resolveR32Slot(slot.a,null,used);
-  const b=resolveR32Slot(slot.b,null,used);
-  return {id:slot.id,aTeam:a?.team||null,bTeam:b?.team||null,aSource:sourceLabel(slot.a),bSource:sourceLabel(slot.b)};
+  // Ya no reconstruye 16avos con grupos/terceros: usa el cruce manual oficial p073-p088.
+  const m=matchById(slot.id);
+  return {
+    id:slot.id,
+    aTeam:m?.local||null,
+    bTeam:m?.visitante||null,
+    aSource:slot.aSource||'Cruce manual oficial',
+    bSource:slot.bSource||'Cruce manual oficial'
+  };
 }
 function matchById(id){return MATCHES.find(m=>m.id===id)||null}
 function matchWinnerOrSource(id,label){
