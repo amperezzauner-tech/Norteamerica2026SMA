@@ -104,7 +104,7 @@ async function loadData(){try{const [p,r]=await Promise.all([fetch('predicciones
 
 
 /* ============================================================
-   V6.1 FINAL — Ajustes finales Ana
+   V6.6 FIX — Llaves manuales Ana
    - Mantiene normas de puntos originales de marcadores.
    - Grupos: 1.º=4, 2.º=3, 3.º=1, 4.º=1.
    - Llave exacta 16avos: +2 por cruce correcto, sin importar local/visitante.
@@ -157,7 +157,23 @@ function sortMatchesByPredictionOrder(ms,p=null){
 function groupBonus(p){let total=0,hits=0,closed=0;const detail=[];groupLetters().forEach(g=>{const real=actualGroupStanding(g), pred=predGroupStanding(g,p);if(!real||!pred)return;closed++;[4,3,1,1].forEach((val,i)=>{if(teamKey(real[i]?.team)===teamKey(pred[i]?.team)){total+=val;hits++;detail.push({grupo:g,pos:i+1,team:real[i].team,pts:val})}})});return{total,hits,closed,detail,max:closed*9}}
 function bestThirdsForBracket(p){const thirds=[];let closed=0;groupLetters().forEach(g=>{const st=p?predGroupStanding(g,p):actualGroupStanding(g);if(!st||st.length<4)return;closed++;thirds.push({...st[2],grupo:g})});if(!p&&closed<groupLetters().length)return{thirds:[],closed,total:groupLetters().length,complete:false};thirds.sort((a,b)=>(b.pts??0)-(a.pts??0)||(b.gd??0)-(a.gd??0)||(b.gf??0)-(a.gf??0)||(a.gc??0)-(b.gc??0)||String(a.team).localeCompare(String(b.team)));return{thirds:thirds.slice(0,8),closed,total:groupLetters().length,complete:p?true:closed===groupLetters().length}}
 function resolveR32Slot(slot,p,usedThirdGroups){if(slot.group){const st=p?predGroupStanding(slot.group,p):actualGroupStanding(slot.group);const item=st?.[slot.pos-1];return item?{team:item.team,source:`${slot.pos}° Grupo ${slot.group}`}:null}if(slot.third){const best=bestThirdsForBracket(p);if(!best.complete)return null;const found=best.thirds.find(x=>slot.third.includes(x.grupo)&&!usedThirdGroups.has(x.grupo));if(!found)return null;usedThirdGroups.add(found.grupo);return{team:found.team,source:`3° Grupo ${found.grupo}`}}return null}
-function r32Matchups(p){const used=new Set(),out=[];R32_SLOTS.forEach(slot=>{const a=resolveR32Slot(slot.a,p,used),b=resolveR32Slot(slot.b,p,used);if(a&&b)out.push({id:slot.id,a:a.team,b:b.team,aSource:a.source,bSource:b.source,key:pairKey(a.team,b.team)})});return out}
+function r32Matchups(p){
+  // FIX V6.6 Ana: la llave REAL de 16avos NO se reconstruye desde grupos.
+  // Se toma del cruce manual cargado en resultados.json (p073-p088 / Diesiseisavos.xlsx).
+  // Las predicciones de cada participante sí se reconstruyen desde sus posiciones de grupo,
+  // para poder comparar si el cruce que imaginó coincide con el cruce manual real.
+  if(!p){
+    return MATCHES.filter(m=>R32_IDS.includes(m.id)&&m.local&&m.visitante)
+      .sort((a,b)=>R32_IDS.indexOf(a.id)-R32_IDS.indexOf(b.id))
+      .map(m=>({id:m.id,a:m.local,b:m.visitante,aSource:'Cruce manual',bSource:'Cruce manual',key:pairKey(m.local,m.visitante)}));
+  }
+  const used=new Set(),out=[];
+  R32_SLOTS.forEach(slot=>{
+    const a=resolveR32Slot(slot.a,p,used),b=resolveR32Slot(slot.b,p,used);
+    if(a&&b)out.push({id:slot.id,a:a.team,b:b.team,aSource:a.source,bSource:b.source,key:pairKey(a.team,b.team)});
+  });
+  return out;
+}
 function r32ExactMatchupBonus(p){const real=r32Matchups(null),pred=r32Matchups(p),predKeys=new Set(pred.map(x=>x.key));let total=0;const detail=[];real.forEach(m=>{if(predKeys.has(m.key)){total+=R32_EXACT_MATCHUP_BONUS;detail.push({...m,pts:R32_EXACT_MATCHUP_BONUS})}});return{total,hits:detail.length,available:real.length,detail}}
 function calculate(){PLAYED=MATCHES.filter(isScoreable).sort((a,b)=>mt(a)-mt(b));PENDING=MATCHES.filter(m=>!isScoreable(m)).sort((a,b)=>mt(a)-mt(b));RANKING=PARTICIPANTES.map(p=>{let matchPts=0,exact=0,hit=0,last=[],koPts=0,koExact=0,koHit=0;const koByRound={};PLAYED.forEach(m=>{const pr=p.predicciones?.[m.id];if(!pr)return;const realGl=scoreLocal(m), realGv=scoreVisitante(m);const s=points(pr.golesLocal,pr.golesVisitante,realGl,realGv);matchPts+=s;const ex=+pr.golesLocal===+realGl&&+pr.golesVisitante===+realGv;const ok=outcome(pr.golesLocal,pr.golesVisitante)===outcome(realGl,realGv);if(ex)exact++;if(ok)hit++;const item={m,pr,s,ex,ok};last.unshift(item);if(isKO(m)){koPts+=s;if(ex)koExact++;if(ok)koHit++;const r=roundOfMatch(m);if(!koByRound[r])koByRound[r]={pts:0,hit:0,exact:0,total:0,items:[]};koByRound[r].pts+=s;koByRound[r].total++;if(ok)koByRound[r].hit++;if(ex)koByRound[r].exact++;koByRound[r].items.unshift(item)}});const gb=groupBonus(p);const r32=r32ExactMatchupBonus(p);const total=matchPts+gb.total+r32.total;return{...p,pts:total,matchPts,exact,hit,pct:PLAYED.length?pct(hit,PLAYED.length):0,last,groupPts:gb.total,groupHits:gb.hits,groupClosed:gb.closed,groupMax:gb.max,groupDetail:gb.detail,r32Pts:r32.total,r32Hits:r32.hits,r32Available:r32.available,r32Detail:r32.detail,koPts,koExact,koHit,koByRound}}).sort((a,b)=>b.pts-a.pts||b.exact-a.exact||b.hit-a.hit||a.nombre.localeCompare(b.nombre));RANKING.forEach((p,i)=>p.pos=i+1)}
 function scoreDistribution(match){const scores={};const outcomes={L:0,E:0,V:0};let total=0;PARTICIPANTES.forEach(p=>{const pr=p.predicciones?.[match.id];if(!pr)return;const sc=`${pr.golesLocal}-${pr.golesVisitante}`;scores[sc]=(scores[sc]||0)+1;outcomes[outcome(pr.golesLocal,pr.golesVisitante)]++;total++});const scoreRows=Object.entries(scores).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));return{scores:scoreRows,outcomes,total}}
