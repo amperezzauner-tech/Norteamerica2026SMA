@@ -2,21 +2,21 @@
   "_meta": {
     "generado": "2026-06-21",
     "total_partidos": 88,
-    "jugados": 80,
+    "jugados": 81,
     "pendientes": 7,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-07-01T22:02:48.756861+00:00",
+    "ultima_actualizacion_auto": "2026-07-01T22:51:22.146692+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
-    "en_vivo": 1,
-    "ultima_revision_auto": "2026-07-01T22:02:48.756861+00:00",
+    "en_vivo": 0,
+    "ultima_revision_auto": "2026-07-01T22:51:22.146692+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
     "correccion_manual_p059": "Turquía 3-2 EE.UU.",
     "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
-    "nota_auto": "p081 Bélgica 2-2 Senegal [en_vivo] ESPN:760493",
+    "nota_auto": "p081 Bélgica 3-2 Senegal [finalizado] ESPN:760493",
     "diagnostico_auto": "actualizados=1; encontrados_sin_cambio=14; pendientes_no_encontrados=0"
   },
   "partidos": [
@@ -1058,10 +1058,12 @@
       "visitante": "Senegal",
       "fase": "16avos",
       "jornada": 1,
-      "estado": "en_vivo",
-      "golesLocal": 2,
+      "estado": "finalizado",
+      "golesLocal": 3,
       "golesVisitante": 2,
-      "espn_id": "760493"
+      "espn_id": "760493",
+      "ganador": "Bélgica",
+      "formaDefinicion": "alargue"
     },
     {
       "id": "p082",
