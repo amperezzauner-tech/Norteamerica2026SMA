@@ -118,7 +118,7 @@ async function loadData(){try{const [p,r]=await Promise.all([fetch('predicciones
 
 
 /* ============================================================
-   V6.6 FIX — Llaves manuales Ana
+   V6.7 FIX — Mejores terceros con marcadores
    - Mantiene normas de puntos originales de marcadores.
    - Grupos: 1.º=4, 2.º=3, 3.º=1, 4.º=1.
    - Llave exacta 16avos: +2 por cruce correcto, sin importar local/visitante.
@@ -175,7 +175,37 @@ function manualR32Matchups(){
     .sort((a,b)=>(a.matchId||0)-(b.matchId||0))
     .map(m=>({id:m.id,a:m.local,b:m.visitante,aSource:'Cruce manual',bSource:'Cruce manual',key:pairKey(m.local,m.visitante)}))
 }
-function bestThirdsForBracket(p){const thirds=[];let closed=0;groupLetters().forEach(g=>{const st=p?predGroupStanding(g,p):actualGroupStanding(g);if(!st||st.length<4)return;closed++;thirds.push({...st[2],grupo:g})});if(!p&&closed<groupLetters().length)return{thirds:[],closed,total:groupLetters().length,complete:false};thirds.sort((a,b)=>(b.pts??0)-(a.pts??0)||(b.gd??0)-(a.gd??0)||(b.gf??0)-(a.gf??0)||(a.gc??0)-(b.gc??0)||String(a.team).localeCompare(String(b.team)));return{thirds:thirds.slice(0,8),closed,total:groupLetters().length,complete:p?true:closed===groupLetters().length}}
+function predictedGroupStatsFromScores(g,p){
+  const rows={};
+  for(const m of groupMatches(g)){
+    const pr=p?.predicciones?.[m.id];
+    if(!pr||pr.golesLocal==null||pr.golesVisitante==null)return null;
+    addRow(rows,m.local,m.visitante,pr.golesLocal,pr.golesVisitante);
+  }
+  return rows;
+}
+function bestThirdsForBracket(p){
+  const thirds=[];let closed=0;
+  groupLetters().forEach(g=>{
+    let st=p?predGroupStanding(g,p):actualGroupStanding(g);
+    if(!st||st.length<4)return;
+    closed++;
+    // Si existen posiciones manuales p.grupos, esas posiciones mandan.
+    // Pero para escoger los 8 mejores terceros NO se puede ordenar alfabéticamente:
+    // se adjuntan pts/gd/gf/gc calculados desde los marcadores pronosticados.
+    let third={...st[2],grupo:g};
+    if(p&&p.grupos&&Array.isArray(p.grupos[g])){
+      const stats=predictedGroupStatsFromScores(g,p);
+      const team=st[2]?.team;
+      if(stats&&team&&stats[team]) third={...stats[team],team,grupo:g};
+      else third={team,grupo:g,pts:0,gd:0,gf:0,gc:0};
+    }
+    thirds.push(third);
+  });
+  if(!p&&closed<groupLetters().length)return{thirds:[],closed,total:groupLetters().length,complete:false};
+  thirds.sort((a,b)=>(b.pts??0)-(a.pts??0)||(b.gd??0)-(a.gd??0)||(b.gf??0)-(a.gf??0)||(a.gc??0)-(b.gc??0)||String(a.team).localeCompare(String(b.team)));
+  return{thirds:thirds.slice(0,8),closed,total:groupLetters().length,complete:p?true:closed===groupLetters().length}
+}
 function fixedR32Side(side,p){if(!side.group)return null;const st=p?predGroupStanding(side.group,p):actualGroupStanding(side.group);const item=st?.[side.pos-1];return item?{team:item.team,source:`${side.pos}° Grupo ${side.group}`}:null}
 function compatibleThirdOptions(side,p,usedThirdGroups=new Set()){const best=bestThirdsForBracket(p);if(!best.complete)return[];return best.thirds.filter(x=>side.third.includes(x.grupo)&&!usedThirdGroups.has(x.grupo)).map(x=>({team:x.team,grupo:x.grupo,source:`3° Grupo ${x.grupo}`}))}
 function resolveR32Slot(slot,p,usedThirdGroups){
