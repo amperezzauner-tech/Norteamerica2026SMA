@@ -126,29 +126,7 @@ async function loadData(){try{const [p,r]=await Promise.all([fetch('predicciones
    ============================================================ */
 function pairKey(a,b){return [teamKey(a),teamKey(b)].sort().join('::')}
 const R32_EXACT_MATCHUP_BONUS=2;
-const R32_SLOTS=[
-  {id:'R32-1',a:{group:'A',pos:2},b:{group:'B',pos:2}},
-  {id:'R32-2',a:{group:'C',pos:1},b:{group:'F',pos:2}},
-  {id:'R32-3',a:{group:'E',pos:1},b:{third:['A','B','C','D','F']}},
-  {id:'R32-4',a:{group:'F',pos:1},b:{group:'C',pos:2}},
-  {id:'R32-5',a:{group:'E',pos:2},b:{group:'I',pos:2}},
-  {id:'R32-6',a:{group:'I',pos:1},b:{third:['C','D','F','G','H']}},
-  {id:'R32-7',a:{group:'A',pos:1},b:{third:['C','E','F','H','I']}},
-  {id:'R32-8',a:{group:'L',pos:1},b:{third:['E','H','I','J','K']}},
-  {id:'R32-9',a:{group:'G',pos:1},b:{third:['A','E','H','I','J']}},
-  {id:'R32-10',a:{group:'D',pos:1},b:{third:['B','E','F','I','J']}},
-  {id:'R32-11',a:{group:'H',pos:1},b:{group:'J',pos:2}},
-  {id:'R32-12',a:{group:'K',pos:2},b:{group:'L',pos:2}},
-  {id:'R32-13',a:{group:'B',pos:1},b:{third:['E','F','G','I','J']}},
-  {id:'R32-14',a:{group:'D',pos:2},b:{group:'G',pos:2}},
-  {id:'R32-15',a:{group:'J',pos:1},b:{group:'H',pos:2}},
-  {id:'R32-16',a:{group:'K',pos:1},b:{third:['D','E','I','J','L']}}
-];
-
-const R32_IDS=R32_SLOTS.map((_,i)=>`p${String(73+i).padStart(3,'0')}`);
-// Orden real del Excel en la sección Dieciseisavos.
-// IMPORTANTE: este orden manda para mostrar "Yo vs el grupo" y apuestas KO,
-// aunque la llave oficial/real tenga equipos diferentes o se actualice por clasificados.
+const R32_IDS=Array.from({length:16},(_,i)=>`p${String(73+i).padStart(3,'0')}`);
 const EXCEL_R32_ORDER=['p073','p074','p075','p076','p077','p078','p079','p080','p081','p082','p083','p084','p085','p086','p087','p088'];
 function isSameIdSet(a,b){const A=[...a].sort().join('|'), B=[...b].sort().join('|');return A===B}
 function predictionOrderIds(p, allowedIds=null){
@@ -170,89 +148,77 @@ function sortMatchesByPredictionOrder(ms,p=null){
 
 function groupBonus(p){let total=0,hits=0,closed=0;const detail=[];groupLetters().forEach(g=>{const real=actualGroupStanding(g), pred=predGroupStanding(g,p);if(!real||!pred)return;closed++;[4,3,1,1].forEach((val,i)=>{if(teamKey(real[i]?.team)===teamKey(pred[i]?.team)){total+=val;hits++;detail.push({grupo:g,pos:i+1,team:real[i].team,pts:val})}})});return{total,hits,closed,detail,max:closed*9}}
 
-function manualR32Matchups(){
-  return MATCHES.filter(m=>(m.matchId||0)>=73&&(m.matchId||0)<=88&&m.local&&m.visitante)
-    .sort((a,b)=>(a.matchId||0)-(b.matchId||0))
-    .map(m=>({id:m.id,a:m.local,b:m.visitante,aSource:'Cruce manual',bSource:'Cruce manual',key:pairKey(m.local,m.visitante)}))
-}
-function predictedGroupStatsFromScores(g,p){
-  const rows={};
-  for(const m of groupMatches(g)){
-    const pr=p?.predicciones?.[m.id];
-    if(!pr||pr.golesLocal==null||pr.golesVisitante==null)return null;
-    addRow(rows,m.local,m.visitante,pr.golesLocal,pr.golesVisitante);
-  }
-  return rows;
-}
-function bestThirdsForBracket(p){
-  const thirds=[];let closed=0;
-  groupLetters().forEach(g=>{
-    let st=p?predGroupStanding(g,p):actualGroupStanding(g);
-    if(!st||st.length<4)return;
-    closed++;
-    // Si existen posiciones manuales p.grupos, esas posiciones mandan.
-    // Pero para escoger los 8 mejores terceros NO se puede ordenar alfabéticamente:
-    // se adjuntan pts/gd/gf/gc calculados desde los marcadores pronosticados.
-    let third={...st[2],grupo:g};
-    if(p&&p.grupos&&Array.isArray(p.grupos[g])){
-      const stats=predictedGroupStatsFromScores(g,p);
-      const team=st[2]?.team;
-      if(stats&&team&&stats[team]) third={...stats[team],team,grupo:g};
-      else third={team,grupo:g,pts:0,gd:0,gf:0,gc:0};
-    }
-    thirds.push(third);
-  });
-  if(!p&&closed<groupLetters().length)return{thirds:[],closed,total:groupLetters().length,complete:false};
-  thirds.sort((a,b)=>(b.pts??0)-(a.pts??0)||(b.gd??0)-(a.gd??0)||(b.gf??0)-(a.gf??0)||(a.gc??0)-(b.gc??0)||String(a.team).localeCompare(String(b.team)));
-  return{thirds:thirds.slice(0,8),closed,total:groupLetters().length,complete:p?true:closed===groupLetters().length}
-}
-function fixedR32Side(side,p){if(!side.group)return null;const st=p?predGroupStanding(side.group,p):actualGroupStanding(side.group);const item=st?.[side.pos-1];return item?{team:item.team,source:`${side.pos}° Grupo ${side.group}`}:null}
-function compatibleThirdOptions(side,p,usedThirdGroups=new Set()){const best=bestThirdsForBracket(p);if(!best.complete)return[];return best.thirds.filter(x=>side.third.includes(x.grupo)&&!usedThirdGroups.has(x.grupo)).map(x=>({team:x.team,grupo:x.grupo,source:`3° Grupo ${x.grupo}`}))}
-function resolveR32Slot(slot,p,usedThirdGroups){
-  if(slot.group)return fixedR32Side(slot,p);
-  const opts=compatibleThirdOptions(slot,p,usedThirdGroups);
-  if(!opts.length)return null;
-  const found=opts[0];usedThirdGroups.add(found.grupo);return{team:found.team,source:found.source}
-}
+// Para armar la llave predicha se usan los MARCADORES de fase de grupos,
+// no p.grupos, porque p.grupos solo guarda el orden final y no permite rankear los mejores terceros.
+function predGroupStandingByScores(g,p){const rows={};for(const m of groupMatches(g)){const pr=p.predicciones?.[m.id];if(!pr)return null;addRow(rows,m.local,m.visitante,pr.golesLocal,pr.golesVisitante)}return Object.values(rows).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||a.gc-b.gc||a.team.localeCompare(b.team))}
+function bracketGroupStanding(g,p){return p?predGroupStandingByScores(g,p):actualGroupStanding(g)}
+function bestThirdsForBracket(p){const thirds=[];let closed=0;groupLetters().forEach(g=>{const st=bracketGroupStanding(g,p);if(!st||st.length<4)return;closed++;thirds.push({...st[2],grupo:g})});if(!p&&closed<groupLetters().length)return{thirds:[],closed,total:groupLetters().length,complete:false};thirds.sort((a,b)=>(b.pts??0)-(a.pts??0)||(b.gd??0)-(a.gd??0)||(b.gf??0)-(a.gf??0)||(a.gc??0)-(b.gc??0)||String(a.team).localeCompare(String(b.team)));return{thirds:thirds.slice(0,8),closed,total:groupLetters().length,complete:p?true:closed===groupLetters().length}}
+
+// Orden de columnas del Anexo C: 1A, 1B, 1D, 1E, 1G, 1I, 1K, 1L.
+// Incluye las combinaciones observadas en los 116 participantes. Si aparece una combinación no listada,
+// el sistema usa un fallback NO optimizador, para no regalar puntos.
+const ANNEX_C_THIRD_MAP={
+  'ACDEFGIJ':['C','G','J','D','A','F','E','I'],
+  'BCDEFIJL':['C','J','B','D','E','F','L','I'],
+  'ABCDEFGI':['C','G','B','D','A','F','E','I'],
+  'ABCDFGIL':['C','G','B','D','A','F','L','I'],
+  'ABCEFHIL':['H','E','B','C','A','F','L','I'],
+  'ABCEHIJL':['E','J','B','C','A','H','L','I'],
+  'ABCDEFJL':['C','J','B','D','A','F','L','E'],
+  'ABCDEFIL':['C','E','B','D','A','F','L','I'],
+  'BCDFGIJL':['C','G','B','D','J','F','L','I'],
+  'ABCDEFKL':['C','E','B','D','A','F','L','K'],
+  'ABCDFGJL':['C','G','B','D','A','F','L','J'],
+  'ABCEFIKL':['E','I','B','C','A','F','L','K'],
+  'ABCDEHIK':['H','E','B','C','A','D','I','K'],
+  'BCDEHIJL':['E','J','B','C','H','D','L','I'],
+  'ABCDEFGH':['H','G','B','C','A','F','D','E'],
+  'ABCDFIJL':['C','J','B','D','A','F','L','I'],
+  'ABCEFIJL':['E','J','B','C','A','F','L','I'],
+  'ABDEFGIJ':['E','G','B','D','A','F','I','J'],
+  'CDEFHIJL':['C','J','E','D','H','F','L','I'],
+  'ABCDEIJL':['E','J','B','C','A','D','L','I'],
+  'ACDEFIKL':['C','E','I','D','A','F','L','K'],
+  'ACDEFIJL':['C','J','E','D','A','F','L','I']
+};
+function thirdMapForGroups(groups){return ANNEX_C_THIRD_MAP[[...groups].sort().join('')]||null}
+
+const R32_FIXED_SLOTS={
+  p073:{a:{group:'A',pos:2},b:{group:'B',pos:2}},
+  p074:{a:{group:'C',pos:1},b:{group:'F',pos:2}},
+  p076:{a:{group:'F',pos:1},b:{group:'C',pos:2}},
+  p077:{a:{group:'E',pos:2},b:{group:'I',pos:2}},
+  p083:{a:{group:'H',pos:1},b:{group:'J',pos:2}},
+  p084:{a:{group:'K',pos:2},b:{group:'L',pos:2}},
+  p086:{a:{group:'D',pos:2},b:{group:'G',pos:2}},
+  p087:{a:{group:'J',pos:1},b:{group:'H',pos:2}}
+};
+const R32_THIRD_SLOTS=[
+  {pid:'p079',winner:'A',column:0},{pid:'p085',winner:'B',column:1},{pid:'p082',winner:'D',column:2},{pid:'p075',winner:'E',column:3},
+  {pid:'p081',winner:'G',column:4},{pid:'p078',winner:'I',column:5},{pid:'p088',winner:'K',column:6},{pid:'p080',winner:'L',column:7}
+];
+function teamFromStanding(st,group,pos){const row=st[group]?.[pos-1];return row?row.team:null}
 function r32Matchups(p){
-  // La verdad oficial de cruces es el archivo manual/resultados p073-p088, no una reconstrucción desde grupos.
-  if(!p)return manualR32Matchups();
-  const realKeys=new Set(manualR32Matchups().map(x=>x.key));
-  const thirdSlots=[];
-  const base=[];
-  R32_SLOTS.forEach((slot,idx)=>{
-    const aFixed=fixedR32Side(slot.a,p), bFixed=fixedR32Side(slot.b,p);
-    if(slot.a.third||slot.b.third){thirdSlots.push({slot,idx,aFixed,bFixed})}
-    else if(aFixed&&bFixed){base.push({id:slot.id,a:aFixed.team,b:bFixed.team,aSource:aFixed.source,bSource:bFixed.source,key:pairKey(aFixed.team,bFixed.team)})}
+  const st={};for(const g of groupLetters()){st[g]=bracketGroupStanding(g,p)}
+  const out=[];
+  const add=(pid,a,b,aSource,bSource)=>{if(a&&b)out.push({id:pid,a,b,aSource,bSource,key:pairKey(a,b)})};
+  Object.entries(R32_FIXED_SLOTS).forEach(([pid,s])=>add(pid,teamFromStanding(st,s.a.group,s.a.pos),teamFromStanding(st,s.b.group,s.b.pos),`${s.a.pos}° Grupo ${s.a.group}`,`${s.b.pos}° Grupo ${s.b.group}`));
+  const best=bestThirdsForBracket(p); if(!best.complete)return out;
+  const groups=best.thirds.map(x=>x.grupo); const map=thirdMapForGroups(groups);
+  const thirdByGroup={}; best.thirds.forEach(x=>thirdByGroup[x.grupo]=x.team);
+  const used=new Set();
+  R32_THIRD_SLOTS.forEach(s=>{
+    let thirdGroup=map?.[s.column];
+    // Fallback sin optimizar: solo toma el primer tercero disponible que sea permitido por la columna oficial del partido.
+    if(!thirdGroup){
+      const allowed={p079:['C','E','F','H','I'],p085:['E','F','G','I','J'],p082:['B','E','F','I','J'],p075:['A','B','C','D','F'],p081:['A','E','H','I','J'],p078:['C','D','F','G','H'],p088:['D','E','I','J','L'],p080:['E','H','I','J','K']}[s.pid]||[];
+      const found=best.thirds.find(x=>allowed.includes(x.grupo)&&!used.has(x.grupo));thirdGroup=found?.grupo;
+    }
+    if(thirdGroup){used.add(thirdGroup);add(s.pid,teamFromStanding(st,s.winner,1),thirdByGroup[thirdGroup],`1° Grupo ${s.winner}`,`3° Grupo ${thirdGroup}`)}
   });
-  const best=bestThirdsForBracket(p);
-  if(!best.complete)return base;
-  let bestAssign=null,bestScore=-1,bestFilled=-1;
-  function walk(i,used,items,score){
-    if(i>=thirdSlots.length){
-      const filled=items.filter(Boolean).length;
-      if(score>bestScore||(score===bestScore&&filled>bestFilled)){bestScore=score;bestFilled=filled;bestAssign=items.slice()}
-      return;
-    }
-    const entry=thirdSlots[i], slot=entry.slot;
-    const thirdSide=slot.a.third?slot.a:slot.b;
-    const fixed=slot.a.third?entry.bFixed:entry.aFixed;
-    const opts=compatibleThirdOptions(thirdSide,p,used);
-    if(!fixed||!opts.length){items.push(null);walk(i+1,used,items,score);items.pop();return}
-    for(const opt of opts){
-      used.add(opt.grupo);
-      const a=slot.a.third?opt.team:fixed.team;
-      const b=slot.a.third?fixed.team:opt.team;
-      const item={id:slot.id,a,b,aSource:slot.a.third?opt.source:fixed.source,bSource:slot.a.third?fixed.source:opt.source,key:pairKey(a,b)};
-      items.push(item);
-      walk(i+1,used,items,score+(realKeys.has(item.key)?1:0));
-      items.pop();used.delete(opt.grupo);
-    }
-  }
-  walk(0,new Set(),[],0);
-  return [...base,...(bestAssign||[]).filter(Boolean)].sort((a,b)=>Number(a.id.replace('R32-',''))-Number(b.id.replace('R32-','')))
+  return EXCEL_R32_ORDER.map(id=>out.find(x=>x.id===id)).filter(Boolean);
 }
-function r32ExactMatchupBonus(p){const real=manualR32Matchups(),pred=r32Matchups(p),predKeys=new Set(pred.map(x=>x.key));let total=0;const detail=[];real.forEach(m=>{if(predKeys.has(m.key)){total+=R32_EXACT_MATCHUP_BONUS;detail.push({...m,pts:R32_EXACT_MATCHUP_BONUS})}});return{total,hits:detail.length,available:real.length,detail}}
+function r32ExactMatchupBonus(p){const real=MATCHES.filter(m=>R32_IDS.includes(m.id)&&m.local&&m.visitante).map(m=>({id:m.id,a:m.local,b:m.visitante,key:pairKey(m.local,m.visitante)}));const pred=r32Matchups(p);const predKeys=new Set(pred.map(x=>x.key));let total=0;const detail=[];real.forEach(m=>{if(predKeys.has(m.key)){total+=R32_EXACT_MATCHUP_BONUS;detail.push({...m,pts:R32_EXACT_MATCHUP_BONUS})}});return{total,hits:detail.length,available:real.length,detail}}
 function calculate(){PLAYED=MATCHES.filter(isScoreable).sort((a,b)=>mt(a)-mt(b));PENDING=MATCHES.filter(m=>!isScoreable(m)).sort((a,b)=>mt(a)-mt(b));RANKING=PARTICIPANTES.map(p=>{let matchPts=0,exact=0,hit=0,last=[],koPts=0,koExact=0,koHit=0;const koByRound={};PLAYED.forEach(m=>{const pr=p.predicciones?.[m.id];if(!pr)return;const realGl=scoreLocal(m), realGv=scoreVisitante(m);const s=points(pr.golesLocal,pr.golesVisitante,realGl,realGv);matchPts+=s;const ex=+pr.golesLocal===+realGl&&+pr.golesVisitante===+realGv;const ok=outcome(pr.golesLocal,pr.golesVisitante)===outcome(realGl,realGv);if(ex)exact++;if(ok)hit++;const item={m,pr,s,ex,ok};last.unshift(item);if(isKO(m)){koPts+=s;if(ex)koExact++;if(ok)koHit++;const r=roundOfMatch(m);if(!koByRound[r])koByRound[r]={pts:0,hit:0,exact:0,total:0,items:[]};koByRound[r].pts+=s;koByRound[r].total++;if(ok)koByRound[r].hit++;if(ex)koByRound[r].exact++;koByRound[r].items.unshift(item)}});const gb=groupBonus(p);const r32=r32ExactMatchupBonus(p);const total=matchPts+gb.total+r32.total;return{...p,pts:total,matchPts,exact,hit,pct:PLAYED.length?pct(hit,PLAYED.length):0,last,groupPts:gb.total,groupHits:gb.hits,groupClosed:gb.closed,groupMax:gb.max,groupDetail:gb.detail,r32Pts:r32.total,r32Hits:r32.hits,r32Available:r32.available,r32Detail:r32.detail,koPts,koExact,koHit,koByRound}}).sort((a,b)=>b.pts-a.pts||b.exact-a.exact||b.hit-a.hit||a.nombre.localeCompare(b.nombre));RANKING.forEach((p,i)=>p.pos=i+1)}
 function scoreDistribution(match){const scores={};const outcomes={L:0,E:0,V:0};let total=0;PARTICIPANTES.forEach(p=>{const pr=p.predicciones?.[match.id];if(!pr)return;const sc=`${pr.golesLocal}-${pr.golesVisitante}`;scores[sc]=(scores[sc]||0)+1;outcomes[outcome(pr.golesLocal,pr.golesVisitante)]++;total++});const scoreRows=Object.entries(scores).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));return{scores:scoreRows,outcomes,total}}
 function groupBetSummary(m){const d=scoreDistribution(m);const max=d.scores[0]?.[1]||1;const rows=d.scores.slice(0,10).map(([sc,n],i)=>`<tr><td>${i+1<=3?['🥇','🥈','🥉'][i]:'#'+(i+1)}</td><td><b>${esc(sc)}</b><div class="bet-meter"><span style="width:${pct(n,max)}%"></span></div></td><td class="bet-num">${n}</td><td>${pct(n,d.total)}%</td><td class="bet-num">${exactPotentialPoints(sc)} pts</td></tr>`).join('');const valent=d.scores.filter(x=>x[1]<=2).slice(0,3).map(x=>x[0]);let brave='';if(valent.length){brave=`<div class="bet-brave">🎲 <b>Los valientes:</b> ${valent.map(sc=>`${esc(sc)} (${d.scores.find(x=>x[0]===sc)?.[1]||0})`).join(' · ')}</div>`}return `<div class="bet-card premium"><div class="bet-title">${flag(m.local)} ${esc(m.local)} vs ${esc(m.visitante)} ${flag(m.visitante)}</div><div class="prediction-strip"><div><span>Local</span><b>${d.outcomes.L}</b><small>${pct(d.outcomes.L,d.total)}%</small></div><div><span>Empate</span><b>${d.outcomes.E}</b><small>${pct(d.outcomes.E,d.total)}%</small></div><div><span>Visitante</span><b>${d.outcomes.V}</b><small>${pct(d.outcomes.V,d.total)}%</small></div></div><div class="collective-pick"><span>Predicción colectiva</span><b>${d.scores[0]?.[0]||'-'}</b><small>${d.scores[0]?.[1]||0} de ${d.total} participantes</small></div><div class="bet-table-wrap"><table class="bet-table"><thead><tr><th>#</th><th>Marcador</th><th>Personas</th><th>%</th><th>Exacto daría</th></tr></thead><tbody>${rows}</tbody><tfoot><tr class="bet-total"><td colspan="2">Total</td><td>${d.total}</td><td>100%</td><td></td></tr></tfoot></table></div>${brave}</div>`}
