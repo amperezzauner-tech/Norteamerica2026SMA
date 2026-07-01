@@ -1,4 +1,3 @@
-// FIX 2026-07-01 llaves 16avos: usar predicciones/resultados actuales y forzar recarga por index.html v=6_7_fix_llaves_16avos_20260701
 let PRED, RES, PARTICIPANTES=[], MATCHES=[], PLAYED=[], PENDING=[], RANKING=[];
 const TABS=[['inicio','🏠 Inicio'],['ranking','🏆 Ranking'],['partidos','⚽ Partidos'],['llave','🏆 Llave'],['camino','🧭 Camino'],['mundial','🌎 Mundial'],['salon','🥇 Salón']];
 const FLAGS={'México':'🇲🇽','Sudáfrica':'🇿🇦','Corea del Sur':'🇰🇷','Chequia':'🇨🇿','Canadá':'🇨🇦','Bosnia':'🇧🇦','Qatar':'🇶🇦','Suiza':'🇨🇭','Haití':'🇭🇹','Escocia':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','Brasil':'🇧🇷','Marruecos':'🇲🇦','EE.UU.':'🇺🇸','Paraguay':'🇵🇾','Australia':'🇦🇺','Turquía':'🇹🇷','C. de Marfil':'🇨🇮','Ecuador':'🇪🇨','Alemania':'🇩🇪','Curazao':'🇨🇼','P. Bajos':'🇳🇱','Japón':'🇯🇵','Suecia':'🇸🇪','Túnez':'🇹🇳','Egipto':'🇪🇬','Irán':'🇮🇷','Bélgica':'🇧🇪','N. Zelanda':'🇳🇿','España':'🇪🇸','Uruguay':'🇺🇾','Cabo Verde':'🇨🇻','Arabia Saudita':'🇸🇦','Francia':'🇫🇷','Noruega':'🇳🇴','Senegal':'🇸🇳','Irak':'🇮🇶','Argentina':'🇦🇷','Austria':'🇦🇹','Argelia':'🇩🇿','Jordania':'🇯🇴','Colombia':'🇨🇴','Portugal':'🇵🇹','Congo':'🇨🇩','Uzbekistán':'🇺🇿','Inglaterra':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','Ghana':'🇬🇭','Croacia':'🇭🇷','Panamá':'🇵🇦'};
@@ -33,7 +32,21 @@ function groupMatches(g){return MATCHES.filter(m=>m.grupo===g)}
 function addRow(rows,l,v,gl,gv){for(const t of [l,v])if(!rows[t])rows[t]={team:t,pj:0,pts:0,gf:0,gc:0,gd:0,w:0,d:0,l:0};const A=rows[l],B=rows[v];A.pj++;B.pj++;A.gf+=+gl;A.gc+=+gv;B.gf+=+gv;B.gc+=+gl;A.gd=A.gf-A.gc;B.gd=B.gf-B.gc;if(+gl>+gv){A.w++;B.l++;A.pts+=3}else if(+gl<+gv){B.w++;A.l++;B.pts+=3}else{A.d++;B.d++;A.pts++;B.pts++}}
 function standings(g){const rows={};groupMatches(g).forEach(m=>{if(!rows[m.local])rows[m.local]={team:m.local,pj:0,pts:0,gf:0,gc:0,gd:0,w:0,d:0,l:0};if(!rows[m.visitante])rows[m.visitante]={team:m.visitante,pj:0,pts:0,gf:0,gc:0,gd:0,w:0,d:0,l:0};if(isFinal(m))addRow(rows,m.local,m.visitante,scoreLocal(m),scoreVisitante(m))});return Object.values(rows).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf||a.gc-b.gc||a.team.localeCompare(b.team))}
 function actualGroupStanding(g){const ms=groupMatches(g);return ms.length>=6&&ms.every(isFinal)?standings(g):null}
-function predGroupStanding(g,p){if(p.grupos&&Array.isArray(p.grupos[g]))return p.grupos[g].map(team=>({team}));const rows={};for(const m of groupMatches(g)){const pr=p.predicciones?.[m.id];if(!pr)return null;addRow(rows,m.local,m.visitante,pr.golesLocal,pr.golesVisitante)}return Object.values(rows).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf)}
+function predGroupStanding(g,p){
+  const rows={};let complete=true;
+  for(const m of groupMatches(g)){
+    const pr=p.predicciones?.[m.id];
+    if(!pr){complete=false;continue}
+    addRow(rows,m.local,m.visitante,+pr.golesLocal,+pr.golesVisitante)
+  }
+  // Si el JSON trae posiciones explícitas de grupo, RESPETAMOS ese orden,
+  // pero conservamos pts/gd/gf calculados desde marcadores para ordenar mejores terceros.
+  if(p.grupos&&Array.isArray(p.grupos[g])){
+    return p.grupos[g].map(team=>rows[team]||{team,pts:0,gd:0,gf:0,gc:0,pj:0})
+  }
+  if(!complete)return null;
+  return Object.values(rows).sort((a,b)=>b.pts-a.pts||b.gd-a.gd||b.gf-a.gf)
+}
 function countHonor(key){const map={};PARTICIPANTES.forEach(p=>{const v=p.honor?.[key];if(v)map[v]=(map[v]||0)+1});return Object.entries(map).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]))}
 function countPredictedWinner(match){const map={};PARTICIPANTES.forEach(p=>{const pr=p.predicciones?.[match.id];if(!pr)return;const o=outcome(pr.golesLocal,pr.golesVisitante);const val=o==='L'?match.local:o==='V'?match.visitante:'Empate';map[val]=(map[val]||0)+1});return Object.entries(map).sort((a,b)=>b[1]-a[1])}
 function topMetric(key,label){return RANKING.slice().sort((a,b)=>b[key]-a[key]||b.pts-a.pts).slice(0,5).map((p,i)=>`<div class="barrow"><div class="barhead"><span>${medal(i+1)} ${esc(p.nombre)}</span><b>${p[key]} ${label}</b></div><div class="bar"><div class="fill" style="width:${pct(p[key],RANKING[0]?.[key]||1)}%"></div></div></div>`).join('')}
@@ -156,26 +169,60 @@ function sortMatchesByPredictionOrder(ms,p=null){
 }
 
 function groupBonus(p){let total=0,hits=0,closed=0;const detail=[];groupLetters().forEach(g=>{const real=actualGroupStanding(g), pred=predGroupStanding(g,p);if(!real||!pred)return;closed++;[4,3,1,1].forEach((val,i)=>{if(teamKey(real[i]?.team)===teamKey(pred[i]?.team)){total+=val;hits++;detail.push({grupo:g,pos:i+1,team:real[i].team,pts:val})}})});return{total,hits,closed,detail,max:closed*9}}
-function bestThirdsForBracket(p){const thirds=[];let closed=0;groupLetters().forEach(g=>{const st=p?predGroupStanding(g,p):actualGroupStanding(g);if(!st||st.length<4)return;closed++;thirds.push({...st[2],grupo:g})});if(!p&&closed<groupLetters().length)return{thirds:[],closed,total:groupLetters().length,complete:false};thirds.sort((a,b)=>(b.pts??0)-(a.pts??0)||(b.gd??0)-(a.gd??0)||(b.gf??0)-(a.gf??0)||(a.gc??0)-(b.gc??0)||String(a.team).localeCompare(String(b.team)));return{thirds:thirds.slice(0,8),closed,total:groupLetters().length,complete:p?true:closed===groupLetters().length}}
-function resolveR32Slot(slot,p,usedThirdGroups){if(slot.group){const st=p?predGroupStanding(slot.group,p):actualGroupStanding(slot.group);const item=st?.[slot.pos-1];return item?{team:item.team,source:`${slot.pos}° Grupo ${slot.group}`}:null}if(slot.third){const best=bestThirdsForBracket(p);if(!best.complete)return null;const found=best.thirds.find(x=>slot.third.includes(x.grupo)&&!usedThirdGroups.has(x.grupo));if(!found)return null;usedThirdGroups.add(found.grupo);return{team:found.team,source:`3° Grupo ${found.grupo}`}}return null}
-function r32Matchups(p){
-  // FIX V6.6 Ana: la llave REAL de 16avos NO se reconstruye desde grupos.
-  // Se toma del cruce manual cargado en resultados.json (p073-p088 / Diesiseisavos.xlsx).
-  // Las predicciones de cada participante sí se reconstruyen desde sus posiciones de grupo,
-  // para poder comparar si el cruce que imaginó coincide con el cruce manual real.
-  if(!p){
-    return MATCHES.filter(m=>R32_IDS.includes(m.id)&&m.local&&m.visitante)
-      .sort((a,b)=>R32_IDS.indexOf(a.id)-R32_IDS.indexOf(b.id))
-      .map(m=>({id:m.id,a:m.local,b:m.visitante,aSource:'Cruce manual',bSource:'Cruce manual',key:pairKey(m.local,m.visitante)}));
-  }
-  const used=new Set(),out=[];
-  R32_SLOTS.forEach(slot=>{
-    const a=resolveR32Slot(slot.a,p,used),b=resolveR32Slot(slot.b,p,used);
-    if(a&&b)out.push({id:slot.id,a:a.team,b:b.team,aSource:a.source,bSource:b.source,key:pairKey(a.team,b.team)});
-  });
-  return out;
+
+function manualR32Matchups(){
+  return MATCHES.filter(m=>(m.matchId||0)>=73&&(m.matchId||0)<=88&&m.local&&m.visitante)
+    .sort((a,b)=>(a.matchId||0)-(b.matchId||0))
+    .map(m=>({id:m.id,a:m.local,b:m.visitante,aSource:'Cruce manual',bSource:'Cruce manual',key:pairKey(m.local,m.visitante)}))
 }
-function r32ExactMatchupBonus(p){const real=r32Matchups(null),pred=r32Matchups(p),predKeys=new Set(pred.map(x=>x.key));let total=0;const detail=[];real.forEach(m=>{if(predKeys.has(m.key)){total+=R32_EXACT_MATCHUP_BONUS;detail.push({...m,pts:R32_EXACT_MATCHUP_BONUS})}});return{total,hits:detail.length,available:real.length,detail}}
+function bestThirdsForBracket(p){const thirds=[];let closed=0;groupLetters().forEach(g=>{const st=p?predGroupStanding(g,p):actualGroupStanding(g);if(!st||st.length<4)return;closed++;thirds.push({...st[2],grupo:g})});if(!p&&closed<groupLetters().length)return{thirds:[],closed,total:groupLetters().length,complete:false};thirds.sort((a,b)=>(b.pts??0)-(a.pts??0)||(b.gd??0)-(a.gd??0)||(b.gf??0)-(a.gf??0)||(a.gc??0)-(b.gc??0)||String(a.team).localeCompare(String(b.team)));return{thirds:thirds.slice(0,8),closed,total:groupLetters().length,complete:p?true:closed===groupLetters().length}}
+function fixedR32Side(side,p){if(!side.group)return null;const st=p?predGroupStanding(side.group,p):actualGroupStanding(side.group);const item=st?.[side.pos-1];return item?{team:item.team,source:`${side.pos}° Grupo ${side.group}`}:null}
+function compatibleThirdOptions(side,p,usedThirdGroups=new Set()){const best=bestThirdsForBracket(p);if(!best.complete)return[];return best.thirds.filter(x=>side.third.includes(x.grupo)&&!usedThirdGroups.has(x.grupo)).map(x=>({team:x.team,grupo:x.grupo,source:`3° Grupo ${x.grupo}`}))}
+function resolveR32Slot(slot,p,usedThirdGroups){
+  if(slot.group)return fixedR32Side(slot,p);
+  const opts=compatibleThirdOptions(slot,p,usedThirdGroups);
+  if(!opts.length)return null;
+  const found=opts[0];usedThirdGroups.add(found.grupo);return{team:found.team,source:found.source}
+}
+function r32Matchups(p){
+  // La verdad oficial de cruces es el archivo manual/resultados p073-p088, no una reconstrucción desde grupos.
+  if(!p)return manualR32Matchups();
+  const realKeys=new Set(manualR32Matchups().map(x=>x.key));
+  const thirdSlots=[];
+  const base=[];
+  R32_SLOTS.forEach((slot,idx)=>{
+    const aFixed=fixedR32Side(slot.a,p), bFixed=fixedR32Side(slot.b,p);
+    if(slot.a.third||slot.b.third){thirdSlots.push({slot,idx,aFixed,bFixed})}
+    else if(aFixed&&bFixed){base.push({id:slot.id,a:aFixed.team,b:bFixed.team,aSource:aFixed.source,bSource:bFixed.source,key:pairKey(aFixed.team,bFixed.team)})}
+  });
+  const best=bestThirdsForBracket(p);
+  if(!best.complete)return base;
+  let bestAssign=null,bestScore=-1,bestFilled=-1;
+  function walk(i,used,items,score){
+    if(i>=thirdSlots.length){
+      const filled=items.filter(Boolean).length;
+      if(score>bestScore||(score===bestScore&&filled>bestFilled)){bestScore=score;bestFilled=filled;bestAssign=items.slice()}
+      return;
+    }
+    const entry=thirdSlots[i], slot=entry.slot;
+    const thirdSide=slot.a.third?slot.a:slot.b;
+    const fixed=slot.a.third?entry.bFixed:entry.aFixed;
+    const opts=compatibleThirdOptions(thirdSide,p,used);
+    if(!fixed||!opts.length){items.push(null);walk(i+1,used,items,score);items.pop();return}
+    for(const opt of opts){
+      used.add(opt.grupo);
+      const a=slot.a.third?opt.team:fixed.team;
+      const b=slot.a.third?fixed.team:opt.team;
+      const item={id:slot.id,a,b,aSource:slot.a.third?opt.source:fixed.source,bSource:slot.a.third?fixed.source:opt.source,key:pairKey(a,b)};
+      items.push(item);
+      walk(i+1,used,items,score+(realKeys.has(item.key)?1:0));
+      items.pop();used.delete(opt.grupo);
+    }
+  }
+  walk(0,new Set(),[],0);
+  return [...base,...(bestAssign||[]).filter(Boolean)].sort((a,b)=>Number(a.id.replace('R32-',''))-Number(b.id.replace('R32-','')))
+}
+function r32ExactMatchupBonus(p){const real=manualR32Matchups(),pred=r32Matchups(p),predKeys=new Set(pred.map(x=>x.key));let total=0;const detail=[];real.forEach(m=>{if(predKeys.has(m.key)){total+=R32_EXACT_MATCHUP_BONUS;detail.push({...m,pts:R32_EXACT_MATCHUP_BONUS})}});return{total,hits:detail.length,available:real.length,detail}}
 function calculate(){PLAYED=MATCHES.filter(isScoreable).sort((a,b)=>mt(a)-mt(b));PENDING=MATCHES.filter(m=>!isScoreable(m)).sort((a,b)=>mt(a)-mt(b));RANKING=PARTICIPANTES.map(p=>{let matchPts=0,exact=0,hit=0,last=[],koPts=0,koExact=0,koHit=0;const koByRound={};PLAYED.forEach(m=>{const pr=p.predicciones?.[m.id];if(!pr)return;const realGl=scoreLocal(m), realGv=scoreVisitante(m);const s=points(pr.golesLocal,pr.golesVisitante,realGl,realGv);matchPts+=s;const ex=+pr.golesLocal===+realGl&&+pr.golesVisitante===+realGv;const ok=outcome(pr.golesLocal,pr.golesVisitante)===outcome(realGl,realGv);if(ex)exact++;if(ok)hit++;const item={m,pr,s,ex,ok};last.unshift(item);if(isKO(m)){koPts+=s;if(ex)koExact++;if(ok)koHit++;const r=roundOfMatch(m);if(!koByRound[r])koByRound[r]={pts:0,hit:0,exact:0,total:0,items:[]};koByRound[r].pts+=s;koByRound[r].total++;if(ok)koByRound[r].hit++;if(ex)koByRound[r].exact++;koByRound[r].items.unshift(item)}});const gb=groupBonus(p);const r32=r32ExactMatchupBonus(p);const total=matchPts+gb.total+r32.total;return{...p,pts:total,matchPts,exact,hit,pct:PLAYED.length?pct(hit,PLAYED.length):0,last,groupPts:gb.total,groupHits:gb.hits,groupClosed:gb.closed,groupMax:gb.max,groupDetail:gb.detail,r32Pts:r32.total,r32Hits:r32.hits,r32Available:r32.available,r32Detail:r32.detail,koPts,koExact,koHit,koByRound}}).sort((a,b)=>b.pts-a.pts||b.exact-a.exact||b.hit-a.hit||a.nombre.localeCompare(b.nombre));RANKING.forEach((p,i)=>p.pos=i+1)}
 function scoreDistribution(match){const scores={};const outcomes={L:0,E:0,V:0};let total=0;PARTICIPANTES.forEach(p=>{const pr=p.predicciones?.[match.id];if(!pr)return;const sc=`${pr.golesLocal}-${pr.golesVisitante}`;scores[sc]=(scores[sc]||0)+1;outcomes[outcome(pr.golesLocal,pr.golesVisitante)]++;total++});const scoreRows=Object.entries(scores).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));return{scores:scoreRows,outcomes,total}}
 function groupBetSummary(m){const d=scoreDistribution(m);const max=d.scores[0]?.[1]||1;const rows=d.scores.slice(0,10).map(([sc,n],i)=>`<tr><td>${i+1<=3?['🥇','🥈','🥉'][i]:'#'+(i+1)}</td><td><b>${esc(sc)}</b><div class="bet-meter"><span style="width:${pct(n,max)}%"></span></div></td><td class="bet-num">${n}</td><td>${pct(n,d.total)}%</td><td class="bet-num">${exactPotentialPoints(sc)} pts</td></tr>`).join('');const valent=d.scores.filter(x=>x[1]<=2).slice(0,3).map(x=>x[0]);let brave='';if(valent.length){brave=`<div class="bet-brave">🎲 <b>Los valientes:</b> ${valent.map(sc=>`${esc(sc)} (${d.scores.find(x=>x[0]===sc)?.[1]||0})`).join(' · ')}</div>`}return `<div class="bet-card premium"><div class="bet-title">${flag(m.local)} ${esc(m.local)} vs ${esc(m.visitante)} ${flag(m.visitante)}</div><div class="prediction-strip"><div><span>Local</span><b>${d.outcomes.L}</b><small>${pct(d.outcomes.L,d.total)}%</small></div><div><span>Empate</span><b>${d.outcomes.E}</b><small>${pct(d.outcomes.E,d.total)}%</small></div><div><span>Visitante</span><b>${d.outcomes.V}</b><small>${pct(d.outcomes.V,d.total)}%</small></div></div><div class="collective-pick"><span>Predicción colectiva</span><b>${d.scores[0]?.[0]||'-'}</b><small>${d.scores[0]?.[1]||0} de ${d.total} participantes</small></div><div class="bet-table-wrap"><table class="bet-table"><thead><tr><th>#</th><th>Marcador</th><th>Personas</th><th>%</th><th>Exacto daría</th></tr></thead><tbody>${rows}</tbody><tfoot><tr class="bet-total"><td colspan="2">Total</td><td>${d.total}</td><td>100%</td><td></td></tr></tfoot></table></div>${brave}</div>`}
