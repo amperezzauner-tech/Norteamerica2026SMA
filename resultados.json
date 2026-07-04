@@ -18,7 +18,7 @@
     "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
     "nota_auto": "p086 Australia 1-1 Egipto [finalizado] ESPN:760499",
     "diagnostico_auto": "actualizados=1; encontrados_sin_cambio=8; pendientes_no_encontrados=0",
-    "nota_fix_chatgpt": "Se agregaron p089-p104 como placeholders para que coincidan con predicciones.json."
+    "nota_llave_auto": "V3: agregados octavos, cuartos, semifinal, final y tercer puesto; los cruces se rellenan automáticamente desde el ganador de la ronda anterior."
   },
   "partidos": [
     {
@@ -1159,98 +1159,106 @@
     {
       "id": "p089",
       "matchId": 89,
-      "local": "Ganador p073",
-      "visitante": "Ganador p074",
-      "fase": "8avos",
+      "local": "Canadá",
+      "visitante": "Brasil",
+      "fase": "Octavos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p073",
+      "origenVisitante": "p074"
     },
     {
       "id": "p090",
       "matchId": 90,
-      "local": "Ganador p075",
-      "visitante": "Ganador p076",
-      "fase": "8avos",
+      "local": "Paraguay",
+      "visitante": "Marruecos",
+      "fase": "Octavos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p075",
+      "origenVisitante": "p076"
     },
     {
       "id": "p091",
       "matchId": 91,
-      "local": "Ganador p077",
-      "visitante": "Ganador p078",
-      "fase": "8avos",
+      "local": "Noruega",
+      "visitante": "Francia",
+      "fase": "Octavos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p077",
+      "origenVisitante": "p078"
     },
     {
       "id": "p092",
       "matchId": 92,
-      "local": "Ganador p079",
-      "visitante": "Ganador p080",
-      "fase": "8avos",
+      "local": "México",
+      "visitante": "Inglaterra",
+      "fase": "Octavos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p079",
+      "origenVisitante": "p080"
     },
     {
       "id": "p093",
       "matchId": 93,
-      "local": "Ganador p081",
-      "visitante": "Ganador p082",
-      "fase": "8avos",
+      "local": "Bélgica",
+      "visitante": "EE.UU.",
+      "fase": "Octavos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p081",
+      "origenVisitante": "p082"
     },
     {
       "id": "p094",
       "matchId": 94,
-      "local": "Ganador p083",
-      "visitante": "Ganador p084",
-      "fase": "8avos",
+      "local": "España",
+      "visitante": "Portugal",
+      "fase": "Octavos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p083",
+      "origenVisitante": "p084"
     },
     {
       "id": "p095",
       "matchId": 95,
-      "local": "Ganador p085",
-      "visitante": "Ganador p086",
-      "fase": "8avos",
+      "local": "Suiza",
+      "visitante": "Egipto",
+      "fase": "Octavos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p085",
+      "origenVisitante": "p086"
     },
     {
       "id": "p096",
       "matchId": 96,
       "local": "Ganador p087",
       "visitante": "Ganador p088",
-      "fase": "8avos",
+      "fase": "Octavos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p087",
+      "origenVisitante": "p088"
     },
     {
       "id": "p097",
@@ -1262,7 +1270,8 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p089",
+      "origenVisitante": "p090"
     },
     {
       "id": "p098",
@@ -1274,7 +1283,8 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p091",
+      "origenVisitante": "p092"
     },
     {
       "id": "p099",
@@ -1286,7 +1296,8 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p093",
+      "origenVisitante": "p094"
     },
     {
       "id": "p100",
@@ -1298,31 +1309,34 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p095",
+      "origenVisitante": "p096"
     },
     {
       "id": "p101",
       "matchId": 101,
       "local": "Ganador p097",
       "visitante": "Ganador p098",
-      "fase": "Semifinal",
+      "fase": "Semis",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p097",
+      "origenVisitante": "p098"
     },
     {
       "id": "p102",
       "matchId": 102,
       "local": "Ganador p099",
       "visitante": "Ganador p100",
-      "fase": "Semifinal",
+      "fase": "Semis",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p099",
+      "origenVisitante": "p100"
     },
     {
       "id": "p103",
@@ -1334,7 +1348,8 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p101",
+      "origenVisitante": "p102"
     },
     {
       "id": "p104",
@@ -1346,7 +1361,9 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "apifootball_id": null
+      "origenLocal": "p101",
+      "origenVisitante": "p102",
+      "tipoOrigen": "perdedores"
     }
   ]
 }

@@ -265,6 +265,108 @@ def apply_event(partido: dict, ev: dict) -> bool:
     return changed
 
 
+
+# --- V3: relleno automático de la llave completa ---
+BRACKET_LINKS = {
+    "p089": ("p073", "p074", "Octavos", "ganadores"),
+    "p090": ("p075", "p076", "Octavos", "ganadores"),
+    "p091": ("p077", "p078", "Octavos", "ganadores"),
+    "p092": ("p079", "p080", "Octavos", "ganadores"),
+    "p093": ("p081", "p082", "Octavos", "ganadores"),
+    "p094": ("p083", "p084", "Octavos", "ganadores"),
+    "p095": ("p085", "p086", "Octavos", "ganadores"),
+    "p096": ("p087", "p088", "Octavos", "ganadores"),
+    "p097": ("p089", "p090", "Cuartos", "ganadores"),
+    "p098": ("p091", "p092", "Cuartos", "ganadores"),
+    "p099": ("p093", "p094", "Cuartos", "ganadores"),
+    "p100": ("p095", "p096", "Cuartos", "ganadores"),
+    "p101": ("p097", "p098", "Semis", "ganadores"),
+    "p102": ("p099", "p100", "Semis", "ganadores"),
+    "p103": ("p101", "p102", "Final", "ganadores"),
+    "p104": ("p101", "p102", "Tercer puesto", "perdedores"),
+}
+
+def _advance_team(m: dict | None) -> str | None:
+    if not m:
+        return None
+    for k in ("ganador", "ganadorLlave", "clasificado", "winner"):
+        if m.get(k):
+            return m.get(k)
+    if m.get("estado") == "finalizado" and m.get("golesLocal") is not None and m.get("golesVisitante") is not None:
+        try:
+            gl, gv = int(m.get("golesLocal")), int(m.get("golesVisitante"))
+            if gl > gv:
+                return m.get("local")
+            if gv > gl:
+                return m.get("visitante")
+        except Exception:
+            return None
+    return None
+
+def _loser_team(m: dict | None) -> str | None:
+    if not m:
+        return None
+    w = _advance_team(m)
+    if not w:
+        return None
+    if w == m.get("local"):
+        return m.get("visitante")
+    if w == m.get("visitante"):
+        return m.get("local")
+    return None
+
+def _ensure_ko_match(partidos: list[dict], pid: str, match_id: int, fase: str, a: str, b: str, kind: str) -> dict:
+    m = next((x for x in partidos if x.get("id") == pid), None)
+    if m is None:
+        m = {
+            "id": pid,
+            "matchId": match_id,
+            "local": ("Perdedor " if kind == "perdedores" else "Ganador ") + a,
+            "visitante": ("Perdedor " if kind == "perdedores" else "Ganador ") + b,
+            "fase": fase,
+            "jornada": 1,
+            "estado": "pendiente",
+            "golesLocal": None,
+            "golesVisitante": None,
+        }
+        partidos.append(m)
+    m.setdefault("matchId", match_id)
+    m.setdefault("fase", fase)
+    m.setdefault("jornada", 1)
+    m["origenLocal"] = a
+    m["origenVisitante"] = b
+    if kind == "perdedores":
+        m["tipoOrigen"] = "perdedores"
+    return m
+
+def sync_bracket(data: dict) -> list[str]:
+    """Rellena octavos→final con ganadores reales cuando se conocen.
+    Mantiene el partido pendiente y NO borra marcadores ya cargados."""
+    partidos = data.setdefault("partidos", [])
+    cambios: list[str] = []
+    by = {p.get("id"): p for p in partidos}
+    for pid, (a, b, fase, kind) in BRACKET_LINKS.items():
+        mid = int(pid[1:])
+        m = _ensure_ko_match(partidos, pid, mid, fase, a, b, kind)
+        by[pid] = m
+        left_src, right_src = by.get(a), by.get(b)
+        if kind == "perdedores":
+            left = _loser_team(left_src) or f"Perdedor {a}"
+            right = _loser_team(right_src) or f"Perdedor {b}"
+        else:
+            left = _advance_team(left_src) or f"Ganador {a}"
+            right = _advance_team(right_src) or f"Ganador {b}"
+        if m.get("local") != left:
+            cambios.append(f"{pid}.local: {m.get('local')} → {left}")
+            m["local"] = left
+        if m.get("visitante") != right:
+            cambios.append(f"{pid}.visitante: {m.get('visitante')} → {right}")
+            m["visitante"] = right
+        m["fase"] = fase
+    partidos.sort(key=lambda x: int(x.get("matchId") or 9999))
+    return cambios
+
+
 def main() -> int:
     if not RESULTADOS.exists():
         print("ERROR: no existe resultados.json en la raíz del repo", file=sys.stderr)
@@ -287,6 +389,8 @@ def main() -> int:
         elif p.get("estado") != "finalizado":
             pendientes_no_encontrados.append(f"{p.get('id')} {p.get('local')} vs {p.get('visitante')}")
 
+    bracket_updates = sync_bracket(data)
+
     meta = data.setdefault("_meta", {})
     partidos = data.get("partidos", [])
     meta["jugados"] = sum(1 for p in partidos if p.get("estado") == "finalizado")
@@ -299,13 +403,17 @@ def main() -> int:
     if updates:
         meta["ultima_actualizacion_auto"] = now_iso
         meta["nota_auto"] = "; ".join(updates[:12])
+    elif bracket_updates:
+        meta["ultima_actualizacion_auto"] = now_iso
+        meta["nota_auto"] = "Llave actualizada: " + "; ".join(bracket_updates[:8])
     elif pendientes_no_encontrados:
         meta["nota_auto"] = "Pendientes no encontrados: " + "; ".join(pendientes_no_encontrados[:8])
+    meta["nota_llave_auto"] = "V3: octavos, cuartos, semifinal, final y tercer puesto se rellenan automáticamente desde ganadores/perdedores."
 
     if data != before:
         RESULTADOS.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print("Cambios aplicados:")
-        for u in updates or ["solo metadatos/diagnóstico de revisión"]:
+        for u in updates or bracket_updates or ["solo metadatos/diagnóstico de revisión"]:
             print(" -", u)
     else:
         print("Sin cambios en resultados.json")
