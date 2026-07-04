@@ -39,10 +39,8 @@ const MATCH_MAP = {
   "p019": null, "p020": null, "p043": null, "p044": null, "p069": null, "p070": null,
   "p023": null, "p024": null, "p047": null, "p048": null, "p071": null, "p072": null,
   "p022": null, "p021": null, "p045": null, "p046": null, "p067": null, "p068": null,
-  // Eliminatorias — 16avos
-  "p073": null, "p074": null, "p075": null, "p076": null, "p077": null, "p078": null,
-  "p079": null, "p080": null, "p081": null, "p082": null, "p083": null, "p084": null,
-  "p085": null, "p086": null, "p087": null, "p088": null,
+  "p073": null, "p074": null, "p075": null, "p076": null, "p077": null, "p078": null, "p079": null, "p080": null,
+  "p081": null, "p082": null, "p083": null, "p084": null, "p085": null, "p086": null, "p087": null, "p088": null,
 };
 
 // Mapeo de nombres de equipos: API-Football → nuestro nombre
@@ -171,9 +169,6 @@ const OUR_MATCHES = [
   {id:"p046",local:"Panamá",visitante:"Croacia"},
   {id:"p067",local:"Panamá",visitante:"Inglaterra"},
   {id:"p068",local:"Croacia",visitante:"Ghana"},
-
-  // Eliminatorias — 16avos de final
-  // IMPORTANTE: para la polla se evalúa el marcador a los 90 minutos.
   {id:"p073",local:"Sudáfrica",visitante:"Canadá"},
   {id:"p074",local:"Brasil",visitante:"Japón"},
   {id:"p075",local:"Alemania",visitante:"Paraguay"},
@@ -207,33 +202,19 @@ function findMatch(apiHome, apiAway) {
   );
 }
 
-// ─── Helper: marcador válido para la polla ────────────────────────────────
-// En eliminatorias API-Football puede devolver en fix.goals el marcador final
-// después de prórroga/penales. Para la polla se debe cerrar a los 90 minutos.
-function getPollScore(fix) {
-  const fullHome = fix.score?.fulltime?.home;
-  const fullAway = fix.score?.fulltime?.away;
 
-  // Si la API trae marcador de 90 minutos, este manda.
-  if (fullHome !== null && fullHome !== undefined && fullAway !== null && fullAway !== undefined) {
-    return { home: fullHome, away: fullAway, source: "score.fulltime" };
-  }
-
-  // Fallback solo para partidos donde no exista score.fulltime.
-  return {
-    home: fix.goals?.home,
-    away: fix.goals?.away,
-    source: "goals.fallback",
-  };
-}
-
-// Corrección manual conocida: Argentina vs Cabo Verde cerró 1-1 a los 90'.
-// El 3-2 corresponde a 120 minutos y NO debe usarse para puntos de la polla.
-function applyKnownNinetyMinuteCorrections(match, score) {
+// Devuelve el marcador que debe contar para la polla: 90 minutos.
+// Si API-Football trae prórroga en goals, se usa score.fulltime.
+function getScore90(fix, match) {
   if (match?.id === "p087") {
-    return { home: 1, away: 1, source: "manual_90min_p087" };
+    return { home: 1, away: 1, winner: "Argentina", source: "manual_90min_p087" };
   }
-  return score;
+  const ftHome = fix.score?.fulltime?.home ?? fix.score?.full_time?.home;
+  const ftAway = fix.score?.fulltime?.away ?? fix.score?.full_time?.away;
+  if (ftHome !== null && ftHome !== undefined && ftAway !== null && ftAway !== undefined) {
+    return { home: ftHome, away: ftAway, winner: null, source: "score.fulltime" };
+  }
+  return { home: fix.goals?.home, away: fix.goals?.away, winner: null, source: "goals_fallback" };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -280,9 +261,9 @@ exports.actualizarResultados = functions
           continue;
         }
 
-        const score = applyKnownNinetyMinuteCorrections(match, getPollScore(fix));
-        const golesL = score.home;
-        const golesV = score.away;
+        const score90 = getScore90(fix, match);
+        const golesL = score90.home;
+        const golesV = score90.away;
         if (golesL === null || golesL === undefined || golesV === null || golesV === undefined) continue;
 
         const ref = db.collection("resultados").doc(match.id);
@@ -294,7 +275,9 @@ exports.actualizarResultados = functions
           golesVisitante:golesV,
           estado:        "finalizado",
           fixtureId:     fix.fixture?.id || null,
-          scoreSource:   score.source,
+          scoreSource:    score90.source,
+          winner:         score90.winner || null,
+          formaClasificacion: match.id === "p087" ? "alargue" : null,
           updatedAt:     admin.firestore.FieldValue.serverTimestamp(),
         }, { merge: true });
 
@@ -356,9 +339,9 @@ exports.actualizarManual = functions
         const match = findMatch(homeTeam, awayTeam);
         if (!match) continue;
 
-        const score = applyKnownNinetyMinuteCorrections(match, getPollScore(fix));
-        const golesL = score.home;
-        const golesV = score.away;
+        const score90 = getScore90(fix, match);
+        const golesL = score90.home;
+        const golesV = score90.away;
         if (golesL === null || golesL === undefined || golesV === null || golesV === undefined) continue;
 
         const ref = db.collection("resultados").doc(match.id);
@@ -370,14 +353,15 @@ exports.actualizarManual = functions
           golesVisitante:golesV,
           estado:        "finalizado",
           fixtureId:     fix.fixture?.id || null,
-          scoreSource:   score.source,
+          scoreSource:    score90.source,
+          winner:         score90.winner || null,
+          formaClasificacion: match.id === "p087" ? "alargue" : null,
           updatedAt:     admin.firestore.FieldValue.serverTimestamp(),
         }, { merge: true });
 
         updatedMatches.push({
           id:      match.id,
           partido: `${match.local} ${golesL}-${golesV} ${match.visitante}`,
-          scoreSource: score.source,
         });
       }
 
