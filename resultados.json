@@ -5,19 +5,19 @@
     "jugados": 88,
     "pendientes": 16,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-07-04T03:34:36.151691+00:00",
+    "ultima_actualizacion_auto": "2026-07-04T04:56:50.651409+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-07-04T03:34:36.151691+00:00",
+    "ultima_revision_auto": "2026-07-04T04:56:50.651409+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
     "correccion_manual_p059": "Turquía 3-2 EE.UU.",
     "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
-    "nota_auto": "p087 Argentina 3-2 Cabo Verde [finalizado] ESPN:760500; p088 Colombia 1-0 Ghana [finalizado] ESPN:760501",
-    "diagnostico_auto": "actualizados=2; encontrados_sin_cambio=4; pendientes_no_encontrados=0",
+    "nota_auto": "p089 Canadá None-None Marruecos [pendiente] ESPN:760502; p090 Paraguay None-None Francia [pendiente] ESPN:760503; p091 Brasil None-None Noruega [pendiente] ESPN:760504; p092 México None-None Inglaterra [pendiente] ESPN:760505; p093 Portugal None-None España [pendiente] ESPN:760506; p094 EE.UU. None-None Bélgica [pendiente] ESPN:760507; p095 Argentina None-None Egipto [pendiente] ESPN:760509; p096 Suiza None-None Colombia [pendiente] ESPN:760508",
+    "diagnostico_auto": "actualizados=8; encontrados_sin_cambio=6; pendientes_no_encontrados=8",
     "nota_llave_auto": "V3: octavos, cuartos, semifinal, final y tercer puesto se rellenan automáticamente desde ganadores/perdedores."
   },
   "partidos": [
@@ -1170,7 +1170,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p073",
-      "origenVisitante": "p076"
+      "origenVisitante": "p076",
+      "espn_id": "760502"
     },
     {
       "id": "p090",
@@ -1183,7 +1184,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p075",
-      "origenVisitante": "p078"
+      "origenVisitante": "p078",
+      "espn_id": "760503"
     },
     {
       "id": "p091",
@@ -1196,7 +1198,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p074",
-      "origenVisitante": "p077"
+      "origenVisitante": "p077",
+      "espn_id": "760504"
     },
     {
       "id": "p092",
@@ -1209,7 +1212,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p079",
-      "origenVisitante": "p080"
+      "origenVisitante": "p080",
+      "espn_id": "760505"
     },
     {
       "id": "p093",
@@ -1222,7 +1226,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p084",
-      "origenVisitante": "p083"
+      "origenVisitante": "p083",
+      "espn_id": "760506"
     },
     {
       "id": "p094",
@@ -1235,7 +1240,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p082",
-      "origenVisitante": "p081"
+      "origenVisitante": "p081",
+      "espn_id": "760507"
     },
     {
       "id": "p095",
@@ -1248,7 +1254,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p087",
-      "origenVisitante": "p086"
+      "origenVisitante": "p086",
+      "espn_id": "760509"
     },
     {
       "id": "p096",
@@ -1261,7 +1268,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p085",
-      "origenVisitante": "p088"
+      "origenVisitante": "p088",
+      "espn_id": "760508"
     },
     {
       "id": "p097",
