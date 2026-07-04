@@ -10,14 +10,14 @@
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-07-04T04:56:50.651409+00:00",
+    "ultima_revision_auto": "2026-07-04T07:54:33.999925+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
     "correccion_manual_p059": "Turquía 3-2 EE.UU.",
     "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
-    "nota_auto": "p089 Canadá None-None Marruecos [pendiente] ESPN:760502; p090 Paraguay None-None Francia [pendiente] ESPN:760503; p091 Brasil None-None Noruega [pendiente] ESPN:760504; p092 México None-None Inglaterra [pendiente] ESPN:760505; p093 Portugal None-None España [pendiente] ESPN:760506; p094 EE.UU. None-None Bélgica [pendiente] ESPN:760507; p095 Argentina None-None Egipto [pendiente] ESPN:760509; p096 Suiza None-None Colombia [pendiente] ESPN:760508",
-    "diagnostico_auto": "actualizados=8; encontrados_sin_cambio=6; pendientes_no_encontrados=8",
+    "nota_auto": "Pendientes no encontrados: p097 Ganador p089 vs Ganador p090; p098 Ganador p093 vs Ganador p094; p099 Ganador p091 vs Ganador p092; p100 Ganador p095 vs Ganador p096; p101 Ganador p097 vs Ganador p098; p102 Ganador p099 vs Ganador p100; p103 Perdedor p101 vs Perdedor p102; p104 Ganador p101 vs Ganador p102",
+    "diagnostico_auto": "actualizados=0; encontrados_sin_cambio=14; pendientes_no_encontrados=8",
     "nota_llave_auto": "V3: octavos, cuartos, semifinal, final y tercer puesto se rellenan automáticamente desde ganadores/perdedores."
   },
   "partidos": [
