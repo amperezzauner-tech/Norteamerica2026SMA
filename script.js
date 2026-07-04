@@ -514,4 +514,17 @@ function renderMundial(){
   document.getElementById('mundial').innerHTML=`<div class="grid2"><div class="card"><div class="ch"><h2>🌍 Campeón más votado</h2></div><div class="cb">${bars(campeones,116)}</div></div><div class="card"><div class="ch"><h2>🥇 Botín de Oro</h2></div><div class="cb"><p class="subtle">Según las predicciones que subió la gente.</p>${bars(botin,Math.max(1,botin[0]?.[1]||1))}</div></div><div class="card"><div class="ch"><h2>⚽ Balón de Oro</h2></div><div class="cb"><p class="subtle">Según las predicciones que subió la gente.</p>${bars(balon,Math.max(1,balon[0]?.[1]||1))}</div></div><div class="card"><div class="ch"><h2>🎯 Acertómetro top 5</h2></div><div class="cb">${topMetric('pct','%')}</div></div></div><br><div class="card"><div class="ch"><h2>🗺️ Mapa del Mundial</h2></div><div class="cb">${worldMap()}</div></div><br><div class="card"><div class="ch"><h2>📊 Opinión colectiva</h2></div><div class="cb">${focus?`<p class="subtle">${cleanFlag(focus.local)} ${esc(ft.local)} vs ${esc(ft.visitante)} ${cleanFlag(focus.visitante)}</p>${bars(countPredictedWinner(focus),116)}`:'Sin próximo partido'}</div></div>`
 }
 
+
+// --- FIX V3.3: orden correcto oficial de octavos y horarios ---
+Object.assign(MATCH_SCHEDULE, {
+  p089:'2026-07-04T17:00:00Z', p090:'2026-07-04T21:00:00Z',
+  p091:'2026-07-05T20:00:00Z', p092:'2026-07-06T00:00:00Z',
+  p093:'2026-07-06T19:00:00Z', p094:'2026-07-07T00:00:00Z',
+  p095:'2026-07-07T16:00:00Z', p096:'2026-07-07T20:00:00Z',
+  p097:'2026-07-09T20:00:00Z', p098:'2026-07-10T19:00:00Z',
+  p099:'2026-07-11T21:00:00Z', p100:'2026-07-12T01:00:00Z',
+  p101:'2026-07-14T19:00:00Z', p102:'2026-07-15T19:00:00Z',
+  p103:'2026-07-18T21:00:00Z', p104:'2026-07-19T19:00:00Z'
+});
+
 initNav();loadData();

@@ -268,22 +268,24 @@ def apply_event(partido: dict, ev: dict) -> bool:
 
 # --- V3: relleno automático de la llave completa ---
 BRACKET_LINKS = {
-    "p089": ("p073", "p074", "Octavos", "ganadores"),
-    "p090": ("p075", "p076", "Octavos", "ganadores"),
-    "p091": ("p077", "p078", "Octavos", "ganadores"),
-    "p092": ("p079", "p080", "Octavos", "ganadores"),
-    "p093": ("p081", "p082", "Octavos", "ganadores"),
-    "p094": ("p083", "p084", "Octavos", "ganadores"),
-    "p095": ("p085", "p086", "Octavos", "ganadores"),
-    "p096": ("p087", "p088", "Octavos", "ganadores"),
+    # Octavos oficiales
+    "p089": ("p073", "p076", "Octavos", "ganadores"),  # Canadá vs Marruecos
+    "p090": ("p075", "p078", "Octavos", "ganadores"),  # Paraguay vs Francia
+    "p091": ("p074", "p077", "Octavos", "ganadores"),  # Brasil vs Noruega
+    "p092": ("p079", "p080", "Octavos", "ganadores"),  # México vs Inglaterra
+    "p093": ("p084", "p083", "Octavos", "ganadores"),  # Portugal vs España
+    "p094": ("p082", "p081", "Octavos", "ganadores"),  # EE.UU. vs Bélgica
+    "p095": ("p087", "p086", "Octavos", "ganadores"),  # Ganador Argentina/Cabo Verde vs Egipto
+    "p096": ("p085", "p088", "Octavos", "ganadores"),  # Suiza vs ganador Colombia/Ghana
+    # Cuartos oficiales
     "p097": ("p089", "p090", "Cuartos", "ganadores"),
-    "p098": ("p091", "p092", "Cuartos", "ganadores"),
-    "p099": ("p093", "p094", "Cuartos", "ganadores"),
+    "p098": ("p093", "p094", "Cuartos", "ganadores"),
+    "p099": ("p091", "p092", "Cuartos", "ganadores"),
     "p100": ("p095", "p096", "Cuartos", "ganadores"),
     "p101": ("p097", "p098", "Semis", "ganadores"),
     "p102": ("p099", "p100", "Semis", "ganadores"),
-    "p103": ("p101", "p102", "Final", "ganadores"),
-    "p104": ("p101", "p102", "Tercer puesto", "perdedores"),
+    "p103": ("p101", "p102", "Tercer puesto", "perdedores"),
+    "p104": ("p101", "p102", "Final", "ganadores"),
 }
 
 def _advance_team(m: dict | None) -> str | None:
