@@ -1,0 +1,21 @@
+POLLA MUNDIAL 2026 — V5 ESTABLE AUDITADA
+
+Archivos principales para subir/reemplazar:
+- index.html
+- resultados.json
+- predicciones.json
+- grupos.html
+- bracket.js
+- bracket.css
+
+Si usas Firebase Functions, revisa también la carpeta functions/.
+
+Validaciones realizadas:
+- index.html: sintaxis JavaScript válida.
+- functions/index.js: sintaxis JavaScript válida.
+- La página carga con 116 participantes, 104 partidos y 88 finalizados.
+- Sin errores de consola al renderizar Inicio, Ranking, Partidos, Llave, Eliminatorias, Predicciones y Salón.
+- Argentina vs Cabo Verde puntúa 1-1 a los 90 minutos y clasifica Argentina.
+- Octavos definidos visibles.
+- +2 puntos por llave exacta en mismo orden por fase.
+- Centro mantiene vivos a equipos programados en octavos como Colombia y Portugal.
