@@ -39,6 +39,10 @@ const MATCH_MAP = {
   "p019": null, "p020": null, "p043": null, "p044": null, "p069": null, "p070": null,
   "p023": null, "p024": null, "p047": null, "p048": null, "p071": null, "p072": null,
   "p022": null, "p021": null, "p045": null, "p046": null, "p067": null, "p068": null,
+  // Eliminatorias — 16avos
+  "p073": null, "p074": null, "p075": null, "p076": null, "p077": null, "p078": null,
+  "p079": null, "p080": null, "p081": null, "p082": null, "p083": null, "p084": null,
+  "p085": null, "p086": null, "p087": null, "p088": null,
 };
 
 // Mapeo de nombres de equipos: API-Football → nuestro nombre
@@ -167,6 +171,25 @@ const OUR_MATCHES = [
   {id:"p046",local:"Panamá",visitante:"Croacia"},
   {id:"p067",local:"Panamá",visitante:"Inglaterra"},
   {id:"p068",local:"Croacia",visitante:"Ghana"},
+
+  // Eliminatorias — 16avos de final
+  // IMPORTANTE: para la polla se evalúa el marcador a los 90 minutos.
+  {id:"p073",local:"Sudáfrica",visitante:"Canadá"},
+  {id:"p074",local:"Brasil",visitante:"Japón"},
+  {id:"p075",local:"Alemania",visitante:"Paraguay"},
+  {id:"p076",local:"P. Bajos",visitante:"Marruecos"},
+  {id:"p077",local:"C. de Marfil",visitante:"Noruega"},
+  {id:"p078",local:"Francia",visitante:"Suecia"},
+  {id:"p079",local:"México",visitante:"Ecuador"},
+  {id:"p080",local:"Inglaterra",visitante:"Congo"},
+  {id:"p081",local:"Bélgica",visitante:"Senegal"},
+  {id:"p082",local:"EE.UU.",visitante:"Bosnia"},
+  {id:"p083",local:"España",visitante:"Austria"},
+  {id:"p084",local:"Portugal",visitante:"Croacia"},
+  {id:"p085",local:"Suiza",visitante:"Argelia"},
+  {id:"p086",local:"Australia",visitante:"Egipto"},
+  {id:"p087",local:"Argentina",visitante:"Cabo Verde"},
+  {id:"p088",local:"Colombia",visitante:"Ghana"},
 ];
 
 // ─── Helper: normalizar nombre de equipo ──────────────────────────────────
@@ -182,6 +205,35 @@ function findMatch(apiHome, apiAway) {
   return OUR_MATCHES.find(m =>
     normalizeTeam(m.local) === h && normalizeTeam(m.visitante) === a
   );
+}
+
+// ─── Helper: marcador válido para la polla ────────────────────────────────
+// En eliminatorias API-Football puede devolver en fix.goals el marcador final
+// después de prórroga/penales. Para la polla se debe cerrar a los 90 minutos.
+function getPollScore(fix) {
+  const fullHome = fix.score?.fulltime?.home;
+  const fullAway = fix.score?.fulltime?.away;
+
+  // Si la API trae marcador de 90 minutos, este manda.
+  if (fullHome !== null && fullHome !== undefined && fullAway !== null && fullAway !== undefined) {
+    return { home: fullHome, away: fullAway, source: "score.fulltime" };
+  }
+
+  // Fallback solo para partidos donde no exista score.fulltime.
+  return {
+    home: fix.goals?.home,
+    away: fix.goals?.away,
+    source: "goals.fallback",
+  };
+}
+
+// Corrección manual conocida: Argentina vs Cabo Verde cerró 1-1 a los 90'.
+// El 3-2 corresponde a 120 minutos y NO debe usarse para puntos de la polla.
+function applyKnownNinetyMinuteCorrections(match, score) {
+  if (match?.id === "p087") {
+    return { home: 1, away: 1, source: "manual_90min_p087" };
+  }
+  return score;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -222,16 +274,16 @@ exports.actualizarResultados = functions
       for (const fix of fixtures) {
         const homeTeam  = fix.teams?.home?.name || "";
         const awayTeam  = fix.teams?.away?.name || "";
-        const golesL    = fix.goals?.home;
-        const golesV    = fix.goals?.away;
-
-        if (golesL === null || golesV === null) continue;
-
         const match = findMatch(homeTeam, awayTeam);
         if (!match) {
           functions.logger.warn(`Sin match: ${homeTeam} vs ${awayTeam}`);
           continue;
         }
+
+        const score = applyKnownNinetyMinuteCorrections(match, getPollScore(fix));
+        const golesL = score.home;
+        const golesV = score.away;
+        if (golesL === null || golesL === undefined || golesV === null || golesV === undefined) continue;
 
         const ref = db.collection("resultados").doc(match.id);
         batch.set(ref, {
@@ -242,6 +294,7 @@ exports.actualizarResultados = functions
           golesVisitante:golesV,
           estado:        "finalizado",
           fixtureId:     fix.fixture?.id || null,
+          scoreSource:   score.source,
           updatedAt:     admin.firestore.FieldValue.serverTimestamp(),
         }, { merge: true });
 
@@ -300,12 +353,13 @@ exports.actualizarManual = functions
       for (const fix of fixtures) {
         const homeTeam = fix.teams?.home?.name || "";
         const awayTeam = fix.teams?.away?.name || "";
-        const golesL   = fix.goals?.home;
-        const golesV   = fix.goals?.away;
-
-        if (golesL === null || golesV === null) continue;
         const match = findMatch(homeTeam, awayTeam);
         if (!match) continue;
+
+        const score = applyKnownNinetyMinuteCorrections(match, getPollScore(fix));
+        const golesL = score.home;
+        const golesV = score.away;
+        if (golesL === null || golesL === undefined || golesV === null || golesV === undefined) continue;
 
         const ref = db.collection("resultados").doc(match.id);
         batch.set(ref, {
@@ -316,12 +370,14 @@ exports.actualizarManual = functions
           golesVisitante:golesV,
           estado:        "finalizado",
           fixtureId:     fix.fixture?.id || null,
+          scoreSource:   score.source,
           updatedAt:     admin.firestore.FieldValue.serverTimestamp(),
         }, { merge: true });
 
         updatedMatches.push({
           id:      match.id,
           partido: `${match.local} ${golesL}-${golesV} ${match.visitante}`,
+          scoreSource: score.source,
         });
       }
 
