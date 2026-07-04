@@ -20,7 +20,13 @@ function decisionLabel(m){const g=advanceTeam(m);if(!g||!isKO(m)||!isFinal(m))re
 function isFinal(m){return m.estado==='finalizado'&&scoreLocal(m)!=null&&scoreVisitante(m)!=null}
 function isLive(m){return m.estado==='en_vivo'&&scoreLocal(m)!=null&&scoreVisitante(m)!=null}
 function isScoreable(m){return isFinal(m)||isLive(m)}
-function mt(m){return MATCH_SCHEDULE[m.id]?new Date(MATCH_SCHEDULE[m.id]).getTime():(m.matchId||999)*999999999}
+function mt(m){
+  // Si el partido tiene horario oficial, ordenar por fecha real.
+  if(MATCH_SCHEDULE[m.id]) return new Date(MATCH_SCHEDULE[m.id]).getTime();
+  // IMPORTANTE: los partidos sin horario definido (octavos en adelante)
+  // deben ir DESPUÉS de los partidos de hoy que sí tienen hora (p087/p088).
+  return Date.UTC(2099,0,1) + ((m.matchId||999)*60000);
+}
 function fmt(m){return MATCH_SCHEDULE[m.id]?new Date(MATCH_SCHEDULE[m.id]).toLocaleString('es-CO',{weekday:'short',hour:'numeric',minute:'2-digit',hour12:true}):''}
 function pct(n,d){return Math.round((n/(d||1))*100)}
 function medal(i){return i===1?'🥇':i===2?'🥈':i===3?'🥉':'#'+i}
