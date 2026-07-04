@@ -472,4 +472,40 @@ function renderPartidos(){const cards=MATCHES.slice().sort((a,b)=>mt(a)-mt(b)).m
 function renderLlave(){const kos=MATCHES.filter(m=>(m.matchId||0)>=73).sort((a,b)=>(a.matchId||0)-(b.matchId||0));const realR32=r32Matchups(null);document.getElementById('llave').innerHTML=`<div class="grid2"><div class="card"><div class="ch"><h2>🏆 Eliminatorias</h2></div><div class="cb"><p class="subtle">Cruces definidos y resultados de llaves.</p>${kos.map(m=>{const t=matchTeams(m);return `<div class="match-row"><div class="team">${cleanFlag(m.local)} ${esc(t.local)}</div><div class="score">${isScoreable(m)?`${scoreLabel(m)}`:'vs'}</div><div class="team r">${esc(t.visitante)} ${cleanFlag(m.visitante)}</div><div class="status">${decisionLabel(m)}</div></div>`}).join('')}</div></div><div><div class="card"><div class="ch"><h2>🧮 Puntos de llaves y clasificados</h2></div><div class="cb"><p class="subtle">Aquí se separan los puntos de grupos, llave exacta de 16avos y partidos de eliminación directa.</p>${koLeaderboard()}</div></div><br><div class="card"><div class="ch"><h2>📌 Resumen por ronda</h2></div><div class="cb">${koRoundSummary()}${realR32.length?`<br><p class="subtle"><b>Llaves oficiales evaluables:</b> ${realR32.map(x=>`${esc(x.a)} vs ${esc(x.b)}`).join(' · ')}</p>`:''}</div></div></div></div>`}
 function countPredictedWinner(match){const map={};const t=matchTeams(match);PARTICIPANTES.forEach(p=>{const pr=p.predicciones?.[match.id];if(!pr)return;const o=outcome(pr.golesLocal,pr.golesVisitante);const val=o==='L'?t.local:o==='V'?t.visitante:'Empate';map[val]=(map[val]||0)+1});return Object.entries(map).sort((a,b)=>b[1]-a[1])}
 
+
+
+// --- FIX V3.1: Mapa del Mundial sin placeholders ---
+function isRealTeamName(t){
+  const v=String(t||'').trim();
+  return !!v && v!=='Por definir' && !isPlaceholderTeam(v) && !/^p\d{3}$/i.test(v);
+}
+function allTeams(){
+  const s=new Set();
+  MATCHES.filter(m=>(m.matchId||0)<=72).forEach(m=>{
+    if(isRealTeamName(m.local))s.add(m.local);
+    if(isRealTeamName(m.visitante))s.add(m.visitante);
+  });
+  return [...s].sort((a,b)=>a.localeCompare(b,'es'));
+}
+function qualifiedTeams(){
+  const s=new Set();
+  MATCHES.filter(m=>(m.matchId||0)>=73).forEach(m=>{
+    const t=matchTeams(m);
+    if(isRealTeamName(t.local))s.add(teamKey(t.local));
+    if(isRealTeamName(t.visitante))s.add(teamKey(t.visitante));
+  });
+  return s;
+}
+function worldMap(){
+  const q=qualifiedTeams();
+  const teams=allTeams();
+  return `<div class="map-grid">${teams.map(t=>`<div class="map-team ${q.has(teamKey(t))?'ok':'bad'}"><span>${flag(t)} ${esc(t)}</span><b>${q.has(teamKey(t))?'Clasificado':'Eliminado'}</b></div>`).join('')}</div>`;
+}
+function renderMundial(){
+  const campeones=countHonor('campeon'), botin=countHonorPlayer('botin_oro'), balon=countHonorPlayer('balon_oro');
+  const focus=liveOrNext();
+  const ft=focus?matchTeams(focus):null;
+  document.getElementById('mundial').innerHTML=`<div class="grid2"><div class="card"><div class="ch"><h2>🌍 Campeón más votado</h2></div><div class="cb">${bars(campeones,116)}</div></div><div class="card"><div class="ch"><h2>🥇 Botín de Oro</h2></div><div class="cb"><p class="subtle">Según las predicciones que subió la gente.</p>${bars(botin,Math.max(1,botin[0]?.[1]||1))}</div></div><div class="card"><div class="ch"><h2>⚽ Balón de Oro</h2></div><div class="cb"><p class="subtle">Según las predicciones que subió la gente.</p>${bars(balon,Math.max(1,balon[0]?.[1]||1))}</div></div><div class="card"><div class="ch"><h2>🎯 Acertómetro top 5</h2></div><div class="cb">${topMetric('pct','%')}</div></div></div><br><div class="card"><div class="ch"><h2>🗺️ Mapa del Mundial</h2></div><div class="cb">${worldMap()}</div></div><br><div class="card"><div class="ch"><h2>📊 Opinión colectiva</h2></div><div class="cb">${focus?`<p class="subtle">${cleanFlag(focus.local)} ${esc(ft.local)} vs ${esc(ft.visitante)} ${cleanFlag(focus.visitante)}</p>${bars(countPredictedWinner(focus),116)}`:'Sin próximo partido'}</div></div>`
+}
+
 initNav();loadData();
