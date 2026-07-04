@@ -2,23 +2,23 @@
   "_meta": {
     "generado": "2026-06-21",
     "total_partidos": 104,
-    "jugados": 86,
-    "pendientes": 18,
+    "jugados": 87,
+    "pendientes": 17,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-07-03T21:17:54.344564+00:00",
+    "ultima_actualizacion_auto": "2026-07-04T01:19:39.043285+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-07-03T21:17:54.344564+00:00",
+    "ultima_revision_auto": "2026-07-04T01:19:39.043285+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
     "correccion_manual_p059": "Turquía 3-2 EE.UU.",
     "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
-    "nota_auto": "p086 Australia 1-1 Egipto [finalizado] ESPN:760499",
-    "diagnostico_auto": "actualizados=1; encontrados_sin_cambio=8; pendientes_no_encontrados=0",
-    "nota_llave_auto": "V3: agregados octavos, cuartos, semifinal, final y tercer puesto; los cruces se rellenan automáticamente desde el ganador de la ronda anterior.",
+    "nota_auto": "p087 Argentina 3-2 Cabo Verde [finalizado] ESPN:760500; p089 Canadá None-None Marruecos [pendiente] ESPN:760502; p090 Paraguay None-None Francia [pendiente] ESPN:760503; p091 Brasil None-None Noruega [pendiente] ESPN:760504; p092 México None-None Inglaterra [pendiente] ESPN:760505; p093 Portugal None-None España [pendiente] ESPN:760506; p094 EE.UU. None-None Bélgica [pendiente] ESPN:760507",
+    "diagnostico_auto": "actualizados=7; encontrados_sin_cambio=5; pendientes_no_encontrados=10",
+    "nota_llave_auto": "V3: octavos, cuartos, semifinal, final y tercer puesto se rellenan automáticamente desde ganadores/perdedores.",
     "nota_octavos_fix": "2026-07-03: Octavos corregidos: Canadá-Marruecos, Paraguay-Francia, Brasil-Noruega, México-Inglaterra, Portugal-España, EE.UU.-Bélgica, ganador p087-Egipto, Suiza-ganador p088."
   },
   "partidos": [
@@ -1140,10 +1140,12 @@
       "visitante": "Cabo Verde",
       "fase": "16avos",
       "jornada": 1,
-      "estado": "pendiente",
-      "golesLocal": null,
-      "golesVisitante": null,
-      "espn_id": "760500"
+      "estado": "finalizado",
+      "golesLocal": 3,
+      "golesVisitante": 2,
+      "espn_id": "760500",
+      "ganador": "Argentina",
+      "formaDefinicion": "alargue"
     },
     {
       "id": "p088",
@@ -1168,7 +1170,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p073",
-      "origenVisitante": "p074"
+      "origenVisitante": "p076",
+      "espn_id": "760502"
     },
     {
       "id": "p090",
@@ -1181,7 +1184,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p075",
-      "origenVisitante": "p076"
+      "origenVisitante": "p078",
+      "espn_id": "760503"
     },
     {
       "id": "p091",
@@ -1193,8 +1197,9 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p077",
-      "origenVisitante": "p078"
+      "origenLocal": "p074",
+      "origenVisitante": "p077",
+      "espn_id": "760504"
     },
     {
       "id": "p092",
@@ -1207,7 +1212,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p079",
-      "origenVisitante": "p080"
+      "origenVisitante": "p080",
+      "espn_id": "760505"
     },
     {
       "id": "p093",
@@ -1219,8 +1225,9 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p081",
-      "origenVisitante": "p082"
+      "origenLocal": "p084",
+      "origenVisitante": "p083",
+      "espn_id": "760506"
     },
     {
       "id": "p094",
@@ -1232,20 +1239,21 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p083",
-      "origenVisitante": "p084"
+      "origenLocal": "p082",
+      "origenVisitante": "p081",
+      "espn_id": "760507"
     },
     {
       "id": "p095",
       "matchId": 95,
-      "local": "Ganador p087",
+      "local": "Argentina",
       "visitante": "Egipto",
       "fase": "Octavos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p085",
+      "origenLocal": "p087",
       "origenVisitante": "p086"
     },
     {
@@ -1258,7 +1266,7 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p087",
+      "origenLocal": "p085",
       "origenVisitante": "p088"
     },
     {
@@ -1284,8 +1292,8 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p091",
-      "origenVisitante": "p092"
+      "origenLocal": "p093",
+      "origenVisitante": "p094"
     },
     {
       "id": "p099",
@@ -1297,8 +1305,8 @@
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p093",
-      "origenVisitante": "p094"
+      "origenLocal": "p091",
+      "origenVisitante": "p092"
     },
     {
       "id": "p100",
@@ -1318,7 +1326,7 @@
       "matchId": 101,
       "local": "Ganador p097",
       "visitante": "Ganador p098",
-      "fase": "Semifinal",
+      "fase": "Semis",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
@@ -1331,7 +1339,7 @@
       "matchId": 102,
       "local": "Ganador p099",
       "visitante": "Ganador p100",
-      "fase": "Semifinal",
+      "fase": "Semis",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
@@ -1342,21 +1350,22 @@
     {
       "id": "p103",
       "matchId": 103,
-      "local": "Ganador p101",
-      "visitante": "Ganador p102",
+      "local": "Perdedor p101",
+      "visitante": "Perdedor p102",
       "fase": "Tercer puesto",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p101",
-      "origenVisitante": "p102"
+      "origenVisitante": "p102",
+      "tipoOrigen": "perdedores"
     },
     {
       "id": "p104",
       "matchId": 104,
-      "local": "Perdedor p101",
-      "visitante": "Perdedor p102",
+      "local": "Ganador p101",
+      "visitante": "Ganador p102",
       "fase": "Final",
       "jornada": 1,
       "estado": "pendiente",
