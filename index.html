@@ -691,7 +691,7 @@ function sanitizeMatches(matches){
       m.golesVisitante=1;
       m.winner='Argentina';
       m.formaClasificacion='alargue';
-      m.nota90='Marcador 90': 1-1. Pasa Argentina por alargue.';
+      m.nota90='Marcador 90: 1-1. Pasa Argentina por alargue.';
     }
   });
   return matches;
@@ -1159,7 +1159,7 @@ function renderActivityFeed(){
     const last16=r16done[r16done.length-1];
     const adv=advanceWinner(last16)||(+last16.golesLocal>+last16.golesVisitante?last16.local:last16.visitante);
     const via=last16.formaClasificacion?' ('+last16.formaClasificacion+')':'';
-    items.push(['🏆',adv+' avanzó a Octavos de Final','Marcador 90': '+last16.golesLocal+'-'+last16.golesVisitante+via+' en 16avos']);
+    items.push(['🏆',adv+' avanzó a Octavos de Final','Marcador 90: '+last16.golesLocal+'-'+last16.golesVisitante+via+' en 16avos']);
   }
   el.innerHTML=items.slice(0,7).map(x=>'<div class="feed-item"><div class="feed-ico">'+x[0]+'</div><div><div class="feed-title">'+esc(x[1])+'</div><div class="feed-sub">'+esc(x[2])+'</div></div></div>').join('')||'<div class="empty">Aún no hay movimientos para mostrar.</div>';
 }
