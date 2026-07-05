@@ -855,6 +855,15 @@ function predWinnerForMatch(p,matchup){
   if(gv>gl)return matchup.b;
   return null;
 }
+function predLoserForMatch(p,matchup){
+  if(!matchup||!p)return null;
+  const pr=p.predicciones?.[matchup.id];
+  if(!pr || pr.golesLocal===undefined || pr.golesVisitante===undefined)return null;
+  const gl=+pr.golesLocal, gv=+pr.golesVisitante;
+  if(gl>gv)return matchup.b;
+  if(gv>gl)return matchup.a;
+  return null;
+}
 function participantKnockoutMatchups(p){
   const map={};
   r32Matchups(p).forEach((m,i)=>{map['p'+String(73+i).padStart(3,'0')]={id:'p'+String(73+i).padStart(3,'0'),a:m.a,b:m.b,key:orderedPairKey(m.a,m.b)};});
@@ -864,6 +873,11 @@ function participantKnockoutMatchups(p){
     const b=predWinnerForMatch(p,map[y]);
     if(a&&b)map[id]={id,a,b,key:orderedPairKey(a,b)};
   });
+  // Tercer puesto (p103): se juega entre los perdedores de las semifinales (p101/p102),
+  // no está en BRACKET_LINKS porque ese mapa solo propaga ganadores.
+  const l101=predLoserForMatch(p,map['p101']);
+  const l102=predLoserForMatch(p,map['p102']);
+  if(l101&&l102)map['p103']={id:'p103',a:l101,b:l102,key:orderedPairKey(l101,l102)};
   return map;
 }
 function realPhaseMatchups(phase){
@@ -1306,7 +1320,7 @@ const KO_MATCH_INFO={
   p097:{a:'Por definir',b:'Por definir',date:'Jul 9'},p098:{a:'Por definir',b:'Por definir',date:'Jul 10'},
   p099:{a:'Por definir',b:'Por definir',date:'Jul 11'},p100:{a:'Por definir',b:'Por definir',date:'Jul 11'},
   p101:{a:'Por definir',b:'Por definir',date:'Jul 14'},p102:{a:'Por definir',b:'Por definir',date:'Jul 15'},
-  p103:{a:'Por definir',b:'Por definir',date:'Jul 19'},p104:{a:'Por definir',b:'Por definir',date:'Jul 18'},
+  p103:{a:'Por definir',b:'Por definir',date:'Jul 18'},p104:{a:'Por definir',b:'Por definir',date:'Jul 19'},
 };
 function koPredCard(matchId){
   const info=KO_MATCH_INFO[matchId];if(!info)return'';
@@ -1374,7 +1388,8 @@ function matchPhaseLabel(m){
   if(num>=89&&num<=96)return'🏆 Octavos de Final';
   if(num>=97&&num<=100)return'🏆 Cuartos de Final';
   if(num>=101&&num<=102)return'🏆 Semifinal';
-  if(num===103)return'🏆 Final';
+  if(num===103)return'🏆 Tercer puesto';
+  if(num===104)return'🏆 Final';
   return'Grupo '+(m.grupo||'?')+' · Jornada '+(m.jornada||'?');
 }
 function renderMatches(){
