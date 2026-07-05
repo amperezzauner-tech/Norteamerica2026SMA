@@ -25,7 +25,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .section{display:none}.section.act{display:block}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.section-title{font-size:.86rem;color:var(--gold);font-weight:900;padding:13px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px}.body{padding:12px 14px}.muted{color:var(--muted)}
 .search{width:100%;padding:10px 14px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);color:#fff;outline:none;margin-bottom:10px}
 .rank-row{display:grid;grid-template-columns:42px 1fr 72px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(30,58,85,.75);cursor:pointer}.rank-row:last-child{border-bottom:none}.pos{color:var(--muted);font-size:.78rem;text-align:center}.name{font-weight:760;font-size:.9rem}.pts{text-align:right;color:var(--gold);font-weight:950}
-.chips{margin-top:3px;display:flex;gap:4px;flex-wrap:wrap}.chip{font-size:.62rem;background:#1a0a3d;border:1px solid var(--line);color:var(--muted);padding:2px 6px;border-radius:999px}.chip.gold{color:#06101d;background:var(--gold);border-color:var(--gold)}.chip.ok{color:var(--ok);border-color:#4cde7a66;background:#4cde7a12}.chip.violet{color:var(--violet);border-color:#c084fc66;background:#c084fc14}
+.chips{margin-top:3px;display:flex;gap:4px;flex-wrap:wrap}.chip{font-size:.62rem;background:#1a0a3d;border:1px solid var(--line);color:var(--muted);padding:2px 6px;border-radius:999px}.chip.gold{color:#06101d;background:var(--gold);border-color:var(--gold)}.chip.ok{color:var(--ok);border-color:#4cde7a66;background:#4cde7a12}.chip.violet{color:var(--violet);border-color:#c084fc66;background:#c084fc14}.chip.bad{color:var(--bad);border-color:#ef3e3666;background:#ef3e3612}
 .match-card{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}.match-card:last-child{border-bottom:none}.score{font-weight:950;color:var(--gold);white-space:nowrap}
 .barrow{margin:11px 0}.barhead{display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:5px}.bar{height:9px;background:#1a0a3d;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#7c3aed,#ffd447,#c084fc)}.fill.ok{background:linear-gradient(90deg,#059669,#26d07c)}.fill.violet{background:linear-gradient(90deg,#6d28d9,#c084fc)}
 .pred-match{padding:12px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#1a0a3d,#0e0520);margin-bottom:10px}.pred-title{font-weight:900;margin-bottom:4px}.pred-sub{font-size:.68rem;color:var(--muted);margin-bottom:8px}.group-head{display:flex;gap:6px;overflow:auto;padding-bottom:10px}.group-head button{border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:999px;padding:7px 11px;font-weight:900}.group-head button.act{background:linear-gradient(135deg,var(--gold),#ffef9a);color:#06101d;border-color:var(--gold)}
@@ -237,6 +237,8 @@ body:before{
     </div>
     <div style="height:10px"></div>
     <div class="card"><div class="section-title">🎯 Acertómetro top 5</div><div class="body" id="top-meter"></div></div>
+    <div style="height:10px"></div>
+    <div class="card"><div class="section-title">📊 Quién se movió <span class="chip">última jornada</span></div><div class="body" id="movers-card"></div></div>
     <div style="height:10px"></div>
     <div class="card"><div class="section-title">📈 Gráfica del ranking <span class="chip">top 10</span></div><div class="body"><div class="rank-chart" id="rank-chart"></div></div></div>
     <div style="height:10px"></div>
@@ -982,7 +984,7 @@ function renderAll(){
     renderDashboard, renderActivityFeed, renderRankingChart, renderFifaCards,
     renderWorldMap, renderDaily, renderQuickAwards, renderSurprise,
     renderCollective, renderChampionCards, renderBotinBalon, renderKOPredictions,
-    renderGroupButtons, renderGroupPredictions, renderTopMeter,
+    renderGroupButtons, renderGroupPredictions, renderTopMeter, renderMovers,
     renderRanking, renderMatches, renderMatchPredictionTable,
     renderEliminatorias, renderBadges, renderRarest
   ].forEach(fn=>{ try{ if(typeof fn==='function') fn(); } catch(e){ console.error('[renderAll]',fn?.name,e); } });
@@ -1200,6 +1202,18 @@ function renderGroupPredictions(){
 }
 function predBar(label,n,total,cls){return '<div class="barrow"><div class="barhead"><span>'+esc(label)+'</span><b>'+pct(n,total)+'%</b></div><div class="bar"><div class="fill '+cls+'" style="width:'+pct(n,total)+'%"></div></div></div>'}
 function renderTopMeter(){const tmEl=document.getElementById('top-meter');if(!tmEl)return;tmEl.innerHTML=RANKING.slice(0,5).map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">#'+p.pos+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">'+p.hit+'/'+PLAYED.length+' aciertos</span><span class="chip">'+p.exact+' exactos</span><span class="chip">'+p.pct+'%</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')}
+function renderMovers(){
+  const el=document.getElementById('movers-card'); if(!el)return;
+  const moves=positionMovers();
+  if(!moves.length){el.innerHTML='<div class="empty">Sin jornada reciente para comparar todavía.</div>';return;}
+  const up=moves.filter(x=>x.delta>0).slice(0,4);
+  const down=moves.filter(x=>x.delta<0).slice(-4).reverse();
+  const row=(x,cls,arrow)=>'<div class="rank-row" onclick="openProfile(\''+x.p.id+'\')"><div class="pos">#'+x.p.pos+'</div><div><div class="name">'+esc(x.p.nombre)+'</div><div class="chips"><span class="chip '+cls+'">'+arrow+' '+Math.abs(x.delta)+' puesto'+(Math.abs(x.delta)===1?'':'s')+'</span></div></div><div class="pts">'+x.p.pts+'</div></div>';
+  let html='';
+  if(up.length)html+='<div class="muted" style="font-weight:900;margin-bottom:4px">🔼 Subieron</div>'+up.map(x=>row(x,'ok','🔼')).join('');
+  if(down.length)html+='<div class="muted" style="font-weight:900;margin:10px 0 4px">🔽 Bajaron</div>'+down.map(x=>row(x,'bad','🔽')).join('');
+  el.innerHTML=html||'<div class="empty">Nadie cambió de puesto en la última jornada.</div>';
+}
 function renderRanking(){const searchEl=document.getElementById('search');const q=norm(searchEl?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+((p.r32MatchHits||0)?'<span class="chip gold">🔗 '+p.r32MatchHits+' llaves</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
 function matchPhaseLabel(m){
   const id=m.id;const num=parseInt((id||'').replace('p',''));
@@ -1314,6 +1328,19 @@ function jornadaScores(){
     });
     return {...p,jPts:pts,jHit:hit,jExact:exact,jGames:ms.length};
   }).sort((a,b)=>b.jPts-a.jPts||b.jExact-a.jExact||b.jHit-a.jHit);
+}
+// Aproxima el puesto de cada quien ANTES de la jornada más reciente restando sus
+// puntos de esa jornada (los bonos de grupo/llave se asumen iguales; solo cambia
+// rara vez, cuando la jornada reciente cierra un grupo o define una llave nueva).
+function positionMovers(){
+  const js=jornadaScores();
+  if(!js.length||!js.some(p=>p.jGames))return [];
+  const before=js.map(p=>({id:p.id,priorPts:(p.pts||0)-(p.jPts||0)}))
+    .sort((a,b)=>b.priorPts-a.priorPts);
+  const priorPos={}; before.forEach((p,i)=>{priorPos[p.id]=i+1;});
+  return RANKING.map(p=>({p,delta:(priorPos[p.id]||p.pos)-p.pos}))
+    .filter(x=>x.delta!==0)
+    .sort((a,b)=>b.delta-a.delta);
 }
 
 function renderBadges(){
