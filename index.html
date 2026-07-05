@@ -869,7 +869,21 @@ function predLoserForMatch(p,matchup){
 }
 function participantKnockoutMatchups(p){
   const map={};
-  r32Matchups(p).forEach((m,i)=>{map['p'+String(73+i).padStart(3,'0')]={id:'p'+String(73+i).padStart(3,'0'),a:m.a,b:m.b,key:orderedPairKey(m.a,m.b)};});
+  // OJO: no usar r32Matchups(p) aquí. Esa función SALTA (no empuja nada al arreglo)
+  // los cruces que no logra resolver, así que su índice ya no corresponde a la
+  // posición real del cruce en R32_SLOTS. Si eso pasa, todos los cruces siguientes
+  // quedan desalineados y terminan comparándose contra el partido equivocado
+  // (ej.: el cruce de p084 termina comparado como si fuera el de p081).
+  // Por eso aquí se recorre R32_SLOTS directamente, para que el índice i
+  // siempre corresponda a 73+i sin importar cuántos cruces no se resuelvan.
+  const usedThirdGroups=new Set();
+  R32_SLOTS.forEach((slot,i)=>{
+    const a=resolveBracketSlot(slot.a,p,usedThirdGroups);
+    const b=resolveBracketSlot(slot.b,p,usedThirdGroups);
+    if(!a||!b)return;
+    const id='p'+String(73+i).padStart(3,'0');
+    map[id]={id,a:a.team,b:b.team,key:orderedPairKey(a.team,b.team)};
+  });
   Object.keys(BRACKET_LINKS).forEach(id=>{
     const [x,y]=BRACKET_LINKS[id];
     const a=predWinnerForMatch(p,map[x]);
