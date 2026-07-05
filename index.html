@@ -854,26 +854,11 @@ function teamStatusTag(team){
   if(!team)return '';
   return aliveTeamsSet().has(team)?'<span class="chip ok">🟢 vivo</span>':'<span class="chip">⚫ eliminado</span>';
 }
-// Partidos de eliminatoria (16avos a semis) que alimentan la final (p104).
-// Si el usuario predijo un empate en cualquiera de estos, la cadena de "quién avanza"
-// se corta ahí mismo: un empate no dice a quién llevó a la siguiente ronda.
-const P104_ANCESTOR_IDS=['p073','p074','p075','p076','p077','p078','p079','p080','p081','p082','p083','p084','p085','p086','p087','p088','p089','p090','p091','p092','p093','p094','p095','p096','p097','p098','p099','p100','p101','p102'];
-function tiedChainMatches(p){
-  return P104_ANCESTOR_IDS.map(id=>{
-    const pr=p.predicciones?.[id]; if(!pr||pr.golesLocal===undefined||pr.golesVisitante===undefined)return null;
-    if(+pr.golesLocal!==+pr.golesVisitante)return null;
-    const real=MATCHES.find(m=>m.id===id);
-    const label=(real&&real.local&&!isPlaceholderTeam(real.local))?real.local+' vs '+real.visitante:null;
-    return {id,score:pr.golesLocal+'-'+pr.golesVisitante,label};
-  }).filter(Boolean);
-}
 function championPathCard(p){
   const map=participantKnockoutMatchups(p);
-  const championTeam=predWinnerForMatch(p,map['p104']);
-  const thirdTeam=predWinnerForMatch(p,map['p103']);
-  const finalMatch=map['p104'];
-  const rivalTeam=finalMatch?(finalMatch.a===championTeam?finalMatch.b:finalMatch.a):null;
   const honorChampion=cleanHonorTeam(p.honor?.campeon);
+  const honorSub=cleanHonorTeam(p.honor?.subcampeon);
+  const honorThird=cleanHonorTeam(p.honor?.tercer_puesto);
   const phasesOrder=['16avos','8vos','Cuartos','Semis','Final'];
   const rowsHtml=phasesOrder.map(ph=>{
     const ids=KO_PHASES[ph].ids;
@@ -888,22 +873,9 @@ function championPathCard(p){
       return '<span class="ko-pill '+cls+'">'+icon+' '+teamsTxt+'</span>';
     }).join('');
   });
-  let header='<div class="label">Según tus marcadores partido a partido</div>';
-  if(championTeam){
-    header+='<h2 style="color:var(--gold);margin:6px 0">'+esc(championTeam)+' '+teamStatusTag(championTeam)+'</h2>'+(rivalTeam?'<p class="muted">Le ganarías la final a <b>'+esc(rivalTeam)+'</b> '+teamStatusTag(rivalTeam)+'</p>':'');
-  }else{
-    const tied=tiedChainMatches(p).slice(0,3);
-    header+=tied.length
-      ? '<p class="muted">No se puede seguir el camino hasta la final: predijiste empate en '+(tied.length>1?'estos partidos de eliminatoria':'este partido de eliminatoria')+' (y ahí no hay forma de saber a quién llevaste a la siguiente ronda): '+tied.map(t=>'<b>'+esc(t.label||t.id)+' '+t.score+'</b>').join(', ')+'.</p>'
-      : '<p class="muted">Tu cadena de predicciones todavía no llega hasta la final (te falta alguna predicción de eliminatoria).</p>';
-  }
-  const honorHtml=honorChampion
-    ? '<p class="muted" style="margin-top:6px">🗳️ Campeón que elegiste: <b style="color:var(--white)">'+esc(honorChampion)+'</b> '+teamStatusTag(honorChampion)+
-      (championTeam&&!sameTeam(championTeam,honorChampion)?'<br><span style="font-size:.68rem">⚠️ No coincide con lo de arriba: tu pick de campeón fue independiente de tus marcadores partido a partido, así que pueden no cuadrar entre sí.</span>':'')+'</p>'
-    : '';
-  const thirdHtml=thirdTeam?'<p class="muted" style="margin-top:4px">Tu tercer puesto: <b>'+esc(thirdTeam)+'</b> '+teamStatusTag(thirdTeam)+'</p>':'';
-  const explainer='<div class="admin-note" style="margin-bottom:10px">ℹ️ Aquí ves <b>dos campeones que pueden no coincidir</b>, y está bien que no coincidan: el de arriba sale de seguir tus propios marcadores partido a partido hasta la final; el <b>🗳️ que elegiste</b> es tu voto aparte a "¿quién crees que gana el Mundial?". Si dice que no puede calcular tu camino, es porque predijiste un empate en algún partido de eliminatoria (ahí siempre hay un ganador, así que un empate no dice a quién avanzaste).</div>';
-  return '<div class="card" style="margin-top:10px"><div class="section-title">🔮 Tu camino a campeón</div><div class="body">'+explainer+header+honorHtml+thirdHtml+
+  const picks=[['🏆','Campeón',honorChampion],['🥈','Subcampeón',honorSub],['🥉','Tercer puesto',honorThird]].filter(x=>x[2]);
+  const picksHtml=picks.map(x=>'<p class="muted" style="margin-top:4px">'+x[0]+' '+x[1]+' que elegiste: <b style="color:var(--white)">'+esc(x[2])+'</b> '+teamStatusTag(x[2])+'</p>').join('');
+  return '<div class="card" style="margin-top:10px"><div class="section-title">🔮 Tu camino a campeón</div><div class="body">'+picksHtml+
     '<div style="margin-top:10px">'+phasesOrder.map((ph,i)=>'<div style="margin-bottom:8px"><b style="color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.4px">'+esc(KO_PHASES[ph].label||ph)+'</b><div style="margin-top:4px">'+rowsHtml[i]+'</div></div>').join('')+'</div>'+
     '<p class="muted" style="font-size:.66rem;margin-top:6px">✅ llave acertada · ❌ llave fallada · ⏳ pendiente de definirse · ➖ tu propia predicción no llega a este cruce.</p>'+
     '</div></div>';
