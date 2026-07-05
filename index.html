@@ -909,7 +909,8 @@ function championPathCard(p){
       (championTeam&&!sameTeam(championTeam,honorChampion)?'<br><span style="font-size:.68rem">⚠️ No coincide con lo de arriba: tu pick de campeón fue independiente de tus marcadores partido a partido, así que pueden no cuadrar entre sí.</span>':'')+'</p>'
     : '';
   const thirdHtml=thirdTeam?'<p class="muted" style="margin-top:4px">Tu tercer puesto: <b>'+esc(thirdTeam)+'</b> '+teamStatusTag(thirdTeam)+'</p>':'';
-  return '<div class="card" style="margin-top:10px"><div class="section-title">🔮 Tu camino a campeón</div><div class="body">'+header+honorHtml+thirdHtml+
+  const explainer='<div class="admin-note" style="margin-bottom:10px">ℹ️ Aquí ves <b>dos campeones que pueden no coincidir</b>, y está bien que no coincidan: el de arriba sale de seguir tus propios marcadores partido a partido hasta la final; el <b>🗳️ que elegiste</b> es tu voto aparte a "¿quién crees que gana el Mundial?". Si dice que no puede calcular tu camino, es porque predijiste un empate en algún partido de eliminatoria (ahí siempre hay un ganador, así que un empate no dice a quién avanzaste).</div>';
+  return '<div class="card" style="margin-top:10px"><div class="section-title">🔮 Tu camino a campeón</div><div class="body">'+explainer+header+honorHtml+thirdHtml+
     '<div style="margin-top:10px">'+phasesOrder.map((ph,i)=>'<div style="margin-bottom:8px"><b style="color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.4px">'+esc(KO_PHASES[ph].label||ph)+'</b><div style="margin-top:4px">'+rowsHtml[i]+'</div></div>').join('')+'</div>'+
     '<p class="muted" style="font-size:.66rem;margin-top:6px">✅ llave acertada · ❌ llave fallada · ⏳ pendiente de definirse · ➖ tu propia predicción no llega a este cruce.</p>'+
     '</div></div>';
