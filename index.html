@@ -251,7 +251,7 @@ body:before{
     </div>
   </section>
 
-  <section id="ranking" class="section"><div class="card"><div class="section-title">🏆 Ranking general <span class="chip">toca un nombre</span></div><div class="body"><input class="search" id="search" placeholder="🔍 Buscar participante..." oninput="renderRanking()"><div id="ranking-list"></div></div></div></section>
+  <section id="ranking" class="section"><div class="card"><div class="section-title">🏆 Ranking general <span class="chip">toca un nombre</span></div><div class="body"><input class="search" id="search" placeholder="🔍 Buscar participante..." oninput="renderRanking()"><div style="display:flex;justify-content:flex-end;margin-bottom:6px"><button class="share-btn" onclick="shareRankingImage()">📸 Compartir ranking</button></div><div class="share-status" id="rank-share-status" style="text-align:right;margin-bottom:8px"></div><div id="ranking-list"></div></div></div></section>
 
 
   <section id="eliminatorias" class="section">
@@ -265,6 +265,7 @@ body:before{
           <button onclick="showSub('ko-2',this)">🔥 Semis</button>
           <button onclick="showSub('ko-final',this)">👑 Final</button>
           <button onclick="showSub('ko-resumen',this)">📊 Resumen</button>
+          <button onclick="showSub('ko-aciertos',this)">🎯 Aciertos</button>
         </div>
         <div id="sub-ko-16" class="subpanel act"><div id="ko-16-content"></div></div>
         <div id="sub-ko-8" class="subpanel"><div id="ko-8-content"></div></div>
@@ -272,6 +273,7 @@ body:before{
         <div id="sub-ko-2" class="subpanel"><div id="ko-2-content"></div></div>
         <div id="sub-ko-final" class="subpanel"><div id="ko-final-content"></div></div>
         <div id="sub-ko-resumen" class="subpanel"><div id="ko-resumen-content"></div></div>
+        <div id="sub-ko-aciertos" class="subpanel"><div id="ko-aciertos-content"></div></div>
       </div>
     </div>
   </section>
@@ -361,6 +363,7 @@ body:before{
           <div class="award-card"><h3>🎯 Francotirador</h3><div class="award-desc">Quien lleva más marcadores exactos en todo el torneo.</div><div class="award-rule">No basta acertar ganador: aquí manda el marcador perfecto.</div></div>
           <div class="award-card"><h3>🐙 Pulpo Paul</h3><div class="award-desc">Quien tiene el mayor porcentaje de aciertos de resultado.</div><div class="award-rule">Mide consistencia: local, empate o visitante.</div></div>
           <div class="award-card"><h3>🧨 Rey del Batacazo</h3><div class="award-desc">Quien acertó el resultado menos predicho del torneo.</div><div class="award-rule">Premia ver venir lo que casi nadie vio.</div></div>
+          <div class="award-card"><h3>🔗 Arquitecto de Llaves</h3><div class="award-desc">Quien más cruces de eliminatoria (16avos, 8vos, cuartos, semis, final) adivinó exactamente.</div><div class="award-rule">Cada llave exacta suma +2 pts extra, sin importar el marcador.</div></div>
           <div class="award-card"><h3>🏆 Rey del Mundial</h3><div class="award-desc">El líder actual de la clasificación general.</div><div class="award-rule">El premio principal: más puntos acumulados.</div></div>
         </div>
       </div>
@@ -798,6 +801,12 @@ const R32_SLOTS=[
   {id:'R32-15',a:{group:'J',pos:1},b:{group:'H',pos:2}},
   {id:'R32-16',a:{group:'K',pos:1},b:{third:['D','E','I','J','L']}}
 ];
+// Anexo C del reglamento oficial FIFA 2026: para cada combinación posible de los
+// 8 grupos cuyo tercero clasifica, indica exactamente a qué ganador de grupo se
+// enfrenta el tercero de cada uno de esos grupos. Reemplaza la heurística anterior
+// (que asignaba el mejor tercero disponible al primer cruce que lo pidiera), la cual
+// no coincidía con el sorteo oficial en varios casos.
+const THIRD_PLACE_TABLE={EFGHIJKL:{A:"E",B:"J",D:"I",E:"F",G:"H",I:"G",K:"L",L:"K"},DFGHIJKL:{A:"H",B:"G",D:"I",E:"D",G:"J",I:"F",K:"L",L:"K"},DEGHIJKL:{A:"E",B:"J",D:"I",E:"D",G:"H",I:"G",K:"L",L:"K"},DEFHIJKL:{A:"E",B:"J",D:"I",E:"D",G:"H",I:"F",K:"L",L:"K"},DEFGIJKL:{A:"E",B:"G",D:"I",E:"D",G:"J",I:"F",K:"L",L:"K"},DEFGHJKL:{A:"E",B:"G",D:"J",E:"D",G:"H",I:"F",K:"L",L:"K"},DEFGHIKL:{A:"E",B:"G",D:"I",E:"D",G:"H",I:"F",K:"L",L:"K"},DEFGHIJL:{A:"E",B:"G",D:"J",E:"D",G:"H",I:"F",K:"L",L:"I"},DEFGHIJK:{A:"E",B:"G",D:"J",E:"D",G:"H",I:"F",K:"I",L:"K"},CFGHIJKL:{A:"H",B:"G",D:"I",E:"C",G:"J",I:"F",K:"L",L:"K"},CEGHIJKL:{A:"E",B:"J",D:"I",E:"C",G:"H",I:"G",K:"L",L:"K"},CEFHIJKL:{A:"E",B:"J",D:"I",E:"C",G:"H",I:"F",K:"L",L:"K"},CEFGIJKL:{A:"E",B:"G",D:"I",E:"C",G:"J",I:"F",K:"L",L:"K"},CEFGHJKL:{A:"E",B:"G",D:"J",E:"C",G:"H",I:"F",K:"L",L:"K"},CEFGHIKL:{A:"E",B:"G",D:"I",E:"C",G:"H",I:"F",K:"L",L:"K"},CEFGHIJL:{A:"E",B:"G",D:"J",E:"C",G:"H",I:"F",K:"L",L:"I"},CEFGHIJK:{A:"E",B:"G",D:"J",E:"C",G:"H",I:"F",K:"I",L:"K"},CDGHIJKL:{A:"H",B:"G",D:"I",E:"C",G:"J",I:"D",K:"L",L:"K"},CDFHIJKL:{A:"C",B:"J",D:"I",E:"D",G:"H",I:"F",K:"L",L:"K"},CDFGIJKL:{A:"C",B:"G",D:"I",E:"D",G:"J",I:"F",K:"L",L:"K"},CDFGHJKL:{A:"C",B:"G",D:"J",E:"D",G:"H",I:"F",K:"L",L:"K"},CDFGHIKL:{A:"C",B:"G",D:"I",E:"D",G:"H",I:"F",K:"L",L:"K"},CDFGHIJL:{A:"C",B:"G",D:"J",E:"D",G:"H",I:"F",K:"L",L:"I"},CDFGHIJK:{A:"C",B:"G",D:"J",E:"D",G:"H",I:"F",K:"I",L:"K"},CDEHIJKL:{A:"E",B:"J",D:"I",E:"C",G:"H",I:"D",K:"L",L:"K"},CDEGIJKL:{A:"E",B:"G",D:"I",E:"C",G:"J",I:"D",K:"L",L:"K"},CDEGHJKL:{A:"E",B:"G",D:"J",E:"C",G:"H",I:"D",K:"L",L:"K"},CDEGHIKL:{A:"E",B:"G",D:"I",E:"C",G:"H",I:"D",K:"L",L:"K"},CDEGHIJL:{A:"E",B:"G",D:"J",E:"C",G:"H",I:"D",K:"L",L:"I"},CDEGHIJK:{A:"E",B:"G",D:"J",E:"C",G:"H",I:"D",K:"I",L:"K"},CDEFIJKL:{A:"C",B:"J",D:"E",E:"D",G:"I",I:"F",K:"L",L:"K"},CDEFHJKL:{A:"C",B:"J",D:"E",E:"D",G:"H",I:"F",K:"L",L:"K"},CDEFHIKL:{A:"C",B:"E",D:"I",E:"D",G:"H",I:"F",K:"L",L:"K"},CDEFHIJL:{A:"C",B:"J",D:"E",E:"D",G:"H",I:"F",K:"L",L:"I"},CDEFHIJK:{A:"C",B:"J",D:"E",E:"D",G:"H",I:"F",K:"I",L:"K"},CDEFGJKL:{A:"C",B:"G",D:"E",E:"D",G:"J",I:"F",K:"L",L:"K"},CDEFGIKL:{A:"C",B:"G",D:"E",E:"D",G:"I",I:"F",K:"L",L:"K"},CDEFGIJL:{A:"C",B:"G",D:"E",E:"D",G:"J",I:"F",K:"L",L:"I"},CDEFGIJK:{A:"C",B:"G",D:"E",E:"D",G:"J",I:"F",K:"I",L:"K"},CDEFGHKL:{A:"C",B:"G",D:"E",E:"D",G:"H",I:"F",K:"L",L:"K"},CDEFGHJL:{A:"C",B:"G",D:"J",E:"D",G:"H",I:"F",K:"L",L:"E"},CDEFGHJK:{A:"C",B:"G",D:"J",E:"D",G:"H",I:"F",K:"E",L:"K"},CDEFGHIL:{A:"C",B:"G",D:"E",E:"D",G:"H",I:"F",K:"L",L:"I"},CDEFGHIK:{A:"C",B:"G",D:"E",E:"D",G:"H",I:"F",K:"I",L:"K"},CDEFGHIJ:{A:"C",B:"G",D:"J",E:"D",G:"H",I:"F",K:"E",L:"I"},BFGHIJKL:{A:"H",B:"J",D:"B",E:"F",G:"I",I:"G",K:"L",L:"K"},BEGHIJKL:{A:"E",B:"J",D:"I",E:"B",G:"H",I:"G",K:"L",L:"K"},BEFHIJKL:{A:"E",B:"J",D:"B",E:"F",G:"I",I:"H",K:"L",L:"K"},BEFGIJKL:{A:"E",B:"J",D:"B",E:"F",G:"I",I:"G",K:"L",L:"K"},BEFGHJKL:{A:"E",B:"J",D:"B",E:"F",G:"H",I:"G",K:"L",L:"K"},BEFGHIKL:{A:"E",B:"G",D:"B",E:"F",G:"I",I:"H",K:"L",L:"K"},BEFGHIJL:{A:"E",B:"J",D:"B",E:"F",G:"H",I:"G",K:"L",L:"I"},BEFGHIJK:{A:"E",B:"J",D:"B",E:"F",G:"H",I:"G",K:"I",L:"K"},BDGHIJKL:{A:"H",B:"J",D:"B",E:"D",G:"I",I:"G",K:"L",L:"K"},BDFHIJKL:{A:"H",B:"J",D:"B",E:"D",G:"I",I:"F",K:"L",L:"K"},BDFGIJKL:{A:"I",B:"G",D:"B",E:"D",G:"J",I:"F",K:"L",L:"K"},BDFGHJKL:{A:"H",B:"G",D:"B",E:"D",G:"J",I:"F",K:"L",L:"K"},BDFGHIKL:{A:"H",B:"G",D:"B",E:"D",G:"I",I:"F",K:"L",L:"K"},BDFGHIJL:{A:"H",B:"G",D:"B",E:"D",G:"J",I:"F",K:"L",L:"I"},BDFGHIJK:{A:"H",B:"G",D:"B",E:"D",G:"J",I:"F",K:"I",L:"K"},BDEHIJKL:{A:"E",B:"J",D:"B",E:"D",G:"I",I:"H",K:"L",L:"K"},BDEGIJKL:{A:"E",B:"J",D:"B",E:"D",G:"I",I:"G",K:"L",L:"K"},BDEGHJKL:{A:"E",B:"J",D:"B",E:"D",G:"H",I:"G",K:"L",L:"K"},BDEGHIKL:{A:"E",B:"G",D:"B",E:"D",G:"I",I:"H",K:"L",L:"K"},BDEGHIJL:{A:"E",B:"J",D:"B",E:"D",G:"H",I:"G",K:"L",L:"I"},BDEGHIJK:{A:"E",B:"J",D:"B",E:"D",G:"H",I:"G",K:"I",L:"K"},BDEFIJKL:{A:"E",B:"J",D:"B",E:"D",G:"I",I:"F",K:"L",L:"K"},BDEFHJKL:{A:"E",B:"J",D:"B",E:"D",G:"H",I:"F",K:"L",L:"K"},BDEFHIKL:{A:"E",B:"I",D:"B",E:"D",G:"H",I:"F",K:"L",L:"K"},BDEFHIJL:{A:"E",B:"J",D:"B",E:"D",G:"H",I:"F",K:"L",L:"I"},BDEFHIJK:{A:"E",B:"J",D:"B",E:"D",G:"H",I:"F",K:"I",L:"K"},BDEFGJKL:{A:"E",B:"G",D:"B",E:"D",G:"J",I:"F",K:"L",L:"K"},BDEFGIKL:{A:"E",B:"G",D:"B",E:"D",G:"I",I:"F",K:"L",L:"K"},BDEFGIJL:{A:"E",B:"G",D:"B",E:"D",G:"J",I:"F",K:"L",L:"I"},BDEFGIJK:{A:"E",B:"G",D:"B",E:"D",G:"J",I:"F",K:"I",L:"K"},BDEFGHKL:{A:"E",B:"G",D:"B",E:"D",G:"H",I:"F",K:"L",L:"K"},BDEFGHJL:{A:"H",B:"G",D:"B",E:"D",G:"J",I:"F",K:"L",L:"E"},BDEFGHJK:{A:"H",B:"G",D:"B",E:"D",G:"J",I:"F",K:"E",L:"K"},BDEFGHIL:{A:"E",B:"G",D:"B",E:"D",G:"H",I:"F",K:"L",L:"I"},BDEFGHIK:{A:"E",B:"G",D:"B",E:"D",G:"H",I:"F",K:"I",L:"K"},BDEFGHIJ:{A:"H",B:"G",D:"B",E:"D",G:"J",I:"F",K:"E",L:"I"},BCGHIJKL:{A:"H",B:"J",D:"B",E:"C",G:"I",I:"G",K:"L",L:"K"},BCFHIJKL:{A:"H",B:"J",D:"B",E:"C",G:"I",I:"F",K:"L",L:"K"},BCFGIJKL:{A:"I",B:"G",D:"B",E:"C",G:"J",I:"F",K:"L",L:"K"},BCFGHJKL:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"F",K:"L",L:"K"},BCFGHIKL:{A:"H",B:"G",D:"B",E:"C",G:"I",I:"F",K:"L",L:"K"},BCFGHIJL:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"F",K:"L",L:"I"},BCFGHIJK:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"F",K:"I",L:"K"},BCEHIJKL:{A:"E",B:"J",D:"B",E:"C",G:"I",I:"H",K:"L",L:"K"},BCEGIJKL:{A:"E",B:"J",D:"B",E:"C",G:"I",I:"G",K:"L",L:"K"},BCEGHJKL:{A:"E",B:"J",D:"B",E:"C",G:"H",I:"G",K:"L",L:"K"},BCEGHIKL:{A:"E",B:"G",D:"B",E:"C",G:"I",I:"H",K:"L",L:"K"},BCEGHIJL:{A:"E",B:"J",D:"B",E:"C",G:"H",I:"G",K:"L",L:"I"},BCEGHIJK:{A:"E",B:"J",D:"B",E:"C",G:"H",I:"G",K:"I",L:"K"},BCEFIJKL:{A:"E",B:"J",D:"B",E:"C",G:"I",I:"F",K:"L",L:"K"},BCEFHJKL:{A:"E",B:"J",D:"B",E:"C",G:"H",I:"F",K:"L",L:"K"},BCEFHIKL:{A:"E",B:"I",D:"B",E:"C",G:"H",I:"F",K:"L",L:"K"},BCEFHIJL:{A:"E",B:"J",D:"B",E:"C",G:"H",I:"F",K:"L",L:"I"},BCEFHIJK:{A:"E",B:"J",D:"B",E:"C",G:"H",I:"F",K:"I",L:"K"},BCEFGJKL:{A:"E",B:"G",D:"B",E:"C",G:"J",I:"F",K:"L",L:"K"},BCEFGIKL:{A:"E",B:"G",D:"B",E:"C",G:"I",I:"F",K:"L",L:"K"},BCEFGIJL:{A:"E",B:"G",D:"B",E:"C",G:"J",I:"F",K:"L",L:"I"},BCEFGIJK:{A:"E",B:"G",D:"B",E:"C",G:"J",I:"F",K:"I",L:"K"},BCEFGHKL:{A:"E",B:"G",D:"B",E:"C",G:"H",I:"F",K:"L",L:"K"},BCEFGHJL:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"F",K:"L",L:"E"},BCEFGHJK:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"F",K:"E",L:"K"},BCEFGHIL:{A:"E",B:"G",D:"B",E:"C",G:"H",I:"F",K:"L",L:"I"},BCEFGHIK:{A:"E",B:"G",D:"B",E:"C",G:"H",I:"F",K:"I",L:"K"},BCEFGHIJ:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"F",K:"E",L:"I"},BCDHIJKL:{A:"H",B:"J",D:"B",E:"C",G:"I",I:"D",K:"L",L:"K"},BCDGIJKL:{A:"I",B:"G",D:"B",E:"C",G:"J",I:"D",K:"L",L:"K"},BCDGHJKL:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"D",K:"L",L:"K"},BCDGHIKL:{A:"H",B:"G",D:"B",E:"C",G:"I",I:"D",K:"L",L:"K"},BCDGHIJL:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"D",K:"L",L:"I"},BCDGHIJK:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"D",K:"I",L:"K"},BCDFIJKL:{A:"C",B:"J",D:"B",E:"D",G:"I",I:"F",K:"L",L:"K"},BCDFHJKL:{A:"C",B:"J",D:"B",E:"D",G:"H",I:"F",K:"L",L:"K"},BCDFHIKL:{A:"C",B:"I",D:"B",E:"D",G:"H",I:"F",K:"L",L:"K"},BCDFHIJL:{A:"C",B:"J",D:"B",E:"D",G:"H",I:"F",K:"L",L:"I"},BCDFHIJK:{A:"C",B:"J",D:"B",E:"D",G:"H",I:"F",K:"I",L:"K"},BCDFGJKL:{A:"C",B:"G",D:"B",E:"D",G:"J",I:"F",K:"L",L:"K"},BCDFGIKL:{A:"C",B:"G",D:"B",E:"D",G:"I",I:"F",K:"L",L:"K"},BCDFGIJL:{A:"C",B:"G",D:"B",E:"D",G:"J",I:"F",K:"L",L:"I"},BCDFGIJK:{A:"C",B:"G",D:"B",E:"D",G:"J",I:"F",K:"I",L:"K"},BCDFGHKL:{A:"C",B:"G",D:"B",E:"D",G:"H",I:"F",K:"L",L:"K"},BCDFGHJL:{A:"C",B:"G",D:"B",E:"D",G:"H",I:"F",K:"L",L:"J"},BCDFGHJK:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"F",K:"D",L:"K"},BCDFGHIL:{A:"C",B:"G",D:"B",E:"D",G:"H",I:"F",K:"L",L:"I"},BCDFGHIK:{A:"C",B:"G",D:"B",E:"D",G:"H",I:"F",K:"I",L:"K"},BCDFGHIJ:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"F",K:"D",L:"I"},BCDEIJKL:{A:"E",B:"J",D:"B",E:"C",G:"I",I:"D",K:"L",L:"K"},BCDEHJKL:{A:"E",B:"J",D:"B",E:"C",G:"H",I:"D",K:"L",L:"K"},BCDEHIKL:{A:"E",B:"I",D:"B",E:"C",G:"H",I:"D",K:"L",L:"K"},BCDEHIJL:{A:"E",B:"J",D:"B",E:"C",G:"H",I:"D",K:"L",L:"I"},BCDEHIJK:{A:"E",B:"J",D:"B",E:"C",G:"H",I:"D",K:"I",L:"K"},BCDEGJKL:{A:"E",B:"G",D:"B",E:"C",G:"J",I:"D",K:"L",L:"K"},BCDEGIKL:{A:"E",B:"G",D:"B",E:"C",G:"I",I:"D",K:"L",L:"K"},BCDEGIJL:{A:"E",B:"G",D:"B",E:"C",G:"J",I:"D",K:"L",L:"I"},BCDEGIJK:{A:"E",B:"G",D:"B",E:"C",G:"J",I:"D",K:"I",L:"K"},BCDEGHKL:{A:"E",B:"G",D:"B",E:"C",G:"H",I:"D",K:"L",L:"K"},BCDEGHJL:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"D",K:"L",L:"E"},BCDEGHJK:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"D",K:"E",L:"K"},BCDEGHIL:{A:"E",B:"G",D:"B",E:"C",G:"H",I:"D",K:"L",L:"I"},BCDEGHIK:{A:"E",B:"G",D:"B",E:"C",G:"H",I:"D",K:"I",L:"K"},BCDEGHIJ:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"D",K:"E",L:"I"},BCDEFJKL:{A:"C",B:"J",D:"B",E:"D",G:"E",I:"F",K:"L",L:"K"},BCDEFIKL:{A:"C",B:"E",D:"B",E:"D",G:"I",I:"F",K:"L",L:"K"},BCDEFIJL:{A:"C",B:"J",D:"B",E:"D",G:"E",I:"F",K:"L",L:"I"},BCDEFIJK:{A:"C",B:"J",D:"B",E:"D",G:"E",I:"F",K:"I",L:"K"},BCDEFHKL:{A:"C",B:"E",D:"B",E:"D",G:"H",I:"F",K:"L",L:"K"},BCDEFHJL:{A:"C",B:"J",D:"B",E:"D",G:"H",I:"F",K:"L",L:"E"},BCDEFHJK:{A:"C",B:"J",D:"B",E:"D",G:"H",I:"F",K:"E",L:"K"},BCDEFHIL:{A:"C",B:"E",D:"B",E:"D",G:"H",I:"F",K:"L",L:"I"},BCDEFHIK:{A:"C",B:"E",D:"B",E:"D",G:"H",I:"F",K:"I",L:"K"},BCDEFHIJ:{A:"C",B:"J",D:"B",E:"D",G:"H",I:"F",K:"E",L:"I"},BCDEFGKL:{A:"C",B:"G",D:"B",E:"D",G:"E",I:"F",K:"L",L:"K"},BCDEFGJL:{A:"C",B:"G",D:"B",E:"D",G:"J",I:"F",K:"L",L:"E"},BCDEFGJK:{A:"C",B:"G",D:"B",E:"D",G:"J",I:"F",K:"E",L:"K"},BCDEFGIL:{A:"C",B:"G",D:"B",E:"D",G:"E",I:"F",K:"L",L:"I"},BCDEFGIK:{A:"C",B:"G",D:"B",E:"D",G:"E",I:"F",K:"I",L:"K"},BCDEFGIJ:{A:"C",B:"G",D:"B",E:"D",G:"J",I:"F",K:"E",L:"I"},BCDEFGHL:{A:"C",B:"G",D:"B",E:"D",G:"H",I:"F",K:"L",L:"E"},BCDEFGHK:{A:"C",B:"G",D:"B",E:"D",G:"H",I:"F",K:"E",L:"K"},BCDEFGHJ:{A:"H",B:"G",D:"B",E:"C",G:"J",I:"F",K:"D",L:"E"},BCDEFGHI:{A:"C",B:"G",D:"B",E:"D",G:"H",I:"F",K:"E",L:"I"},AFGHIJKL:{A:"H",B:"J",D:"I",E:"F",G:"A",I:"G",K:"L",L:"K"},AEGHIJKL:{A:"E",B:"J",D:"I",E:"A",G:"H",I:"G",K:"L",L:"K"},AEFHIJKL:{A:"E",B:"J",D:"I",E:"F",G:"A",I:"H",K:"L",L:"K"},AEFGIJKL:{A:"E",B:"J",D:"I",E:"F",G:"A",I:"G",K:"L",L:"K"},AEFGHJKL:{A:"E",B:"G",D:"J",E:"F",G:"A",I:"H",K:"L",L:"K"},AEFGHIKL:{A:"E",B:"G",D:"I",E:"F",G:"A",I:"H",K:"L",L:"K"},AEFGHIJL:{A:"E",B:"G",D:"J",E:"F",G:"A",I:"H",K:"L",L:"I"},AEFGHIJK:{A:"E",B:"G",D:"J",E:"F",G:"A",I:"H",K:"I",L:"K"},ADGHIJKL:{A:"H",B:"J",D:"I",E:"D",G:"A",I:"G",K:"L",L:"K"},ADFHIJKL:{A:"H",B:"J",D:"I",E:"D",G:"A",I:"F",K:"L",L:"K"},ADFGIJKL:{A:"I",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"K"},ADFGHJKL:{A:"H",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"K"},ADFGHIKL:{A:"H",B:"G",D:"I",E:"D",G:"A",I:"F",K:"L",L:"K"},ADFGHIJL:{A:"H",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"I"},ADFGHIJK:{A:"H",B:"G",D:"J",E:"D",G:"A",I:"F",K:"I",L:"K"},ADEHIJKL:{A:"E",B:"J",D:"I",E:"D",G:"A",I:"H",K:"L",L:"K"},ADEGIJKL:{A:"E",B:"J",D:"I",E:"D",G:"A",I:"G",K:"L",L:"K"},ADEGHJKL:{A:"E",B:"G",D:"J",E:"D",G:"A",I:"H",K:"L",L:"K"},ADEGHIKL:{A:"E",B:"G",D:"I",E:"D",G:"A",I:"H",K:"L",L:"K"},ADEGHIJL:{A:"E",B:"G",D:"J",E:"D",G:"A",I:"H",K:"L",L:"I"},ADEGHIJK:{A:"E",B:"G",D:"J",E:"D",G:"A",I:"H",K:"I",L:"K"},ADEFIJKL:{A:"E",B:"J",D:"I",E:"D",G:"A",I:"F",K:"L",L:"K"},ADEFHJKL:{A:"H",B:"J",D:"E",E:"D",G:"A",I:"F",K:"L",L:"K"},ADEFHIKL:{A:"H",B:"E",D:"I",E:"D",G:"A",I:"F",K:"L",L:"K"},ADEFHIJL:{A:"H",B:"J",D:"E",E:"D",G:"A",I:"F",K:"L",L:"I"},ADEFHIJK:{A:"H",B:"J",D:"E",E:"D",G:"A",I:"F",K:"I",L:"K"},ADEFGJKL:{A:"E",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"K"},ADEFGIKL:{A:"E",B:"G",D:"I",E:"D",G:"A",I:"F",K:"L",L:"K"},ADEFGIJL:{A:"E",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"I"},ADEFGIJK:{A:"E",B:"G",D:"J",E:"D",G:"A",I:"F",K:"I",L:"K"},ADEFGHKL:{A:"H",B:"G",D:"E",E:"D",G:"A",I:"F",K:"L",L:"K"},ADEFGHJL:{A:"H",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"E"},ADEFGHJK:{A:"H",B:"G",D:"J",E:"D",G:"A",I:"F",K:"E",L:"K"},ADEFGHIL:{A:"H",B:"G",D:"E",E:"D",G:"A",I:"F",K:"L",L:"I"},ADEFGHIK:{A:"H",B:"G",D:"E",E:"D",G:"A",I:"F",K:"I",L:"K"},ADEFGHIJ:{A:"H",B:"G",D:"J",E:"D",G:"A",I:"F",K:"E",L:"I"},ACGHIJKL:{A:"H",B:"J",D:"I",E:"C",G:"A",I:"G",K:"L",L:"K"},ACFHIJKL:{A:"H",B:"J",D:"I",E:"C",G:"A",I:"F",K:"L",L:"K"},ACFGIJKL:{A:"I",B:"G",D:"J",E:"C",G:"A",I:"F",K:"L",L:"K"},ACFGHJKL:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"F",K:"L",L:"K"},ACFGHIKL:{A:"H",B:"G",D:"I",E:"C",G:"A",I:"F",K:"L",L:"K"},ACFGHIJL:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"F",K:"L",L:"I"},ACFGHIJK:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"F",K:"I",L:"K"},ACEHIJKL:{A:"E",B:"J",D:"I",E:"C",G:"A",I:"H",K:"L",L:"K"},ACEGIJKL:{A:"E",B:"J",D:"I",E:"C",G:"A",I:"G",K:"L",L:"K"},ACEGHJKL:{A:"E",B:"G",D:"J",E:"C",G:"A",I:"H",K:"L",L:"K"},ACEGHIKL:{A:"E",B:"G",D:"I",E:"C",G:"A",I:"H",K:"L",L:"K"},ACEGHIJL:{A:"E",B:"G",D:"J",E:"C",G:"A",I:"H",K:"L",L:"I"},ACEGHIJK:{A:"E",B:"G",D:"J",E:"C",G:"A",I:"H",K:"I",L:"K"},ACEFIJKL:{A:"E",B:"J",D:"I",E:"C",G:"A",I:"F",K:"L",L:"K"},ACEFHJKL:{A:"H",B:"J",D:"E",E:"C",G:"A",I:"F",K:"L",L:"K"},ACEFHIKL:{A:"H",B:"E",D:"I",E:"C",G:"A",I:"F",K:"L",L:"K"},ACEFHIJL:{A:"H",B:"J",D:"E",E:"C",G:"A",I:"F",K:"L",L:"I"},ACEFHIJK:{A:"H",B:"J",D:"E",E:"C",G:"A",I:"F",K:"I",L:"K"},ACEFGJKL:{A:"E",B:"G",D:"J",E:"C",G:"A",I:"F",K:"L",L:"K"},ACEFGIKL:{A:"E",B:"G",D:"I",E:"C",G:"A",I:"F",K:"L",L:"K"},ACEFGIJL:{A:"E",B:"G",D:"J",E:"C",G:"A",I:"F",K:"L",L:"I"},ACEFGIJK:{A:"E",B:"G",D:"J",E:"C",G:"A",I:"F",K:"I",L:"K"},ACEFGHKL:{A:"H",B:"G",D:"E",E:"C",G:"A",I:"F",K:"L",L:"K"},ACEFGHJL:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"F",K:"L",L:"E"},ACEFGHJK:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"F",K:"E",L:"K"},ACEFGHIL:{A:"H",B:"G",D:"E",E:"C",G:"A",I:"F",K:"L",L:"I"},ACEFGHIK:{A:"H",B:"G",D:"E",E:"C",G:"A",I:"F",K:"I",L:"K"},ACEFGHIJ:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"F",K:"E",L:"I"},ACDHIJKL:{A:"H",B:"J",D:"I",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDGIJKL:{A:"I",B:"G",D:"J",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDGHJKL:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDGHIKL:{A:"H",B:"G",D:"I",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDGHIJL:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"D",K:"L",L:"I"},ACDGHIJK:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"D",K:"I",L:"K"},ACDFIJKL:{A:"C",B:"J",D:"I",E:"D",G:"A",I:"F",K:"L",L:"K"},ACDFHJKL:{A:"H",B:"J",D:"F",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDFHIKL:{A:"H",B:"F",D:"I",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDFHIJL:{A:"H",B:"J",D:"F",E:"C",G:"A",I:"D",K:"L",L:"I"},ACDFHIJK:{A:"H",B:"J",D:"F",E:"C",G:"A",I:"D",K:"I",L:"K"},ACDFGJKL:{A:"C",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"K"},ACDFGIKL:{A:"C",B:"G",D:"I",E:"D",G:"A",I:"F",K:"L",L:"K"},ACDFGIJL:{A:"C",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"I"},ACDFGIJK:{A:"C",B:"G",D:"J",E:"D",G:"A",I:"F",K:"I",L:"K"},ACDFGHKL:{A:"H",B:"G",D:"F",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDFGHJL:{A:"C",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"H"},ACDFGHJK:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"F",K:"D",L:"K"},ACDFGHIL:{A:"H",B:"G",D:"F",E:"C",G:"A",I:"D",K:"L",L:"I"},ACDFGHIK:{A:"H",B:"G",D:"F",E:"C",G:"A",I:"D",K:"I",L:"K"},ACDFGHIJ:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"F",K:"D",L:"I"},ACDEIJKL:{A:"E",B:"J",D:"I",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDEHJKL:{A:"H",B:"J",D:"E",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDEHIKL:{A:"H",B:"E",D:"I",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDEHIJL:{A:"H",B:"J",D:"E",E:"C",G:"A",I:"D",K:"L",L:"I"},ACDEHIJK:{A:"H",B:"J",D:"E",E:"C",G:"A",I:"D",K:"I",L:"K"},ACDEGJKL:{A:"E",B:"G",D:"J",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDEGIKL:{A:"E",B:"G",D:"I",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDEGIJL:{A:"E",B:"G",D:"J",E:"C",G:"A",I:"D",K:"L",L:"I"},ACDEGIJK:{A:"E",B:"G",D:"J",E:"C",G:"A",I:"D",K:"I",L:"K"},ACDEGHKL:{A:"H",B:"G",D:"E",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDEGHJL:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"D",K:"L",L:"E"},ACDEGHJK:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"D",K:"E",L:"K"},ACDEGHIL:{A:"H",B:"G",D:"E",E:"C",G:"A",I:"D",K:"L",L:"I"},ACDEGHIK:{A:"H",B:"G",D:"E",E:"C",G:"A",I:"D",K:"I",L:"K"},ACDEGHIJ:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"D",K:"E",L:"I"},ACDEFJKL:{A:"C",B:"J",D:"E",E:"D",G:"A",I:"F",K:"L",L:"K"},ACDEFIKL:{A:"C",B:"E",D:"I",E:"D",G:"A",I:"F",K:"L",L:"K"},ACDEFIJL:{A:"C",B:"J",D:"E",E:"D",G:"A",I:"F",K:"L",L:"I"},ACDEFIJK:{A:"C",B:"J",D:"E",E:"D",G:"A",I:"F",K:"I",L:"K"},ACDEFHKL:{A:"H",B:"E",D:"F",E:"C",G:"A",I:"D",K:"L",L:"K"},ACDEFHJL:{A:"H",B:"J",D:"F",E:"C",G:"A",I:"D",K:"L",L:"E"},ACDEFHJK:{A:"H",B:"J",D:"E",E:"C",G:"A",I:"F",K:"D",L:"K"},ACDEFHIL:{A:"H",B:"E",D:"F",E:"C",G:"A",I:"D",K:"L",L:"I"},ACDEFHIK:{A:"H",B:"E",D:"F",E:"C",G:"A",I:"D",K:"I",L:"K"},ACDEFHIJ:{A:"H",B:"J",D:"E",E:"C",G:"A",I:"F",K:"D",L:"I"},ACDEFGKL:{A:"C",B:"G",D:"E",E:"D",G:"A",I:"F",K:"L",L:"K"},ACDEFGJL:{A:"C",B:"G",D:"J",E:"D",G:"A",I:"F",K:"L",L:"E"},ACDEFGJK:{A:"C",B:"G",D:"J",E:"D",G:"A",I:"F",K:"E",L:"K"},ACDEFGIL:{A:"C",B:"G",D:"E",E:"D",G:"A",I:"F",K:"L",L:"I"},ACDEFGIK:{A:"C",B:"G",D:"E",E:"D",G:"A",I:"F",K:"I",L:"K"},ACDEFGIJ:{A:"C",B:"G",D:"J",E:"D",G:"A",I:"F",K:"E",L:"I"},ACDEFGHL:{A:"H",B:"G",D:"F",E:"C",G:"A",I:"D",K:"L",L:"E"},ACDEFGHK:{A:"H",B:"G",D:"E",E:"C",G:"A",I:"F",K:"D",L:"K"},ACDEFGHJ:{A:"H",B:"G",D:"J",E:"C",G:"A",I:"F",K:"D",L:"E"},ACDEFGHI:{A:"H",B:"G",D:"E",E:"C",G:"A",I:"F",K:"D",L:"I"},ABGHIJKL:{A:"H",B:"J",D:"B",E:"A",G:"I",I:"G",K:"L",L:"K"},ABFHIJKL:{A:"H",B:"J",D:"B",E:"A",G:"I",I:"F",K:"L",L:"K"},ABFGIJKL:{A:"I",B:"J",D:"B",E:"F",G:"A",I:"G",K:"L",L:"K"},ABFGHJKL:{A:"H",B:"J",D:"B",E:"F",G:"A",I:"G",K:"L",L:"K"},ABFGHIKL:{A:"H",B:"G",D:"B",E:"A",G:"I",I:"F",K:"L",L:"K"},ABFGHIJL:{A:"H",B:"J",D:"B",E:"F",G:"A",I:"G",K:"L",L:"I"},ABFGHIJK:{A:"H",B:"J",D:"B",E:"F",G:"A",I:"G",K:"I",L:"K"},ABEHIJKL:{A:"E",B:"J",D:"B",E:"A",G:"I",I:"H",K:"L",L:"K"},ABEGIJKL:{A:"E",B:"J",D:"B",E:"A",G:"I",I:"G",K:"L",L:"K"},ABEGHJKL:{A:"E",B:"J",D:"B",E:"A",G:"H",I:"G",K:"L",L:"K"},ABEGHIKL:{A:"E",B:"G",D:"B",E:"A",G:"I",I:"H",K:"L",L:"K"},ABEGHIJL:{A:"E",B:"J",D:"B",E:"A",G:"H",I:"G",K:"L",L:"I"},ABEGHIJK:{A:"E",B:"J",D:"B",E:"A",G:"H",I:"G",K:"I",L:"K"},ABEFIJKL:{A:"E",B:"J",D:"B",E:"A",G:"I",I:"F",K:"L",L:"K"},ABEFHJKL:{A:"E",B:"J",D:"B",E:"F",G:"A",I:"H",K:"L",L:"K"},ABEFHIKL:{A:"E",B:"I",D:"B",E:"F",G:"A",I:"H",K:"L",L:"K"},ABEFHIJL:{A:"E",B:"J",D:"B",E:"F",G:"A",I:"H",K:"L",L:"I"},ABEFHIJK:{A:"E",B:"J",D:"B",E:"F",G:"A",I:"H",K:"I",L:"K"},ABEFGJKL:{A:"E",B:"J",D:"B",E:"F",G:"A",I:"G",K:"L",L:"K"},ABEFGIKL:{A:"E",B:"G",D:"B",E:"A",G:"I",I:"F",K:"L",L:"K"},ABEFGIJL:{A:"E",B:"J",D:"B",E:"F",G:"A",I:"G",K:"L",L:"I"},ABEFGIJK:{A:"E",B:"J",D:"B",E:"F",G:"A",I:"G",K:"I",L:"K"},ABEFGHKL:{A:"E",B:"G",D:"B",E:"F",G:"A",I:"H",K:"L",L:"K"},ABEFGHJL:{A:"H",B:"J",D:"B",E:"F",G:"A",I:"G",K:"L",L:"E"},ABEFGHJK:{A:"H",B:"J",D:"B",E:"F",G:"A",I:"G",K:"E",L:"K"},ABEFGHIL:{A:"E",B:"G",D:"B",E:"F",G:"A",I:"H",K:"L",L:"I"},ABEFGHIK:{A:"E",B:"G",D:"B",E:"F",G:"A",I:"H",K:"I",L:"K"},ABEFGHIJ:{A:"H",B:"J",D:"B",E:"F",G:"A",I:"G",K:"E",L:"I"},ABDHIJKL:{A:"I",B:"J",D:"B",E:"D",G:"A",I:"H",K:"L",L:"K"},ABDGIJKL:{A:"I",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"K"},ABDGHJKL:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"K"},ABDGHIKL:{A:"I",B:"G",D:"B",E:"D",G:"A",I:"H",K:"L",L:"K"},ABDGHIJL:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"I"},ABDGHIJK:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"G",K:"I",L:"K"},ABDFIJKL:{A:"I",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABDFHJKL:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABDFHIKL:{A:"H",B:"I",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABDFHIJL:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"I"},ABDFHIJK:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"F",K:"I",L:"K"},ABDFGJKL:{A:"F",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"K"},ABDFGIKL:{A:"I",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABDFGIJL:{A:"F",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"I"},ABDFGIJK:{A:"F",B:"J",D:"B",E:"D",G:"A",I:"G",K:"I",L:"K"},ABDFGHKL:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABDFGHJL:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"J"},ABDFGHJK:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"J",L:"K"},ABDFGHIL:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"I"},ABDFGHIK:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"I",L:"K"},ABDFGHIJ:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"I",L:"J"},ABDEIJKL:{A:"E",B:"J",D:"B",E:"A",G:"I",I:"D",K:"L",L:"K"},ABDEHJKL:{A:"E",B:"J",D:"B",E:"D",G:"A",I:"H",K:"L",L:"K"},ABDEHIKL:{A:"E",B:"I",D:"B",E:"D",G:"A",I:"H",K:"L",L:"K"},ABDEHIJL:{A:"E",B:"J",D:"B",E:"D",G:"A",I:"H",K:"L",L:"I"},ABDEHIJK:{A:"E",B:"J",D:"B",E:"D",G:"A",I:"H",K:"I",L:"K"},ABDEGJKL:{A:"E",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"K"},ABDEGIKL:{A:"E",B:"G",D:"B",E:"A",G:"I",I:"D",K:"L",L:"K"},ABDEGIJL:{A:"E",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"I"},ABDEGIJK:{A:"E",B:"J",D:"B",E:"D",G:"A",I:"G",K:"I",L:"K"},ABDEGHKL:{A:"E",B:"G",D:"B",E:"D",G:"A",I:"H",K:"L",L:"K"},ABDEGHJL:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"E"},ABDEGHJK:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"G",K:"E",L:"K"},ABDEGHIL:{A:"E",B:"G",D:"B",E:"D",G:"A",I:"H",K:"L",L:"I"},ABDEGHIK:{A:"E",B:"G",D:"B",E:"D",G:"A",I:"H",K:"I",L:"K"},ABDEGHIJ:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"G",K:"E",L:"I"},ABDEFJKL:{A:"E",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABDEFIKL:{A:"E",B:"I",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABDEFIJL:{A:"E",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"I"},ABDEFIJK:{A:"E",B:"J",D:"B",E:"D",G:"A",I:"F",K:"I",L:"K"},ABDEFHKL:{A:"H",B:"E",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABDEFHJL:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"E"},ABDEFHJK:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"F",K:"E",L:"K"},ABDEFHIL:{A:"H",B:"E",D:"B",E:"D",G:"A",I:"F",K:"L",L:"I"},ABDEFHIK:{A:"H",B:"E",D:"B",E:"D",G:"A",I:"F",K:"I",L:"K"},ABDEFHIJ:{A:"H",B:"J",D:"B",E:"D",G:"A",I:"F",K:"E",L:"I"},ABDEFGKL:{A:"E",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABDEFGJL:{A:"E",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"J"},ABDEFGJK:{A:"E",B:"G",D:"B",E:"D",G:"A",I:"F",K:"J",L:"K"},ABDEFGIL:{A:"E",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"I"},ABDEFGIK:{A:"E",B:"G",D:"B",E:"D",G:"A",I:"F",K:"I",L:"K"},ABDEFGIJ:{A:"E",B:"G",D:"B",E:"D",G:"A",I:"F",K:"I",L:"J"},ABDEFGHL:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"E"},ABDEFGHK:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"E",L:"K"},ABDEFGHJ:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"E",L:"J"},ABDEFGHI:{A:"H",B:"G",D:"B",E:"D",G:"A",I:"F",K:"E",L:"I"},ABCHIJKL:{A:"I",B:"J",D:"B",E:"C",G:"A",I:"H",K:"L",L:"K"},ABCGIJKL:{A:"I",B:"J",D:"B",E:"C",G:"A",I:"G",K:"L",L:"K"},ABCGHJKL:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"G",K:"L",L:"K"},ABCGHIKL:{A:"I",B:"G",D:"B",E:"C",G:"A",I:"H",K:"L",L:"K"},ABCGHIJL:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"G",K:"L",L:"I"},ABCGHIJK:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"G",K:"I",L:"K"},ABCFIJKL:{A:"I",B:"J",D:"B",E:"C",G:"A",I:"F",K:"L",L:"K"},ABCFHJKL:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"F",K:"L",L:"K"},ABCFHIKL:{A:"H",B:"I",D:"B",E:"C",G:"A",I:"F",K:"L",L:"K"},ABCFHIJL:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"F",K:"L",L:"I"},ABCFHIJK:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"F",K:"I",L:"K"},ABCFGJKL:{A:"C",B:"J",D:"B",E:"F",G:"A",I:"G",K:"L",L:"K"},ABCFGIKL:{A:"I",B:"G",D:"B",E:"C",G:"A",I:"F",K:"L",L:"K"},ABCFGIJL:{A:"C",B:"J",D:"B",E:"F",G:"A",I:"G",K:"L",L:"I"},ABCFGIJK:{A:"C",B:"J",D:"B",E:"F",G:"A",I:"G",K:"I",L:"K"},ABCFGHKL:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"L",L:"K"},ABCFGHJL:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"L",L:"J"},ABCFGHJK:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"J",L:"K"},ABCFGHIL:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"L",L:"I"},ABCFGHIK:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"I",L:"K"},ABCFGHIJ:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"I",L:"J"},ABCEIJKL:{A:"E",B:"J",D:"B",E:"A",G:"I",I:"C",K:"L",L:"K"},ABCEHJKL:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"H",K:"L",L:"K"},ABCEHIKL:{A:"E",B:"I",D:"B",E:"C",G:"A",I:"H",K:"L",L:"K"},ABCEHIJL:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"H",K:"L",L:"I"},ABCEHIJK:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"H",K:"I",L:"K"},ABCEGJKL:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"G",K:"L",L:"K"},ABCEGIKL:{A:"E",B:"G",D:"B",E:"A",G:"I",I:"C",K:"L",L:"K"},ABCEGIJL:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"G",K:"L",L:"I"},ABCEGIJK:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"G",K:"I",L:"K"},ABCEGHKL:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"H",K:"L",L:"K"},ABCEGHJL:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"G",K:"L",L:"E"},ABCEGHJK:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"G",K:"E",L:"K"},ABCEGHIL:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"H",K:"L",L:"I"},ABCEGHIK:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"H",K:"I",L:"K"},ABCEGHIJ:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"G",K:"E",L:"I"},ABCEFJKL:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"F",K:"L",L:"K"},ABCEFIKL:{A:"E",B:"I",D:"B",E:"C",G:"A",I:"F",K:"L",L:"K"},ABCEFIJL:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"F",K:"L",L:"I"},ABCEFIJK:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"F",K:"I",L:"K"},ABCEFHKL:{A:"H",B:"E",D:"B",E:"C",G:"A",I:"F",K:"L",L:"K"},ABCEFHJL:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"F",K:"L",L:"E"},ABCEFHJK:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"F",K:"E",L:"K"},ABCEFHIL:{A:"H",B:"E",D:"B",E:"C",G:"A",I:"F",K:"L",L:"I"},ABCEFHIK:{A:"H",B:"E",D:"B",E:"C",G:"A",I:"F",K:"I",L:"K"},ABCEFHIJ:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"F",K:"E",L:"I"},ABCEFGKL:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"F",K:"L",L:"K"},ABCEFGJL:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"F",K:"L",L:"J"},ABCEFGJK:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"F",K:"J",L:"K"},ABCEFGIL:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"F",K:"L",L:"I"},ABCEFGIK:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"F",K:"I",L:"K"},ABCEFGIJ:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"F",K:"I",L:"J"},ABCEFGHL:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"L",L:"E"},ABCEFGHK:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"E",L:"K"},ABCEFGHJ:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"E",L:"J"},ABCEFGHI:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"E",L:"I"},ABCDIJKL:{A:"I",B:"J",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDHJKL:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDHIKL:{A:"H",B:"I",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDHIJL:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"D",K:"L",L:"I"},ABCDHIJK:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"D",K:"I",L:"K"},ABCDGJKL:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"K"},ABCDGIKL:{A:"I",B:"G",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDGIJL:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"G",K:"L",L:"I"},ABCDGIJK:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"G",K:"I",L:"K"},ABCDGHKL:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDGHJL:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"L",L:"J"},ABCDGHJK:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"J",L:"K"},ABCDGHIL:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"L",L:"I"},ABCDGHIK:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"I",L:"K"},ABCDGHIJ:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"I",L:"J"},ABCDFJKL:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABCDFIKL:{A:"C",B:"I",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABCDFIJL:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"I"},ABCDFIJK:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"F",K:"I",L:"K"},ABCDFHKL:{A:"H",B:"F",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDFHJL:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"H"},ABCDFHJK:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"F",K:"D",L:"K"},ABCDFHIL:{A:"H",B:"F",D:"B",E:"C",G:"A",I:"D",K:"L",L:"I"},ABCDFHIK:{A:"H",B:"F",D:"B",E:"C",G:"A",I:"D",K:"I",L:"K"},ABCDFHIJ:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"F",K:"D",L:"I"},ABCDFGKL:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABCDFGJL:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"J"},ABCDFGJK:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"J",L:"K"},ABCDFGIL:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"I"},ABCDFGIK:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"I",L:"K"},ABCDFGIJ:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"I",L:"J"},ABCDFGHL:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"H"},ABCDFGHK:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"D",L:"K"},ABCDFGHJ:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"D",L:"J"},ABCDFGHI:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"D",L:"I"},ABCDEJKL:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDEIKL:{A:"E",B:"I",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDEIJL:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"D",K:"L",L:"I"},ABCDEIJK:{A:"E",B:"J",D:"B",E:"C",G:"A",I:"D",K:"I",L:"K"},ABCDEHKL:{A:"H",B:"E",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDEHJL:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"D",K:"L",L:"E"},ABCDEHJK:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"D",K:"E",L:"K"},ABCDEHIL:{A:"H",B:"E",D:"B",E:"C",G:"A",I:"D",K:"L",L:"I"},ABCDEHIK:{A:"H",B:"E",D:"B",E:"C",G:"A",I:"D",K:"I",L:"K"},ABCDEHIJ:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"D",K:"E",L:"I"},ABCDEGKL:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"D",K:"L",L:"K"},ABCDEGJL:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"D",K:"L",L:"J"},ABCDEGJK:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"D",K:"J",L:"K"},ABCDEGIL:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"D",K:"L",L:"I"},ABCDEGIK:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"D",K:"I",L:"K"},ABCDEGIJ:{A:"E",B:"G",D:"B",E:"C",G:"A",I:"D",K:"I",L:"J"},ABCDEGHL:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"L",L:"E"},ABCDEGHK:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"E",L:"K"},ABCDEGHJ:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"E",L:"J"},ABCDEGHI:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"D",K:"E",L:"I"},ABCDEFKL:{A:"C",B:"E",D:"B",E:"D",G:"A",I:"F",K:"L",L:"K"},ABCDEFJL:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"F",K:"L",L:"E"},ABCDEFJK:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"F",K:"E",L:"K"},ABCDEFIL:{A:"C",B:"E",D:"B",E:"D",G:"A",I:"F",K:"L",L:"I"},ABCDEFIK:{A:"C",B:"E",D:"B",E:"D",G:"A",I:"F",K:"I",L:"K"},ABCDEFIJ:{A:"C",B:"J",D:"B",E:"D",G:"A",I:"F",K:"E",L:"I"},ABCDEFHL:{A:"H",B:"F",D:"B",E:"C",G:"A",I:"D",K:"L",L:"E"},ABCDEFHK:{A:"H",B:"E",D:"B",E:"C",G:"A",I:"F",K:"D",L:"K"},ABCDEFHJ:{A:"H",B:"J",D:"B",E:"C",G:"A",I:"F",K:"D",L:"E"},ABCDEFHI:{A:"H",B:"E",D:"B",E:"C",G:"A",I:"F",K:"D",L:"I"},ABCDEFGL:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"L",L:"E"},ABCDEFGK:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"E",L:"K"},ABCDEFGJ:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"E",L:"J"},ABCDEFGI:{A:"C",B:"G",D:"B",E:"D",G:"A",I:"F",K:"E",L:"I"},ABCDEFGH:{A:"H",B:"G",D:"B",E:"C",G:"A",I:"F",K:"D",L:"E"}};
 function getGroupStandingForBracket(g,p){
   return p?predictedGroupStanding(g,p):actualGroupStanding(g);
 }
@@ -813,28 +822,34 @@ function bestThirdsForBracket(p){
   thirds.sort((a,b)=>(b.pts??0)-(a.pts??0)||(b.gd??0)-(a.gd??0)||(b.gf??0)-(a.gf??0)||(a.gc??0)-(b.gc??0)||String(a.team).localeCompare(String(b.team)));
   return {thirds:thirds.slice(0,8),closed,total:groupLetters().length,complete:p?true:closed===groupLetters().length};
 }
-function resolveBracketSlot(slot,p,usedThirdGroups){
-  if(slot.group){
-    const st=getGroupStandingForBracket(slot.group,p);
-    if(!st||!st[slot.pos-1])return null;
-    return {team:st[slot.pos-1].team,source:slot.pos+slot.group};
-  }
-  if(slot.third){
-    const best=bestThirdsForBracket(p);
-    if(!best.complete)return null;
-    const found=best.thirds.find(x=>slot.third.includes(x.grupo)&&!usedThirdGroups.has(x.grupo));
-    if(!found)return null;
-    usedThirdGroups.add(found.grupo);
-    return {team:found.team,source:'3'+found.grupo};
-  }
-  return null;
+function resolveGroupSlot(slot,p){
+  const st=getGroupStandingForBracket(slot.group,p);
+  if(!st||!st[slot.pos-1])return null;
+  return {team:st[slot.pos-1].team,source:slot.pos+slot.group};
+}
+function thirdPlaceAssignment(p){
+  const best=bestThirdsForBracket(p);
+  if(!best.complete||best.thirds.length<8)return null;
+  const key=best.thirds.map(x=>x.grupo).slice().sort().join('');
+  const assign=THIRD_PLACE_TABLE[key];
+  if(!assign)return null;
+  const byGroup={};
+  best.thirds.forEach(x=>{byGroup[x.grupo]=x;});
+  return {assign,byGroup};
+}
+function resolveThirdSlot(anchorGroup,thirdRes){
+  if(!thirdRes)return null;
+  const targetGroup=thirdRes.assign[anchorGroup];
+  const found=targetGroup&&thirdRes.byGroup[targetGroup];
+  if(!found)return null;
+  return {team:found.team,source:'3'+found.grupo};
 }
 function r32Matchups(p){
-  const usedThirdGroups=new Set();
   const out=[];
+  const thirdRes=thirdPlaceAssignment(p);
   R32_SLOTS.forEach(slot=>{
-    const a=resolveBracketSlot(slot.a,p,usedThirdGroups);
-    const b=resolveBracketSlot(slot.b,p,usedThirdGroups);
+    const a=resolveGroupSlot(slot.a,p);
+    const b=slot.b.third?resolveThirdSlot(slot.a.group,thirdRes):resolveGroupSlot(slot.b,p);
     if(a&&b)out.push({id:slot.id,a:a.team,b:b.team,aSource:a.source,bSource:b.source,key:orderedPairKey(a.team,b.team)});
   });
   return out;
@@ -855,15 +870,43 @@ function predWinnerForMatch(p,matchup){
   if(gv>gl)return matchup.b;
   return null;
 }
+function predLoserForMatch(p,matchup){
+  if(!matchup||!p)return null;
+  const pr=p.predicciones?.[matchup.id];
+  if(!pr || pr.golesLocal===undefined || pr.golesVisitante===undefined)return null;
+  const gl=+pr.golesLocal, gv=+pr.golesVisitante;
+  if(gl>gv)return matchup.b;
+  if(gv>gl)return matchup.a;
+  return null;
+}
 function participantKnockoutMatchups(p){
   const map={};
-  r32Matchups(p).forEach((m,i)=>{map['p'+String(73+i).padStart(3,'0')]={id:'p'+String(73+i).padStart(3,'0'),a:m.a,b:m.b,key:orderedPairKey(m.a,m.b)};});
+  // OJO: no usar r32Matchups(p) aquí. Esa función SALTA (no empuja nada al arreglo)
+  // los cruces que no logra resolver, así que su índice ya no corresponde a la
+  // posición real del cruce en R32_SLOTS. Si eso pasa, todos los cruces siguientes
+  // quedan desalineados y terminan comparándose contra el partido equivocado
+  // (ej.: el cruce de p084 termina comparado como si fuera el de p081).
+  // Por eso aquí se recorre R32_SLOTS directamente, para que el índice i
+  // siempre corresponda a 73+i sin importar cuántos cruces no se resuelvan.
+  const thirdRes=thirdPlaceAssignment(p);
+  R32_SLOTS.forEach((slot,i)=>{
+    const a=resolveGroupSlot(slot.a,p);
+    const b=slot.b.third?resolveThirdSlot(slot.a.group,thirdRes):resolveGroupSlot(slot.b,p);
+    if(!a||!b)return;
+    const id='p'+String(73+i).padStart(3,'0');
+    map[id]={id,a:a.team,b:b.team,key:orderedPairKey(a.team,b.team)};
+  });
   Object.keys(BRACKET_LINKS).forEach(id=>{
     const [x,y]=BRACKET_LINKS[id];
     const a=predWinnerForMatch(p,map[x]);
     const b=predWinnerForMatch(p,map[y]);
     if(a&&b)map[id]={id,a,b,key:orderedPairKey(a,b)};
   });
+  // Tercer puesto (p103): se juega entre los perdedores de las semifinales (p101/p102),
+  // no está en BRACKET_LINKS porque ese mapa solo propaga ganadores.
+  const l101=predLoserForMatch(p,map['p101']);
+  const l102=predLoserForMatch(p,map['p102']);
+  if(l101&&l102)map['p103']={id:'p103',a:l101,b:l102,key:orderedPairKey(l101,l102)};
   return map;
 }
 function realPhaseMatchups(phase){
@@ -1020,6 +1063,31 @@ function renderKOResumen(){
   }).join('');
   document.getElementById('ko-resumen-content').innerHTML='<div class="ko-summary">'+cards+'</div><p class="ko-status">Este módulo se actualiza solo con los datos disponibles. Cuando entren resultados de eliminatorias en resultados.json, se llenan automáticamente 8vos, cuartos, semis y final.</p>';
 }
+function renderBracketHits(){
+  const el=document.getElementById('ko-aciertos-content'); if(!el)return;
+  const leaderboard=RANKING.slice().sort((a,b)=>(b.r32MatchHits||0)-(a.r32MatchHits||0)||(b.r32MatchPts||0)-(a.r32MatchPts||0)||a.nombre.localeCompare(b.nombre));
+  const top=leaderboard.filter(p=>(p.r32MatchHits||0)>0).slice(0,40);
+  const totalAvailable=Math.max(0,...RANKING.map(p=>p.r32MatchAvailable||0));
+  let html='<p class="ko-status">🔗 Cada llave (cruce de eliminatoria) adivinada exactamente suma +2 pts. Aquí ves quién acierta más llaves, fase por fase.</p>';
+  html+='<div class="ko-phase-title">🏆 Ranking de llaves acertadas</div>';
+  html+= top.length? top.map((p,i)=>'<div class="ko-rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(i+1)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="ko-detail">'+(p.r32MatchHits||0)+' de '+totalAvailable+' llaves definidas · +'+(p.r32MatchPts||0)+' pts</div></div><div class="pts">'+(p.r32MatchHits||0)+' 🔗</div></div>').join('')
+    : '<div class="empty">Todavía nadie tiene llaves confirmadas.</div>';
+  html+='<div class="ko-phase-title" style="margin-top:16px">📋 Cruce por cruce</div>';
+  Object.keys(KO_PHASES).forEach(ph=>{
+    const reals=realPhaseMatchups(ph);
+    if(!reals.length)return;
+    html+='<div style="margin:10px 0 6px;font-weight:900;color:var(--gold)">'+esc(KO_PHASES[ph].label||ph)+'</div>';
+    reals.forEach(real=>{
+      const hitters=RANKING.filter(p=>{
+        const pred=participantKnockoutMatchups(p)[real.id];
+        return pred && pred.key===real.key;
+      });
+      const names=hitters.slice(0,6).map(p=>esc(p.nombre)).join(', ')+(hitters.length>6?' +'+(hitters.length-6):'');
+      html+='<div class="match-card"><div><b>'+esc(real.a)+'</b> vs <b>'+esc(real.b)+'</b><div class="muted" style="font-size:.68rem;margin-top:3px">'+(hitters.length? '🎯 '+hitters.length+' acertaron ('+pct(hitters.length,PARTICIPANTES.length)+'%): '+names : 'Nadie tiene esta llave exacta todavía.')+'</div></div><div class="score">'+hitters.length+'</div></div>';
+    });
+  });
+  el.innerHTML=html;
+}
 function renderEliminatorias(){
   if(!document.getElementById('ko-16-content'))return;
   try{
@@ -1029,6 +1097,7 @@ function renderEliminatorias(){
     renderKORank('Semis','ko-2-content');
     renderKORank('Final','ko-final-content');
     renderKOResumen();
+    renderBracketHits();
   }catch(e){console.error('[eliminatorias]',e);}
 }
 
@@ -1099,8 +1168,7 @@ function renderRankingChart(){
 function allTeamsFromData(){
   const set=new Set(); MATCHES.forEach(m=>{if(m.local)set.add(m.local);if(m.visitante)set.add(m.visitante)}); return [...set].sort((a,b)=>a.localeCompare(b,'es'));
 }
-function renderWorldMap(){
-  const el=document.getElementById('world-map'); if(!el)return;
+function aliveTeamsSet(){
   const q=actualQualifiers();
   const initialQualified=new Set(q.teams||[]);
   const alive=new Set(initialQualified);
@@ -1113,6 +1181,12 @@ function renderWorldMap(){
   // Los partidos ya programados de octavos mantienen vivos a sus participantes, aunque aún no se jueguen.
   phaseMatches('8vos').forEach(m=>{ if(m.local)alive.add(m.local); if(m.visitante)alive.add(m.visitante); });
   CONFIRMED_OCTAVOS.forEach(m=>{ alive.add(m.local); alive.add(m.visitante); });
+  return alive;
+}
+function renderWorldMap(){
+  const el=document.getElementById('world-map'); if(!el)return;
+  const q=actualQualifiers();
+  const alive=aliveTeamsSet();
   const groupTeams=allTeamsFromData().filter(t=>!/^Por definir/i.test(t));
   const phaseHasStarted=knockoutMatches().some(isScoreable)||q.closed===q.total;
   const rows=groupTeams.map(t=>{
@@ -1123,6 +1197,39 @@ function renderWorldMap(){
   }).join('');
   el.innerHTML=rows||'<div class="empty">Aún no hay equipos cargados.</div>';
 }
+function teamStatusTag(team){
+  if(!team)return '';
+  return aliveTeamsSet().has(team)?'<span class="chip ok">🟢 vivo</span>':'<span class="chip">⚫ eliminado</span>';
+}
+function championPathCard(p){
+  const map=participantKnockoutMatchups(p);
+  const championTeam=predWinnerForMatch(p,map['p104']);
+  const thirdTeam=predWinnerForMatch(p,map['p103']);
+  const finalMatch=map['p104'];
+  const rivalTeam=finalMatch?(finalMatch.a===championTeam?finalMatch.b:finalMatch.a):null;
+  const phasesOrder=['16avos','8vos','Cuartos','Semis','Final'];
+  const rowsHtml=phasesOrder.map(ph=>{
+    const ids=KO_PHASES[ph].ids;
+    const realsById=new Map(realPhaseMatchups(ph).map(r=>[r.id,r]));
+    return ids.map(id=>{
+      const pred=map[id];
+      const real=realsById.get(id);
+      let icon='⏳',cls='';
+      if(real&&pred){ if(pred.key===real.key){icon='✅';cls='ok'} else {icon='❌';cls='bad'} }
+      else if(!pred){icon='➖';}
+      const teamsTxt=pred?(esc(pred.a)+' vs '+esc(pred.b)):'Tu bracket aún no llega aquí';
+      return '<span class="ko-pill '+cls+'">'+icon+' '+teamsTxt+'</span>';
+    }).join('');
+  });
+  const header=championTeam
+    ? '<div class="label">Tu campeón predicho</div><h2 style="color:var(--gold);margin:6px 0">'+esc(championTeam)+' '+teamStatusTag(championTeam)+'</h2>'+(rivalTeam?'<p class="muted">Le ganarías la final a <b>'+esc(rivalTeam)+'</b> '+teamStatusTag(rivalTeam)+'</p>':'')
+    : '<div class="label">Tu campeón predicho</div><p class="muted">Tu cadena de predicciones todavía no llega hasta la final (o ese cruce aún no aplica con tus picks).</p>';
+  const thirdHtml=thirdTeam?'<p class="muted" style="margin-top:4px">Tu tercer puesto: <b>'+esc(thirdTeam)+'</b> '+teamStatusTag(thirdTeam)+'</p>':'';
+  return '<div class="card" style="margin-top:10px"><div class="section-title">🔮 Tu camino a campeón</div><div class="body">'+header+thirdHtml+
+    '<div style="margin-top:10px">'+phasesOrder.map((ph,i)=>'<div style="margin-bottom:8px"><b style="color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.4px">'+esc(KO_PHASES[ph].label||ph)+'</b><div style="margin-top:4px">'+rowsHtml[i]+'</div></div>').join('')+'</div>'+
+    '<p class="muted" style="font-size:.66rem;margin-top:6px">✅ llave acertada · ❌ llave fallada · ⏳ pendiente de definirse · ➖ tu propia predicción no llega a este cruce.</p>'+
+    '</div></div>';
+}
 function shareTextFor(p){return '🏆 Polla Mundial 2026\n'+p.nombre+' va #'+p.pos+' con '+p.pts+' pts\n🎯 '+p.exact+' exactos · ✅ '+p.hit+' aciertos\n👑 Campeón elegido: '+(cleanHonorTeam(p.honor?.campeon)||'—');}
 async function sharePlayer(id){
   const p=RANKING.find(x=>x.id===id); if(!p)return;
@@ -1130,6 +1237,59 @@ async function sharePlayer(id){
   try{ if(navigator.share){ await navigator.share({title:'Polla Mundial 2026',text}); if(status)status.textContent='Compartido ✅'; }
     else{ await navigator.clipboard.writeText(text); if(status)status.textContent='Copiado para WhatsApp ✅'; }
   }catch(e){ try{await navigator.clipboard.writeText(text); if(status)status.textContent='Copiado para WhatsApp ✅';}catch(_){if(status)status.textContent='No se pudo copiar automáticamente.'} }
+}
+function roundRectPath(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+function fitText(ctx,text,maxWidth){
+  let t=text;
+  while(ctx.measureText(t).width>maxWidth && t.length>3){ t=t.slice(0,-1); }
+  return t===text?text:t.slice(0,-1)+'…';
+}
+async function shareRankingImage(){
+  const status=document.getElementById('rank-share-status');
+  const top=RANKING.slice(0,10);
+  if(!top.length){ if(status)status.textContent='Aún no hay ranking para compartir.'; return; }
+  const W=1080, rowH=100, headerH=210, footerH=70;
+  const H=headerH+rowH*top.length+footerH;
+  const canvas=document.createElement('canvas'); canvas.width=W; canvas.height=H;
+  const ctx=canvas.getContext('2d');
+  const bg=ctx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,'#3b0764'); bg.addColorStop(.4,'#1e1040'); bg.addColorStop(1,'#0e0520');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#ffd447'; ctx.font='900 52px sans-serif'; ctx.fillText('🏆 Polla Mundial 2026',48,88);
+  ctx.fillStyle='#d4b8ff'; ctx.font='700 28px sans-serif'; ctx.fillText('Ranking general · Top '+top.length,48,132);
+  ctx.font='600 24px sans-serif'; ctx.fillText(new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'}),48,168);
+  top.forEach((p,i)=>{
+    const y=headerH+i*rowH;
+    ctx.fillStyle= i%2===0?'rgba(255,255,255,.045)':'rgba(255,255,255,.015)';
+    roundRectPath(ctx,32,y+8,W-64,rowH-16,18); ctx.fill();
+    const posTxt=p.pos===1?'🥇':p.pos===2?'🥈':p.pos===3?'🥉':('#'+p.pos);
+    ctx.fillStyle='#ffd447'; ctx.font='900 38px sans-serif'; ctx.fillText(posTxt,58,y+58);
+    ctx.fillStyle='#fffaf0'; ctx.font='800 36px sans-serif';
+    ctx.fillText(fitText(ctx,p.nombre,560),170,y+46);
+    ctx.fillStyle='#d4b8ff'; ctx.font='600 22px sans-serif';
+    const sub=(p.exact||0)+' exactos · '+(p.hit||0)+' aciertos'+((p.r32MatchHits||0)?' · 🔗 '+p.r32MatchHits+' llaves':'');
+    ctx.fillText(sub,170,y+76);
+    ctx.fillStyle='#ffd447'; ctx.font='900 38px sans-serif';
+    const ptsTxt=(p.pts||0)+' pts'; const w=ctx.measureText(ptsTxt).width;
+    ctx.fillText(ptsTxt,W-64-w,y+58);
+  });
+  ctx.fillStyle='#9a7fce'; ctx.font='600 20px sans-serif'; ctx.fillText('Generado automáticamente · comparte con tu grupo',48,H-28);
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+  if(!blob){ if(status)status.textContent='No se pudo generar la imagen.'; return; }
+  const file=new File([blob],'ranking-polla-2026.png',{type:'image/png'});
+  try{
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],title:'Polla Mundial 2026',text:'Mira cómo va el ranking 🏆'});
+      if(status)status.textContent='Compartido ✅';
+      return;
+    }
+  }catch(e){ /* si cancela o falla, sigue al fallback de descarga */ }
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='ranking-polla-2026.png'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4000);
+  if(status)status.textContent='Imagen descargada ✅ Ya la puedes compartir por WhatsApp.';
 }
 function needToWinCard(p){
   const leader=RANKING[0]; if(!leader||!p)return'';
@@ -1306,7 +1466,7 @@ const KO_MATCH_INFO={
   p097:{a:'Por definir',b:'Por definir',date:'Jul 9'},p098:{a:'Por definir',b:'Por definir',date:'Jul 10'},
   p099:{a:'Por definir',b:'Por definir',date:'Jul 11'},p100:{a:'Por definir',b:'Por definir',date:'Jul 11'},
   p101:{a:'Por definir',b:'Por definir',date:'Jul 14'},p102:{a:'Por definir',b:'Por definir',date:'Jul 15'},
-  p103:{a:'Por definir',b:'Por definir',date:'Jul 19'},p104:{a:'Por definir',b:'Por definir',date:'Jul 18'},
+  p103:{a:'Por definir',b:'Por definir',date:'Jul 18'},p104:{a:'Por definir',b:'Por definir',date:'Jul 19'},
 };
 function koPredCard(matchId){
   const info=KO_MATCH_INFO[matchId];if(!info)return'';
@@ -1367,14 +1527,15 @@ function renderGroupPredictions(){
 }
 function predBar(label,n,total,cls){return '<div class="barrow"><div class="barhead"><span>'+esc(label)+'</span><b>'+pct(n,total)+'%</b></div><div class="bar"><div class="fill '+cls+'" style="width:'+pct(n,total)+'%"></div></div></div>'}
 function renderTopMeter(){const tmEl=document.getElementById('top-meter');if(!tmEl)return;tmEl.innerHTML=RANKING.slice(0,5).map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">#'+p.pos+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">'+p.hit+'/'+PLAYED.length+' aciertos</span><span class="chip">'+p.exact+' exactos</span><span class="chip">'+p.pct+'%</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')}
-function renderRanking(){const searchEl=document.getElementById('search');const q=norm(searchEl?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
+function renderRanking(){const searchEl=document.getElementById('search');const q=norm(searchEl?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+((p.r32MatchHits||0)?'<span class="chip gold">🔗 '+p.r32MatchHits+' llaves</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
 function matchPhaseLabel(m){
   const id=m.id;const num=parseInt((id||'').replace('p',''));
   if(num>=73&&num<=88)return'🏆 16avos de Final';
   if(num>=89&&num<=96)return'🏆 Octavos de Final';
   if(num>=97&&num<=100)return'🏆 Cuartos de Final';
   if(num>=101&&num<=102)return'🏆 Semifinal';
-  if(num===103)return'🏆 Final';
+  if(num===103)return'🏆 Tercer puesto';
+  if(num===104)return'🏆 Final';
   return'Grupo '+(m.grupo||'?')+' · Jornada '+(m.jornada||'?');
 }
 function renderMatches(){
@@ -1490,6 +1651,7 @@ function renderBadges(){
   const oracle=jscores[0]||leader;
   const tourist=jscores.slice().reverse().find(p=>p.jGames>0)||jscores[jscores.length-1]||leader;
   const golpe=RANKING.slice().sort((a,b)=>(b.surpriseScore||0)-(a.surpriseScore||0))[0]||leader;
+  const bracketArchitect=RANKING.slice().sort((a,b)=>(b.r32MatchHits||0)-(a.r32MatchHits||0)||(b.r32MatchPts||0)-(a.r32MatchPts||0))[0]||leader;
   const batacazoEvent=RARE_EVENTS[0];
   let batacazoWinner=null;
   if(batacazoEvent){
@@ -1505,6 +1667,7 @@ function renderBadges(){
     ['🎯','Francotirador','Más marcadores exactos acumulados',exact,(exact.exact||0)+' exactos'],
     ['🐙','Pulpo Paul','Mayor porcentaje de aciertos de resultado',hit,(hit.pct||0)+'% · '+(hit.hit||0)+'/'+PLAYED.length],
     ['🧨','Rey del Batacazo','Acertó el resultado menos predicho del torneo',batacazoWinner||golpe,batacazoEvent?esc(batacazoEvent.m.local)+' '+batacazoEvent.m.golesLocal+'-'+batacazoEvent.m.golesVisitante+' '+esc(batacazoEvent.m.visitante)+' · '+batacazoEvent.exactCount+' exactos':'—'],
+    ['🔗','Arquitecto de Llaves','Más cruces de eliminatoria adivinados exactamente',bracketArchitect,(bracketArchitect.r32MatchHits||0)+' llaves · +'+(bracketArchitect.r32MatchPts||0)+' pts'],
     ['🏆','Rey del Mundial','Líder de la clasificación general',leader,(leader.pts||0)+' pts · #1 general']
   ];
   document.getElementById('badges').innerHTML=data.map(x=>'<div class="badge-card"><div class="badge-ico">'+x[0]+'</div><div><div class="badge-title">'+x[1]+'</div><div class="badge-winner">'+esc(x[3]?.nombre||'—')+' · '+x[4]+'</div></div></div>').join('');
@@ -1517,9 +1680,9 @@ function openProfile(id){
   document.getElementById('prof-name').textContent=medal(p.pos)+' '+p.nombre;
   const ovr=Math.max(60,Math.min(99,Math.round((p.pct||0)*0.55+(p.exact||0)*1.2+(p.pos<=3?10:0))));
   const pc=document.getElementById('prof-card');
-  if(pc){pc.innerHTML='<div class="player-card"><div class="ovr">'+ovr+'</div><div class="pc-name">'+esc(p.nombre)+'</div><div class="pc-meta">#'+p.pos+' · '+p.pts+' pts · '+p.exact+' exactos · '+p.hit+'/'+PLAYED.length+' aciertos</div><div class="share-actions"><button class="share-btn" onclick="sharePlayer(\''+p.id+'\')">📲 Compartir</button><button class="ghost-btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(shareTextFor(RANKING.find(x=>x.id===\''+p.id+'\')))">Copiar texto</button></div><div class="share-status" id="share-status">Lista para captura o WhatsApp.</div></div>'+needToWinCard(p);}
+  if(pc){pc.innerHTML='<div class="player-card"><div class="ovr">'+ovr+'</div><div class="pc-name">'+esc(p.nombre)+'</div><div class="pc-meta">#'+p.pos+' · '+p.pts+' pts · '+p.exact+' exactos · '+p.hit+'/'+PLAYED.length+' aciertos</div><div class="share-actions"><button class="share-btn" onclick="sharePlayer(\''+p.id+'\')">📲 Compartir</button><button class="ghost-btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(shareTextFor(RANKING.find(x=>x.id===\''+p.id+'\')))">Copiar texto</button></div><div class="share-status" id="share-status">Lista para captura o WhatsApp.</div></div>'+championPathCard(p)+needToWinCard(p);}
   document.getElementById('prof-grid').innerHTML=[
-    ['Posición','#'+p.pos],['Puntos',p.pts],['Puntos posiciones',p.groupPosPts||0],['Grupos cerrados',p.groupPosClosed||0],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',cleanHonorTeam(p.honor?.campeon)||'—'],['Subcampeón',cleanHonorTeam(p.honor?.subcampeon)||'—'],['Sorpresas',p.surpriseHits||0]
+    ['Posición','#'+p.pos],['Puntos',p.pts],['Puntos posiciones',p.groupPosPts||0],['Llaves acertadas',(p.r32MatchHits||0)+' (+'+(p.r32MatchPts||0)+' pts)'],['Grupos cerrados',p.groupPosClosed||0],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',cleanHonorTeam(p.honor?.campeon)||'—'],['Subcampeón',cleanHonorTeam(p.honor?.subcampeon)||'—'],['Sorpresas',p.surpriseHits||0]
   ].map(r=>'<div class="prof-stat"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>').join('');
   document.getElementById('prof-matches').innerHTML=p.last.slice(0,10).map(x=>'<div class="match-card"><div><b>'+esc(x.m.local)+' '+x.m.golesLocal+'-'+x.m.golesVisitante+' '+esc(x.m.visitante)+'</b><div class="muted" style="font-size:.68rem">Predijo '+x.pr.golesLocal+'-'+x.pr.golesVisitante+(x.exact?' · exacto':x.ok?' · resultado':'')+'</div></div><div class="score">+'+x.s+'</div></div>').join('')||'<div class="empty">Sin partidos evaluados.</div>';
   document.getElementById('profile').classList.add('act');
