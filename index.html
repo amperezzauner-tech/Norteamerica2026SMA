@@ -251,7 +251,7 @@ body:before{
     </div>
   </section>
 
-  <section id="ranking" class="section"><div class="card"><div class="section-title">🏆 Ranking general <span class="chip">toca un nombre</span></div><div class="body"><input class="search" id="search" placeholder="🔍 Buscar participante..." oninput="renderRanking()"><div id="ranking-list"></div></div></div></section>
+  <section id="ranking" class="section"><div class="card"><div class="section-title">🏆 Ranking general <span class="chip">toca un nombre</span></div><div class="body"><input class="search" id="search" placeholder="🔍 Buscar participante..." oninput="renderRanking()"><div style="display:flex;justify-content:flex-end;margin-bottom:6px"><button class="share-btn" onclick="shareRankingImage()">📸 Compartir ranking</button></div><div class="share-status" id="rank-share-status" style="text-align:right;margin-bottom:8px"></div><div id="ranking-list"></div></div></div></section>
 
 
   <section id="eliminatorias" class="section">
@@ -265,6 +265,7 @@ body:before{
           <button onclick="showSub('ko-2',this)">🔥 Semis</button>
           <button onclick="showSub('ko-final',this)">👑 Final</button>
           <button onclick="showSub('ko-resumen',this)">📊 Resumen</button>
+          <button onclick="showSub('ko-aciertos',this)">🎯 Aciertos</button>
         </div>
         <div id="sub-ko-16" class="subpanel act"><div id="ko-16-content"></div></div>
         <div id="sub-ko-8" class="subpanel"><div id="ko-8-content"></div></div>
@@ -272,6 +273,7 @@ body:before{
         <div id="sub-ko-2" class="subpanel"><div id="ko-2-content"></div></div>
         <div id="sub-ko-final" class="subpanel"><div id="ko-final-content"></div></div>
         <div id="sub-ko-resumen" class="subpanel"><div id="ko-resumen-content"></div></div>
+        <div id="sub-ko-aciertos" class="subpanel"><div id="ko-aciertos-content"></div></div>
       </div>
     </div>
   </section>
@@ -361,6 +363,7 @@ body:before{
           <div class="award-card"><h3>🎯 Francotirador</h3><div class="award-desc">Quien lleva más marcadores exactos en todo el torneo.</div><div class="award-rule">No basta acertar ganador: aquí manda el marcador perfecto.</div></div>
           <div class="award-card"><h3>🐙 Pulpo Paul</h3><div class="award-desc">Quien tiene el mayor porcentaje de aciertos de resultado.</div><div class="award-rule">Mide consistencia: local, empate o visitante.</div></div>
           <div class="award-card"><h3>🧨 Rey del Batacazo</h3><div class="award-desc">Quien acertó el resultado menos predicho del torneo.</div><div class="award-rule">Premia ver venir lo que casi nadie vio.</div></div>
+          <div class="award-card"><h3>🔗 Arquitecto de Llaves</h3><div class="award-desc">Quien más cruces de eliminatoria (16avos, 8vos, cuartos, semis, final) adivinó exactamente.</div><div class="award-rule">Cada llave exacta suma +2 pts extra, sin importar el marcador.</div></div>
           <div class="award-card"><h3>🏆 Rey del Mundial</h3><div class="award-desc">El líder actual de la clasificación general.</div><div class="award-rule">El premio principal: más puntos acumulados.</div></div>
         </div>
       </div>
@@ -1034,6 +1037,31 @@ function renderKOResumen(){
   }).join('');
   document.getElementById('ko-resumen-content').innerHTML='<div class="ko-summary">'+cards+'</div><p class="ko-status">Este módulo se actualiza solo con los datos disponibles. Cuando entren resultados de eliminatorias en resultados.json, se llenan automáticamente 8vos, cuartos, semis y final.</p>';
 }
+function renderBracketHits(){
+  const el=document.getElementById('ko-aciertos-content'); if(!el)return;
+  const leaderboard=RANKING.slice().sort((a,b)=>(b.r32MatchHits||0)-(a.r32MatchHits||0)||(b.r32MatchPts||0)-(a.r32MatchPts||0)||a.nombre.localeCompare(b.nombre));
+  const top=leaderboard.filter(p=>(p.r32MatchHits||0)>0).slice(0,40);
+  const totalAvailable=Math.max(0,...RANKING.map(p=>p.r32MatchAvailable||0));
+  let html='<p class="ko-status">🔗 Cada llave (cruce de eliminatoria) adivinada exactamente suma +2 pts. Aquí ves quién acierta más llaves, fase por fase.</p>';
+  html+='<div class="ko-phase-title">🏆 Ranking de llaves acertadas</div>';
+  html+= top.length? top.map((p,i)=>'<div class="ko-rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(i+1)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="ko-detail">'+(p.r32MatchHits||0)+' de '+totalAvailable+' llaves definidas · +'+(p.r32MatchPts||0)+' pts</div></div><div class="pts">'+(p.r32MatchHits||0)+' 🔗</div></div>').join('')
+    : '<div class="empty">Todavía nadie tiene llaves confirmadas.</div>';
+  html+='<div class="ko-phase-title" style="margin-top:16px">📋 Cruce por cruce</div>';
+  Object.keys(KO_PHASES).forEach(ph=>{
+    const reals=realPhaseMatchups(ph);
+    if(!reals.length)return;
+    html+='<div style="margin:10px 0 6px;font-weight:900;color:var(--gold)">'+esc(KO_PHASES[ph].label||ph)+'</div>';
+    reals.forEach(real=>{
+      const hitters=RANKING.filter(p=>{
+        const pred=participantKnockoutMatchups(p)[real.id];
+        return pred && pred.key===real.key;
+      });
+      const names=hitters.slice(0,6).map(p=>esc(p.nombre)).join(', ')+(hitters.length>6?' +'+(hitters.length-6):'');
+      html+='<div class="match-card"><div><b>'+esc(real.a)+'</b> vs <b>'+esc(real.b)+'</b><div class="muted" style="font-size:.68rem;margin-top:3px">'+(hitters.length? '🎯 '+hitters.length+' acertaron ('+pct(hitters.length,PARTICIPANTES.length)+'%): '+names : 'Nadie tiene esta llave exacta todavía.')+'</div></div><div class="score">'+hitters.length+'</div></div>';
+    });
+  });
+  el.innerHTML=html;
+}
 function renderEliminatorias(){
   if(!document.getElementById('ko-16-content'))return;
   try{
@@ -1043,6 +1071,7 @@ function renderEliminatorias(){
     renderKORank('Semis','ko-2-content');
     renderKORank('Final','ko-final-content');
     renderKOResumen();
+    renderBracketHits();
   }catch(e){console.error('[eliminatorias]',e);}
 }
 
@@ -1113,8 +1142,7 @@ function renderRankingChart(){
 function allTeamsFromData(){
   const set=new Set(); MATCHES.forEach(m=>{if(m.local)set.add(m.local);if(m.visitante)set.add(m.visitante)}); return [...set].sort((a,b)=>a.localeCompare(b,'es'));
 }
-function renderWorldMap(){
-  const el=document.getElementById('world-map'); if(!el)return;
+function aliveTeamsSet(){
   const q=actualQualifiers();
   const initialQualified=new Set(q.teams||[]);
   const alive=new Set(initialQualified);
@@ -1127,6 +1155,12 @@ function renderWorldMap(){
   // Los partidos ya programados de octavos mantienen vivos a sus participantes, aunque aún no se jueguen.
   phaseMatches('8vos').forEach(m=>{ if(m.local)alive.add(m.local); if(m.visitante)alive.add(m.visitante); });
   CONFIRMED_OCTAVOS.forEach(m=>{ alive.add(m.local); alive.add(m.visitante); });
+  return alive;
+}
+function renderWorldMap(){
+  const el=document.getElementById('world-map'); if(!el)return;
+  const q=actualQualifiers();
+  const alive=aliveTeamsSet();
   const groupTeams=allTeamsFromData().filter(t=>!/^Por definir/i.test(t));
   const phaseHasStarted=knockoutMatches().some(isScoreable)||q.closed===q.total;
   const rows=groupTeams.map(t=>{
@@ -1137,6 +1171,39 @@ function renderWorldMap(){
   }).join('');
   el.innerHTML=rows||'<div class="empty">Aún no hay equipos cargados.</div>';
 }
+function teamStatusTag(team){
+  if(!team)return '';
+  return aliveTeamsSet().has(team)?'<span class="chip ok">🟢 vivo</span>':'<span class="chip">⚫ eliminado</span>';
+}
+function championPathCard(p){
+  const map=participantKnockoutMatchups(p);
+  const championTeam=predWinnerForMatch(p,map['p104']);
+  const thirdTeam=predWinnerForMatch(p,map['p103']);
+  const finalMatch=map['p104'];
+  const rivalTeam=finalMatch?(finalMatch.a===championTeam?finalMatch.b:finalMatch.a):null;
+  const phasesOrder=['16avos','8vos','Cuartos','Semis','Final'];
+  const rowsHtml=phasesOrder.map(ph=>{
+    const ids=KO_PHASES[ph].ids;
+    const realsById=new Map(realPhaseMatchups(ph).map(r=>[r.id,r]));
+    return ids.map(id=>{
+      const pred=map[id];
+      const real=realsById.get(id);
+      let icon='⏳',cls='';
+      if(real&&pred){ if(pred.key===real.key){icon='✅';cls='ok'} else {icon='❌';cls='bad'} }
+      else if(!pred){icon='➖';}
+      const teamsTxt=pred?(esc(pred.a)+' vs '+esc(pred.b)):'Tu bracket aún no llega aquí';
+      return '<span class="ko-pill '+cls+'">'+icon+' '+teamsTxt+'</span>';
+    }).join('');
+  });
+  const header=championTeam
+    ? '<div class="label">Tu campeón predicho</div><h2 style="color:var(--gold);margin:6px 0">'+esc(championTeam)+' '+teamStatusTag(championTeam)+'</h2>'+(rivalTeam?'<p class="muted">Le ganarías la final a <b>'+esc(rivalTeam)+'</b> '+teamStatusTag(rivalTeam)+'</p>':'')
+    : '<div class="label">Tu campeón predicho</div><p class="muted">Tu cadena de predicciones todavía no llega hasta la final (o ese cruce aún no aplica con tus picks).</p>';
+  const thirdHtml=thirdTeam?'<p class="muted" style="margin-top:4px">Tu tercer puesto: <b>'+esc(thirdTeam)+'</b> '+teamStatusTag(thirdTeam)+'</p>':'';
+  return '<div class="card" style="margin-top:10px"><div class="section-title">🔮 Tu camino a campeón</div><div class="body">'+header+thirdHtml+
+    '<div style="margin-top:10px">'+phasesOrder.map((ph,i)=>'<div style="margin-bottom:8px"><b style="color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.4px">'+esc(KO_PHASES[ph].label||ph)+'</b><div style="margin-top:4px">'+rowsHtml[i]+'</div></div>').join('')+'</div>'+
+    '<p class="muted" style="font-size:.66rem;margin-top:6px">✅ llave acertada · ❌ llave fallada · ⏳ pendiente de definirse · ➖ tu propia predicción no llega a este cruce.</p>'+
+    '</div></div>';
+}
 function shareTextFor(p){return '🏆 Polla Mundial 2026\n'+p.nombre+' va #'+p.pos+' con '+p.pts+' pts\n🎯 '+p.exact+' exactos · ✅ '+p.hit+' aciertos\n👑 Campeón elegido: '+(cleanHonorTeam(p.honor?.campeon)||'—');}
 async function sharePlayer(id){
   const p=RANKING.find(x=>x.id===id); if(!p)return;
@@ -1144,6 +1211,59 @@ async function sharePlayer(id){
   try{ if(navigator.share){ await navigator.share({title:'Polla Mundial 2026',text}); if(status)status.textContent='Compartido ✅'; }
     else{ await navigator.clipboard.writeText(text); if(status)status.textContent='Copiado para WhatsApp ✅'; }
   }catch(e){ try{await navigator.clipboard.writeText(text); if(status)status.textContent='Copiado para WhatsApp ✅';}catch(_){if(status)status.textContent='No se pudo copiar automáticamente.'} }
+}
+function roundRectPath(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+}
+function fitText(ctx,text,maxWidth){
+  let t=text;
+  while(ctx.measureText(t).width>maxWidth && t.length>3){ t=t.slice(0,-1); }
+  return t===text?text:t.slice(0,-1)+'…';
+}
+async function shareRankingImage(){
+  const status=document.getElementById('rank-share-status');
+  const top=RANKING.slice(0,10);
+  if(!top.length){ if(status)status.textContent='Aún no hay ranking para compartir.'; return; }
+  const W=1080, rowH=100, headerH=210, footerH=70;
+  const H=headerH+rowH*top.length+footerH;
+  const canvas=document.createElement('canvas'); canvas.width=W; canvas.height=H;
+  const ctx=canvas.getContext('2d');
+  const bg=ctx.createLinearGradient(0,0,0,H);
+  bg.addColorStop(0,'#3b0764'); bg.addColorStop(.4,'#1e1040'); bg.addColorStop(1,'#0e0520');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#ffd447'; ctx.font='900 52px sans-serif'; ctx.fillText('🏆 Polla Mundial 2026',48,88);
+  ctx.fillStyle='#d4b8ff'; ctx.font='700 28px sans-serif'; ctx.fillText('Ranking general · Top '+top.length,48,132);
+  ctx.font='600 24px sans-serif'; ctx.fillText(new Date().toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'}),48,168);
+  top.forEach((p,i)=>{
+    const y=headerH+i*rowH;
+    ctx.fillStyle= i%2===0?'rgba(255,255,255,.045)':'rgba(255,255,255,.015)';
+    roundRectPath(ctx,32,y+8,W-64,rowH-16,18); ctx.fill();
+    const posTxt=p.pos===1?'🥇':p.pos===2?'🥈':p.pos===3?'🥉':('#'+p.pos);
+    ctx.fillStyle='#ffd447'; ctx.font='900 38px sans-serif'; ctx.fillText(posTxt,58,y+58);
+    ctx.fillStyle='#fffaf0'; ctx.font='800 36px sans-serif';
+    ctx.fillText(fitText(ctx,p.nombre,560),170,y+46);
+    ctx.fillStyle='#d4b8ff'; ctx.font='600 22px sans-serif';
+    const sub=(p.exact||0)+' exactos · '+(p.hit||0)+' aciertos'+((p.r32MatchHits||0)?' · 🔗 '+p.r32MatchHits+' llaves':'');
+    ctx.fillText(sub,170,y+76);
+    ctx.fillStyle='#ffd447'; ctx.font='900 38px sans-serif';
+    const ptsTxt=(p.pts||0)+' pts'; const w=ctx.measureText(ptsTxt).width;
+    ctx.fillText(ptsTxt,W-64-w,y+58);
+  });
+  ctx.fillStyle='#9a7fce'; ctx.font='600 20px sans-serif'; ctx.fillText('Generado automáticamente · comparte con tu grupo',48,H-28);
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+  if(!blob){ if(status)status.textContent='No se pudo generar la imagen.'; return; }
+  const file=new File([blob],'ranking-polla-2026.png',{type:'image/png'});
+  try{
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],title:'Polla Mundial 2026',text:'Mira cómo va el ranking 🏆'});
+      if(status)status.textContent='Compartido ✅';
+      return;
+    }
+  }catch(e){ /* si cancela o falla, sigue al fallback de descarga */ }
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='ranking-polla-2026.png'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4000);
+  if(status)status.textContent='Imagen descargada ✅ Ya la puedes compartir por WhatsApp.';
 }
 function needToWinCard(p){
   const leader=RANKING[0]; if(!leader||!p)return'';
@@ -1381,7 +1501,7 @@ function renderGroupPredictions(){
 }
 function predBar(label,n,total,cls){return '<div class="barrow"><div class="barhead"><span>'+esc(label)+'</span><b>'+pct(n,total)+'%</b></div><div class="bar"><div class="fill '+cls+'" style="width:'+pct(n,total)+'%"></div></div></div>'}
 function renderTopMeter(){const tmEl=document.getElementById('top-meter');if(!tmEl)return;tmEl.innerHTML=RANKING.slice(0,5).map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">#'+p.pos+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">'+p.hit+'/'+PLAYED.length+' aciertos</span><span class="chip">'+p.exact+' exactos</span><span class="chip">'+p.pct+'%</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')}
-function renderRanking(){const searchEl=document.getElementById('search');const q=norm(searchEl?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
+function renderRanking(){const searchEl=document.getElementById('search');const q=norm(searchEl?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+((p.r32MatchHits||0)?'<span class="chip gold">🔗 '+p.r32MatchHits+' llaves</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
 function matchPhaseLabel(m){
   const id=m.id;const num=parseInt((id||'').replace('p',''));
   if(num>=73&&num<=88)return'🏆 16avos de Final';
@@ -1505,6 +1625,7 @@ function renderBadges(){
   const oracle=jscores[0]||leader;
   const tourist=jscores.slice().reverse().find(p=>p.jGames>0)||jscores[jscores.length-1]||leader;
   const golpe=RANKING.slice().sort((a,b)=>(b.surpriseScore||0)-(a.surpriseScore||0))[0]||leader;
+  const bracketArchitect=RANKING.slice().sort((a,b)=>(b.r32MatchHits||0)-(a.r32MatchHits||0)||(b.r32MatchPts||0)-(a.r32MatchPts||0))[0]||leader;
   const batacazoEvent=RARE_EVENTS[0];
   let batacazoWinner=null;
   if(batacazoEvent){
@@ -1520,6 +1641,7 @@ function renderBadges(){
     ['🎯','Francotirador','Más marcadores exactos acumulados',exact,(exact.exact||0)+' exactos'],
     ['🐙','Pulpo Paul','Mayor porcentaje de aciertos de resultado',hit,(hit.pct||0)+'% · '+(hit.hit||0)+'/'+PLAYED.length],
     ['🧨','Rey del Batacazo','Acertó el resultado menos predicho del torneo',batacazoWinner||golpe,batacazoEvent?esc(batacazoEvent.m.local)+' '+batacazoEvent.m.golesLocal+'-'+batacazoEvent.m.golesVisitante+' '+esc(batacazoEvent.m.visitante)+' · '+batacazoEvent.exactCount+' exactos':'—'],
+    ['🔗','Arquitecto de Llaves','Más cruces de eliminatoria adivinados exactamente',bracketArchitect,(bracketArchitect.r32MatchHits||0)+' llaves · +'+(bracketArchitect.r32MatchPts||0)+' pts'],
     ['🏆','Rey del Mundial','Líder de la clasificación general',leader,(leader.pts||0)+' pts · #1 general']
   ];
   document.getElementById('badges').innerHTML=data.map(x=>'<div class="badge-card"><div class="badge-ico">'+x[0]+'</div><div><div class="badge-title">'+x[1]+'</div><div class="badge-winner">'+esc(x[3]?.nombre||'—')+' · '+x[4]+'</div></div></div>').join('');
@@ -1532,9 +1654,9 @@ function openProfile(id){
   document.getElementById('prof-name').textContent=medal(p.pos)+' '+p.nombre;
   const ovr=Math.max(60,Math.min(99,Math.round((p.pct||0)*0.55+(p.exact||0)*1.2+(p.pos<=3?10:0))));
   const pc=document.getElementById('prof-card');
-  if(pc){pc.innerHTML='<div class="player-card"><div class="ovr">'+ovr+'</div><div class="pc-name">'+esc(p.nombre)+'</div><div class="pc-meta">#'+p.pos+' · '+p.pts+' pts · '+p.exact+' exactos · '+p.hit+'/'+PLAYED.length+' aciertos</div><div class="share-actions"><button class="share-btn" onclick="sharePlayer(\''+p.id+'\')">📲 Compartir</button><button class="ghost-btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(shareTextFor(RANKING.find(x=>x.id===\''+p.id+'\')))">Copiar texto</button></div><div class="share-status" id="share-status">Lista para captura o WhatsApp.</div></div>'+needToWinCard(p);}
+  if(pc){pc.innerHTML='<div class="player-card"><div class="ovr">'+ovr+'</div><div class="pc-name">'+esc(p.nombre)+'</div><div class="pc-meta">#'+p.pos+' · '+p.pts+' pts · '+p.exact+' exactos · '+p.hit+'/'+PLAYED.length+' aciertos</div><div class="share-actions"><button class="share-btn" onclick="sharePlayer(\''+p.id+'\')">📲 Compartir</button><button class="ghost-btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(shareTextFor(RANKING.find(x=>x.id===\''+p.id+'\')))">Copiar texto</button></div><div class="share-status" id="share-status">Lista para captura o WhatsApp.</div></div>'+championPathCard(p)+needToWinCard(p);}
   document.getElementById('prof-grid').innerHTML=[
-    ['Posición','#'+p.pos],['Puntos',p.pts],['Puntos posiciones',p.groupPosPts||0],['Grupos cerrados',p.groupPosClosed||0],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',cleanHonorTeam(p.honor?.campeon)||'—'],['Subcampeón',cleanHonorTeam(p.honor?.subcampeon)||'—'],['Sorpresas',p.surpriseHits||0]
+    ['Posición','#'+p.pos],['Puntos',p.pts],['Puntos posiciones',p.groupPosPts||0],['Llaves acertadas',(p.r32MatchHits||0)+' (+'+(p.r32MatchPts||0)+' pts)'],['Grupos cerrados',p.groupPosClosed||0],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',cleanHonorTeam(p.honor?.campeon)||'—'],['Subcampeón',cleanHonorTeam(p.honor?.subcampeon)||'—'],['Sorpresas',p.surpriseHits||0]
   ].map(r=>'<div class="prof-stat"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>').join('');
   document.getElementById('prof-matches').innerHTML=p.last.slice(0,10).map(x=>'<div class="match-card"><div><b>'+esc(x.m.local)+' '+x.m.golesLocal+'-'+x.m.golesVisitante+' '+esc(x.m.visitante)+'</b><div class="muted" style="font-size:.68rem">Predijo '+x.pr.golesLocal+'-'+x.pr.golesVisitante+(x.exact?' · exacto':x.ok?' · resultado':'')+'</div></div><div class="score">+'+x.s+'</div></div>').join('')||'<div class="empty">Sin partidos evaluados.</div>';
   document.getElementById('profile').classList.add('act');
