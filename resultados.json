@@ -21,7 +21,16 @@
     "nota_llave_auto": "V3: octavos, cuartos, semifinal, final y tercer puesto se rellenan automáticamente desde ganadores/perdedores.",
     "version_chatgpt": "v4_estable_90min_llaves_exactas",
     "nota_p087": "Argentina-Cabo Verde cerrado 1-1 a 90 minutos; clasifica Argentina por alargue.",
-    "nota_llave_exacta": "La página suma +2 por acertar la llave exacta en el mismo orden en cada cambio de fase."
+    "nota_llave_exacta": "La página suma +2 por acertar la llave exacta en el mismo orden en cada cambio de fase.",
+    "nota_premios": "Botin/Balon de Oro-Plata-Bronce no se pueden derivar de los partidos (son premios individuales que anuncia FIFA al final del torneo). Cuando se sepan los ganadores reales, llenar los campos de premios_oficiales de abajo con el nombre del jugador (ej. \"Kylian Mbappe\"). Campeon/Subcampeon/3er/4to puesto NO van aqui: esos se calculan solos de la final (p104) y el partido por el tercer puesto (p103)."
+  },
+  "premios_oficiales": {
+    "botin_oro": null,
+    "botin_plata": null,
+    "botin_bronce": null,
+    "balon_oro": null,
+    "balon_plata": null,
+    "balon_bronce": null
   },
   "partidos": [
     {
