@@ -529,8 +529,9 @@ function calculate(){
     });
     const groupBonus=groupPositionBonus(p);
     const keyBonus=knockoutExactMatchupBonus(p);
-    pts+=groupBonus.total+keyBonus.total;
-    return {...p,pts,exact:ex,hit,pct:PLAYED.length?pct(hit,PLAYED.length):0,last:last.reverse(),surpriseScore,surpriseHits,groupPosPts:groupBonus.total,groupPosHits:groupBonus.hits,groupPosClosed:groupBonus.closed,groupPosDetail:groupBonus.detail,r32MatchPts:keyBonus.total,r32MatchHits:keyBonus.hits,r32MatchAvailable:keyBonus.available,r32MatchDetail:keyBonus.detail}
+    const honor=honorBonus(p);
+    pts+=groupBonus.total+keyBonus.total+honor.total;
+    return {...p,pts,exact:ex,hit,pct:PLAYED.length?pct(hit,PLAYED.length):0,last:last.reverse(),surpriseScore,surpriseHits,groupPosPts:groupBonus.total,groupPosHits:groupBonus.hits,groupPosClosed:groupBonus.closed,groupPosDetail:groupBonus.detail,r32MatchPts:keyBonus.total,r32MatchHits:keyBonus.hits,r32MatchAvailable:keyBonus.available,r32MatchDetail:keyBonus.detail,honorBonusPts:honor.total,honorBonusDetail:honor.detail}
   });
   computeRarity();
   RANKING.sort((a,b)=>b.pts-a.pts||b.exact-a.exact||b.hit-a.hit||b.groupPosPts-a.groupPosPts||a.nombre.localeCompare(b.nombre));
@@ -565,14 +566,6 @@ function computeRarity(){
   });
   RARE_EVENTS.sort((a,b)=>(a.exactCount-b.exactCount)||(a.outcomeCount-b.outcomeCount));
   SURPRISE=RANKING.slice().sort((a,b)=>(b.surpriseScore||0)-(a.surpriseScore||0)||b.exact-a.exact)[0];
-}
-function cleanHonorTeam(value){
-  const raw=String(value||'').trim();
-  if(!raw)return '';
-  // Algunas celdas de Excel exportaron códigos internos de la llave (W101, L101, 1K)
-  // en vez del país. No deben mostrarse como equipos favoritos.
-  if(/^W\d+$/i.test(raw) || /^L\d+$/i.test(raw) || /^\d+[A-Z]$/i.test(raw))return '';
-  return raw;
 }
 function addVote(obj,value){
   const team=cleanHonorTeam(value);
@@ -1105,22 +1098,6 @@ function renderChampionCards(){
     ['🥉 Tercer puesto',third.team,third.n]
   ].map(x=>'<div class="match-card"><div><b>'+x[0]+'</b><div class="muted">'+esc(x[1])+'</div></div><div class="score">'+x[2]+'</div></div>').join('');
 }
-function normalizePlayer(name){
-  if(!name)return null;
-  const n=(name||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  if(n.includes('mbapp'))return'Kylian Mbappé';
-  if(n.includes('yamal'))return'Lamine Yamal';
-  if(n.includes('kane')&&!n.includes('fernand'))return'Harry Kane';
-  if(n.includes('haaland'))return'Erling Haaland';
-  if(n.includes('alvarez')||n.includes('julian'))return'Julián Álvarez';
-  if(n.includes('ronaldo')||n.includes('cristiano'))return'Cristiano Ronaldo';
-  if(n.includes('diaz'))return'Luis Díaz';
-  if(n.includes('vitinha'))return'Vitinha';
-  if(n.includes('pedri'))return'Pedri';
-  if((n.includes('fernandes')||n.includes('bruno'))&&!n.includes('ronaldo'))return'Bruno Fernandes';
-  if(n.includes('messi')||n.includes('lionel'))return'Lionel Messi';
-  return name.trim();
-}
 function honorPlayerBars(field){
   const counts={};
   PARTICIPANTES.forEach(p=>{const raw=p.honor?.[field];const name=normalizePlayer(raw);if(name){counts[name]=(counts[name]||0)+1;}});
@@ -1407,7 +1384,7 @@ function openProfile(id){
   const pc=document.getElementById('prof-card');
   if(pc){pc.innerHTML='<div class="player-card"><div class="ovr">'+ovr+'</div><div class="pc-name">'+esc(p.nombre)+'</div><div class="pc-meta">#'+p.pos+' · '+p.pts+' pts · '+p.exact+' exactos · '+p.hit+'/'+PLAYED.length+' aciertos</div><div class="share-actions"><button class="share-btn" onclick="sharePlayer(\''+p.id+'\')">📲 Compartir</button><button class="ghost-btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(shareTextFor(RANKING.find(x=>x.id===\''+p.id+'\')))">Copiar texto</button></div><div class="share-status" id="share-status">Lista para captura o WhatsApp.</div></div>'+championPathCard(p)+needToWinCard(p);}
   document.getElementById('prof-grid').innerHTML=[
-    ['Posición','#'+p.pos],['Puntos',p.pts],['Puntos posiciones',p.groupPosPts||0],['Llaves acertadas',(p.r32MatchHits||0)+' (+'+(p.r32MatchPts||0)+' pts)'],['Grupos cerrados',p.groupPosClosed||0],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',cleanHonorTeam(p.honor?.campeon)||'—'],['Subcampeón',cleanHonorTeam(p.honor?.subcampeon)||'—'],['Sorpresas',p.surpriseHits||0]
+    ['Posición','#'+p.pos],['Puntos',p.pts],['Puntos posiciones',p.groupPosPts||0],['Llaves acertadas',(p.r32MatchHits||0)+' (+'+(p.r32MatchPts||0)+' pts)'],['Premios finales',(p.honorBonusPts||0)+' pts'],['Grupos cerrados',p.groupPosClosed||0],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',cleanHonorTeam(p.honor?.campeon)||'—'],['Subcampeón',cleanHonorTeam(p.honor?.subcampeon)||'—'],['Sorpresas',p.surpriseHits||0]
   ].map(r=>'<div class="prof-stat"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>').join('');
   document.getElementById('prof-matches').innerHTML=p.last.slice(0,10).map(x=>'<div class="match-card"><div><b>'+esc(x.m.local)+' '+x.m.golesLocal+'-'+x.m.golesVisitante+' '+esc(x.m.visitante)+'</b><div class="muted" style="font-size:.68rem">Predijo '+x.pr.golesLocal+'-'+x.pr.golesVisitante+(x.exact?' · exacto':x.ok?' · resultado':'')+'</div></div><div class="score">+'+x.s+'</div></div>').join('')||'<div class="empty">Sin partidos evaluados.</div>';
   document.getElementById('profile').classList.add('act');

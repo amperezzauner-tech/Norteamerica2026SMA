@@ -366,6 +366,88 @@ function computeParticipantScore(p,played){
   });
   const groupBonus=groupPositionBonus(p);
   const keyBonus=knockoutExactMatchupBonus(p);
-  pts+=groupBonus.total+keyBonus.total;
-  return {pts,exact:ex,hit,last,groupBonus,keyBonus};
+  const honor=honorBonus(p);
+  pts+=groupBonus.total+keyBonus.total+honor.total;
+  return {pts,exact:ex,hit,last,groupBonus,keyBonus,honor};
+}
+
+function cleanHonorTeam(value){
+  const raw=String(value||'').trim();
+  if(!raw)return '';
+  // Algunas celdas de Excel exportaron códigos internos de la llave (W101, L101, 1K)
+  // en vez del país. No deben mostrarse como equipos favoritos.
+  if(/^W\d+$/i.test(raw) || /^L\d+$/i.test(raw) || /^\d+[A-Z]$/i.test(raw))return '';
+  return raw;
+}
+function normalizePlayer(name){
+  if(!name)return null;
+  const n=(name||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  if(n.includes('mbapp'))return'Kylian Mbappé';
+  if(n.includes('yamal'))return'Lamine Yamal';
+  if(n.includes('kane')&&!n.includes('fernand'))return'Harry Kane';
+  if(n.includes('haaland'))return'Erling Haaland';
+  if(n.includes('alvarez')||n.includes('julian'))return'Julián Álvarez';
+  if(n.includes('ronaldo')||n.includes('cristiano'))return'Cristiano Ronaldo';
+  if(n.includes('diaz'))return'Luis Díaz';
+  if(n.includes('vitinha'))return'Vitinha';
+  if(n.includes('pedri'))return'Pedri';
+  if((n.includes('fernandes')||n.includes('bruno'))&&!n.includes('ronaldo'))return'Bruno Fernandes';
+  if(n.includes('messi')||n.includes('lionel'))return'Lionel Messi';
+  return name.trim();
+}
+
+// Puntos de la tabla de posiciones final y de los premios individuales (reglas de la
+// polla). Campeón/subcampeón/3°/4° puesto se derivan solos de la final (p104) y el
+// partido por el tercer puesto (p103) una vez se juegan. Nadie predijo un "4to puesto"
+// explícito, así que se usa la misma predicción de tercer_puesto: si su equipo termina
+// perdiendo ese partido (el 4° real) en vez de ganarlo (el 3° real), se le abona el
+// bono de 4to puesto — es lo más parecido a "acertó quién llega a ese partido".
+// Botín/Balón de Oro/Plata/Bronce no salen de ningún resultado de partido (son premios
+// individuales que anuncia FIFA al final del torneo): se cargan a mano en
+// RES.premios_oficiales cuando se sepan; mientras ese campo no exista, no suman nada.
+const FINAL_PLACEMENT_BONUS={campeon:60,subcampeon:20,tercer_puesto:10,cuarto_puesto:5};
+const HONOR_PLAYER_BONUS={botin_oro:40,botin_plata:30,botin_bronce:20,balon_oro:40,balon_plata:30,balon_bronce:20};
+function officialFinalPlacements(){
+  const final=(MATCHES||[]).find(m=>m.id==='p104');
+  const third=(MATCHES||[]).find(m=>m.id==='p103');
+  const out={campeon:null,subcampeon:null,tercer_puesto:null,cuarto_puesto:null};
+  if(final&&isFinal(final)&&hasRealTeams(final)){
+    const w=koAdvancer(final);
+    if(w){out.campeon=w;out.subcampeon=(sameTeam(final.local,w)?final.visitante:final.local);}
+  }
+  if(third&&isFinal(third)&&hasRealTeams(third)){
+    const w=koAdvancer(third);
+    if(w){out.tercer_puesto=w;out.cuarto_puesto=(sameTeam(third.local,w)?third.visitante:third.local);}
+  }
+  return out;
+}
+function honorBonus(p){
+  const h=p.honor||{};
+  const official=officialFinalPlacements();
+  let total=0; const detail=[];
+  const pickCampeon=cleanHonorTeam(h.campeon);
+  if(official.campeon&&pickCampeon&&sameTeam(pickCampeon,official.campeon)){
+    total+=FINAL_PLACEMENT_BONUS.campeon;detail.push({tipo:'campeon',pts:FINAL_PLACEMENT_BONUS.campeon,team:official.campeon});
+  }
+  const pickSub=cleanHonorTeam(h.subcampeon);
+  if(official.subcampeon&&pickSub&&sameTeam(pickSub,official.subcampeon)){
+    total+=FINAL_PLACEMENT_BONUS.subcampeon;detail.push({tipo:'subcampeon',pts:FINAL_PLACEMENT_BONUS.subcampeon,team:official.subcampeon});
+  }
+  const pickTercero=cleanHonorTeam(h.tercer_puesto);
+  if(pickTercero&&official.tercer_puesto&&sameTeam(pickTercero,official.tercer_puesto)){
+    total+=FINAL_PLACEMENT_BONUS.tercer_puesto;detail.push({tipo:'tercer_puesto',pts:FINAL_PLACEMENT_BONUS.tercer_puesto,team:official.tercer_puesto});
+  }else if(pickTercero&&official.cuarto_puesto&&sameTeam(pickTercero,official.cuarto_puesto)){
+    total+=FINAL_PLACEMENT_BONUS.cuarto_puesto;detail.push({tipo:'cuarto_puesto',pts:FINAL_PLACEMENT_BONUS.cuarto_puesto,team:official.cuarto_puesto});
+  }
+  const oficialesJugadores=(typeof RES!=='undefined'&&RES&&RES.premios_oficiales)||{};
+  Object.keys(HONOR_PLAYER_BONUS).forEach(campo=>{
+    const realWinner=oficialesJugadores[campo];
+    if(!realWinner)return;
+    const pick=normalizePlayer(h[campo]);
+    const real=normalizePlayer(realWinner);
+    if(pick&&real&&pick===real){
+      total+=HONOR_PLAYER_BONUS[campo];detail.push({tipo:campo,pts:HONOR_PLAYER_BONUS[campo],team:real});
+    }
+  });
+  return {total,detail};
 }
