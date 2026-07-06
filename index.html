@@ -729,7 +729,7 @@ function renderBracketHits(){
   Object.keys(KO_PHASES).forEach(ph=>{
     const reals=realPhaseMatchups(ph);
     if(!reals.length)return;
-    html+='<div style="margin:10px 0 6px;font-weight:900;color:var(--gold)">'+esc(KO_PHASES[ph].label||ph)+'</div>';
+    html+='<div style="margin:10px 0 6px;font-weight:900;color:var(--gold)">'+esc(KO_PHASES[ph].roundLabel||ph)+'</div>';
     reals.forEach(real=>{
       const hitters=RANKING.filter(p=>{
         const pred=participantKnockoutMatchups(p)[real.id];
@@ -876,7 +876,7 @@ function championPathCard(p){
   const picks=[['🏆','Campeón',honorChampion],['🥈','Subcampeón',honorSub],['🥉','Tercer puesto',honorThird]].filter(x=>x[2]);
   const picksHtml=picks.map(x=>'<p class="muted" style="margin-top:4px">'+x[0]+' '+x[1]+' que elegiste: <b style="color:var(--white)">'+esc(x[2])+'</b> '+teamStatusTag(x[2])+'</p>').join('');
   return '<div class="card" style="margin-top:10px"><div class="section-title">🔮 Tu camino a campeón</div><div class="body">'+picksHtml+
-    '<div style="margin-top:10px">'+phasesOrder.map((ph,i)=>'<div style="margin-bottom:8px"><b style="color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.4px">'+esc(KO_PHASES[ph].label||ph)+'</b><div style="margin-top:4px">'+rowsHtml[i]+'</div></div>').join('')+'</div>'+
+    '<div style="margin-top:10px">'+phasesOrder.map((ph,i)=>'<div style="margin-bottom:8px"><b style="color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.4px">'+esc(KO_PHASES[ph].roundLabel||ph)+'</b><div style="margin-top:4px">'+rowsHtml[i]+'</div></div>').join('')+'</div>'+
     '<p class="muted" style="font-size:.66rem;margin-top:6px">✅ llave acertada · ❌ llave fallada · ⏳ pendiente de definirse · ➖ tu propia predicción no llega a este cruce.</p>'+
     '</div></div>';
 }
