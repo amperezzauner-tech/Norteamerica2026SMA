@@ -191,11 +191,11 @@ function groupPositionBonus(p){
   return {total,hits,closed,detail};
 }
 const KO_PHASES={
-  '16avos':{ids:['p073','p074','p075','p076','p077','p078','p079','p080','p081','p082','p083','p084','p085','p086','p087','p088'],total:16,label:'Clasificados a 8vos / 16avos jugados'},
-  '8vos':{ids:['p089','p090','p091','p092','p093','p094','p095','p096'],total:8,label:'Clasificados a cuartos'},
-  'Cuartos':{ids:['p097','p098','p099','p100'],total:4,label:'Clasificados a semifinal'},
-  'Semis':{ids:['p101','p102'],total:2,label:'Finalistas'},
-  'Final':{ids:['p103','p104'],total:2,label:'Tercer puesto y final'}
+  '16avos':{ids:['p073','p074','p075','p076','p077','p078','p079','p080','p081','p082','p083','p084','p085','p086','p087','p088'],total:16,label:'Clasificados a 8vos / 16avos jugados',roundLabel:'16avos de Final'},
+  '8vos':{ids:['p089','p090','p091','p092','p093','p094','p095','p096'],total:8,label:'Clasificados a cuartos',roundLabel:'8vos de Final'},
+  'Cuartos':{ids:['p097','p098','p099','p100'],total:4,label:'Clasificados a semifinal',roundLabel:'Cuartos de Final'},
+  'Semis':{ids:['p101','p102'],total:2,label:'Finalistas',roundLabel:'Semifinales'},
+  'Final':{ids:['p103','p104'],total:2,label:'Tercer puesto y final',roundLabel:'Tercer puesto y Final'}
 };
 const EXACT_MATCHUP_BONUS=2;
 const R32_SLOTS=[
