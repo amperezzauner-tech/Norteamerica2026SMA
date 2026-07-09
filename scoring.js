@@ -273,7 +273,7 @@ function r32ExactMatchupBonus(p){return knockoutExactMatchupBonus(p,'16avos')}
 const BRACKET_LINKS={
   p089:['p073','p076'], p090:['p075','p078'], p091:['p074','p077'], p092:['p079','p080'],
   p093:['p084','p083'], p094:['p082','p081'], p095:['p087','p086'], p096:['p085','p088'],
-  p097:['p089','p090'], p098:['p093','p094'], p099:['p091','p092'], p100:['p095','p096'],
+  p097:['p090','p089'], p098:['p093','p094'], p099:['p091','p092'], p100:['p095','p096'],
   p101:['p097','p098'], p102:['p099','p100'], p104:['p101','p102']
 };
 function predWinnerForMatch(p,matchup){
@@ -331,14 +331,11 @@ function knockoutExactMatchupBonus(p,phase=null){
   const pred=participantKnockoutMatchups(p);
   const phases=phase?[phase]:Object.keys(KO_PHASES);
   const detail=[]; let total=0,available=0;
-  // Una llave solo suma puntos cuando ese partido ya se jugó (cierre de los 90 min).
-  // Aunque el cruce quede definido antes (p. ej. cuartos ya tiene los dos equipos por
-  // los resultados de octavos), no se cuenta hasta que el partido se dispute, igual que
-  // el marcador. Así el total no se adelanta a la planilla oficial.
-  const playedIds=new Set((typeof MATCHES!=='undefined'?MATCHES:[]).filter(isScoreable).map(m=>m.id));
+  // La bonificación de llave exacta (+2) se suma cuando el cruce real ya está definido
+  // con dos equipos reales, aunque el partido aún no se haya jugado. Esto permite sumar
+  // cuartos apenas quedan definidos por octavos, como en la planilla manual.
   phases.forEach(ph=>{
     realPhaseMatchups(ph).forEach(real=>{
-      if(!playedIds.has(real.id))return;
       available++;
       const pm=pred[real.id];
       if(pm && pm.key===real.key){

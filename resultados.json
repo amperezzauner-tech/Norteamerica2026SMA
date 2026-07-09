@@ -22,7 +22,9 @@
     "version_chatgpt": "v4_estable_90min_llaves_exactas",
     "nota_p087": "Argentina-Cabo Verde cerrado 1-1 a 90 minutos; clasifica Argentina por alargue.",
     "nota_llave_exacta": "La página suma +2 por acertar la llave exacta en el mismo orden en cada cambio de fase.",
-    "nota_premios": "Botin/Balon de Oro-Plata-Bronce no se pueden derivar de los partidos (son premios individuales que anuncia FIFA al final del torneo). Cuando se sepan los ganadores reales, llenar los campos de premios_oficiales de abajo con el nombre del jugador (ej. \"Kylian Mbappe\"). Campeon/Subcampeon/3er/4to puesto NO van aqui: esos se calculan solos de la final (p104) y el partido por el tercer puesto (p103)."
+    "nota_premios": "Botin/Balon de Oro-Plata-Bronce no se pueden derivar de los partidos (son premios individuales que anuncia FIFA al final del torneo). Cuando se sepan los ganadores reales, llenar los campos de premios_oficiales de abajo con el nombre del jugador (ej. \"Kylian Mbappe\"). Campeon/Subcampeon/3er/4to puesto NO van aqui: esos se calculan solos de la final (p104) y el partido por el tercer puesto (p103).",
+    "fix_chatgpt_p097_orden": "2026-07-08: p097 corregido a Francia vs Marruecos; origenLocal p090, origenVisitante p089.",
+    "fix_chatgpt_llave_exacta": "scoring.js corregido para sumar +2 por llave exacta cuando el cruce ya está definido, aunque el partido esté pendiente."
   },
   "premios_oficiales": {
     "botin_oro": null,
@@ -1300,15 +1302,15 @@
     {
       "id": "p097",
       "matchId": 97,
-      "local": "Marruecos",
-      "visitante": "Francia",
+      "local": "Francia",
+      "visitante": "Marruecos",
       "fase": "Cuartos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p089",
-      "origenVisitante": "p090",
+      "origenLocal": "p090",
+      "origenVisitante": "p089",
       "espn_id": "760510"
     },
     {
