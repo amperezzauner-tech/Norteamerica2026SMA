@@ -5,12 +5,12 @@
     "jugados": 96,
     "pendientes": 8,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-07-09T03:21:57.047823+00:00",
+    "ultima_actualizacion_auto": "2026-07-09T03:30:55.135330+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-07-09T03:21:57.047823+00:00",
+    "ultima_revision_auto": "2026-07-09T03:30:55.135330+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
@@ -24,8 +24,7 @@
     "nota_llave_exacta": "La página suma +2 por acertar la llave exacta en el mismo orden en cada cambio de fase.",
     "nota_premios": "Botin/Balon de Oro-Plata-Bronce no se pueden derivar de los partidos (son premios individuales que anuncia FIFA al final del torneo). Cuando se sepan los ganadores reales, llenar los campos de premios_oficiales de abajo con el nombre del jugador (ej. \"Kylian Mbappe\"). Campeon/Subcampeon/3er/4to puesto NO van aqui: esos se calculan solos de la final (p104) y el partido por el tercer puesto (p103).",
     "fix_chatgpt_p097_orden": "2026-07-08: p097 corregido a Francia vs Marruecos; origenLocal p090, origenVisitante p089.",
-    "fix_chatgpt_llave_exacta": "scoring.js corregido para sumar +2 por llave exacta cuando el cruce ya está definido, aunque el partido esté pendiente.",
-    "nota_auto": "Llave p097 fijada manualmente: Francia vs Marruecos según conteo manual."
+    "fix_chatgpt_llave_exacta": "scoring.js corregido para sumar +2 por llave exacta cuando el cruce ya está definido, aunque el partido esté pendiente."
   },
   "premios_oficiales": {
     "botin_oro": null,
@@ -1303,15 +1302,15 @@
     {
       "id": "p097",
       "matchId": 97,
-      "local": "Francia",
-      "visitante": "Marruecos",
+      "local": "Marruecos",
+      "visitante": "Francia",
       "fase": "Cuartos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p090",
-      "origenVisitante": "p089",
+      "origenLocal": "p089",
+      "origenVisitante": "p090",
       "espn_id": "760510"
     },
     {
