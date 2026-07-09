@@ -265,7 +265,7 @@ function r32Matchups(p){
   R32_SLOTS.forEach(slot=>{
     const a=resolveGroupSlot(slot.a,p);
     const b=slot.b.third?resolveThirdSlot(slot.a.group,thirdRes):resolveGroupSlot(slot.b,p);
-    if(a&&b)out.push({id:slot.id,a:a.team,b:b.team,aSource:a.source,bSource:b.source,key:orderedPairKey(a.team,b.team)});
+    if(a&&b)out.push({id:slot.id,a:a.team,b:b.team,aSource:a.source,bSource:b.source,key:pairKey(a.team,b.team)});
   });
   return out;
 }
@@ -276,6 +276,17 @@ const BRACKET_LINKS={
   p097:['p090','p089'], p098:['p093','p094'], p099:['p091','p092'], p100:['p095','p096'],
   p101:['p097','p098'], p102:['p099','p100'], p104:['p101','p102']
 };
+// Cuando el participante predijo EMPATE a 90 min en un partido de eliminación, el
+// marcador no dice a quién eligió para pasar (penales/alargue). Ese clasificado se
+// guarda aparte en p.desempates[idPartido] con el nombre del equipo que pasa (dato
+// dado por el participante). Devuelve el equipo del cruce que coincide, o null.
+function tieAdvancer(p,matchup){
+  const dz=p&&p.desempates&&p.desempates[matchup.id];
+  if(!dz)return null;
+  if(sameTeam(dz,matchup.a))return matchup.a;
+  if(sameTeam(dz,matchup.b))return matchup.b;
+  return null;
+}
 function predWinnerForMatch(p,matchup){
   if(!matchup||!p)return null;
   const pr=p.predicciones?.[matchup.id];
@@ -283,7 +294,7 @@ function predWinnerForMatch(p,matchup){
   const gl=+pr.golesLocal, gv=+pr.golesVisitante;
   if(gl>gv)return matchup.a;
   if(gv>gl)return matchup.b;
-  return null;
+  return tieAdvancer(p,matchup);
 }
 function predLoserForMatch(p,matchup){
   if(!matchup||!p)return null;
@@ -292,6 +303,8 @@ function predLoserForMatch(p,matchup){
   const gl=+pr.golesLocal, gv=+pr.golesVisitante;
   if(gl>gv)return matchup.b;
   if(gv>gl)return matchup.a;
+  const w=tieAdvancer(p,matchup);
+  if(w)return sameTeam(w,matchup.a)?matchup.b:matchup.a;
   return null;
 }
 function participantKnockoutMatchups(p){
@@ -309,23 +322,23 @@ function participantKnockoutMatchups(p){
     const b=slot.b.third?resolveThirdSlot(slot.a.group,thirdRes):resolveGroupSlot(slot.b,p);
     if(!a||!b)return;
     const id='p'+String(73+i).padStart(3,'0');
-    map[id]={id,a:a.team,b:b.team,key:orderedPairKey(a.team,b.team)};
+    map[id]={id,a:a.team,b:b.team,key:pairKey(a.team,b.team)};
   });
   Object.keys(BRACKET_LINKS).forEach(id=>{
     const [x,y]=BRACKET_LINKS[id];
     const a=predWinnerForMatch(p,map[x]);
     const b=predWinnerForMatch(p,map[y]);
-    if(a&&b)map[id]={id,a,b,key:orderedPairKey(a,b)};
+    if(a&&b)map[id]={id,a,b,key:pairKey(a,b)};
   });
   // Tercer puesto (p103): se juega entre los perdedores de las semifinales (p101/p102),
   // no está en BRACKET_LINKS porque ese mapa solo propaga ganadores.
   const l101=predLoserForMatch(p,map['p101']);
   const l102=predLoserForMatch(p,map['p102']);
-  if(l101&&l102)map['p103']={id:'p103',a:l101,b:l102,key:orderedPairKey(l101,l102)};
+  if(l101&&l102)map['p103']={id:'p103',a:l101,b:l102,key:pairKey(l101,l102)};
   return map;
 }
 function realPhaseMatchups(phase){
-  return phaseMatches(phase).filter(m=>m.local&&m.visitante&&!/^Por definir/i.test(m.local)&&!/^Por definir/i.test(m.visitante)).map(m=>({id:m.id,a:m.local,b:m.visitante,key:orderedPairKey(m.local,m.visitante)}));
+  return phaseMatches(phase).filter(m=>m.local&&m.visitante&&!/^Por definir/i.test(m.local)&&!/^Por definir/i.test(m.visitante)).map(m=>({id:m.id,a:m.local,b:m.visitante,key:pairKey(m.local,m.visitante)}));
 }
 function knockoutExactMatchupBonus(p,phase=null){
   const pred=participantKnockoutMatchups(p);

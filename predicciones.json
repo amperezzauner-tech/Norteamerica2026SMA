@@ -9771,6 +9771,17 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Suiza",
+        "p074": "Japón",
+        "p076": "P. Bajos",
+        "p079": "México",
+        "p082": "EE.UU.",
+        "p085": "Canadá",
+        "p086": "Egipto",
+        "p097": "Francia",
+        "p100": "Argentina"
       }
     },
     {
@@ -25995,6 +26006,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Corea del Sur",
+        "p076": "Marruecos",
+        "p100": "Portugal"
       }
     },
     {
@@ -51846,6 +51862,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p076": "Marruecos",
+        "p084": "Colombia",
+        "p086": "Egipto",
+        "p091": "Noruega",
+        "p096": "Portugal"
       }
     },
     {
