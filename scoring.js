@@ -331,8 +331,14 @@ function knockoutExactMatchupBonus(p,phase=null){
   const pred=participantKnockoutMatchups(p);
   const phases=phase?[phase]:Object.keys(KO_PHASES);
   const detail=[]; let total=0,available=0;
+  // Una llave solo suma puntos cuando ese partido ya se jugó (cierre de los 90 min).
+  // Aunque el cruce quede definido antes (p. ej. cuartos ya tiene los dos equipos por
+  // los resultados de octavos), no se cuenta hasta que el partido se dispute, igual que
+  // el marcador. Así el total no se adelanta a la planilla oficial.
+  const playedIds=new Set((typeof MATCHES!=='undefined'?MATCHES:[]).filter(isScoreable).map(m=>m.id));
   phases.forEach(ph=>{
     realPhaseMatchups(ph).forEach(real=>{
+      if(!playedIds.has(real.id))return;
       available++;
       const pm=pred[real.id];
       if(pm && pm.key===real.key){
