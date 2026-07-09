@@ -1302,15 +1302,15 @@
     {
       "id": "p097",
       "matchId": 97,
-      "local": "Marruecos",
-      "visitante": "Francia",
+      "local": "Francia",
+      "visitante": "Marruecos",
       "fase": "Cuartos",
       "jornada": 1,
       "estado": "pendiente",
       "golesLocal": null,
       "golesVisitante": null,
-      "origenLocal": "p089",
-      "origenVisitante": "p090",
+      "origenLocal": "p090",
+      "origenVisitante": "p089",
       "espn_id": "760510"
     },
     {
