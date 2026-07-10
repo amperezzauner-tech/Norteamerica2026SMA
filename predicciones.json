@@ -681,6 +681,9 @@
           "Panamá",
           "Ghana"
         ]
+      },
+      "desempates": {
+        "p077": "Noruega"
       }
     },
     {
@@ -2184,6 +2187,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Ecuador",
+        "p081": "Bélgica",
+        "p087": "Argentina",
+        "p099": "Inglaterra",
+        "p102": "Inglaterra"
       }
     },
     {
@@ -2691,6 +2701,11 @@
           "Inglaterra",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Suiza",
+        "p084": "Colombia",
+        "p100": "Argentina"
       }
     },
     {
@@ -4707,6 +4722,12 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Ecuador",
+        "p087": "Argentina",
+        "p099": "Brasil",
+        "p093": "España"
       }
     },
     {
@@ -5208,6 +5229,19 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Canadá",
+        "p076": "P. Bajos",
+        "p077": "Ecuador",
+        "p079": "Escocia",
+        "p086": "Egipto",
+        "p094": "Bélgica",
+        "p099": "Brasil",
+        "p100": "Colombia",
+        "p101": "Francia",
+        "p102": "Colombia",
+        "p104": "Colombia"
       }
     },
     {
@@ -6729,6 +6763,17 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p079": "Ecuador",
+        "p085": "Suiza",
+        "p086": "EE.UU.",
+        "p094": "Bélgica",
+        "p099": "Inglaterra",
+        "p100": "Argentina",
+        "p101": "Francia",
+        "p103": "Portugal",
+        "p104": "Francia"
       }
     },
     {
@@ -8250,6 +8295,10 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p079": "México",
+        "p100": "Argentina"
       }
     },
     {
@@ -9771,6 +9820,18 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Suiza",
+        "p074": "Japón",
+        "p076": "P. Bajos",
+        "p079": "México",
+        "p082": "EE.UU.",
+        "p085": "Canadá",
+        "p086": "Egipto",
+        "p097": "Francia",
+        "p100": "Argentina",
+        "p102": "Inglaterra"
       }
     },
     {
@@ -10278,6 +10339,14 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Corea del Sur",
+        "p079": "México",
+        "p082": "Bosnia",
+        "p085": "Suiza",
+        "p090": "Francia",
+        "p102": "Argentina"
       }
     },
     {
@@ -11799,6 +11868,10 @@
           "Croacia",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p085": "Noruega",
+        "p094": "Turquía"
       }
     },
     {
@@ -12306,6 +12379,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p082": "Australia",
+        "p084": "Colombia",
+        "p103": "España"
       }
     },
     {
@@ -12813,6 +12891,11 @@
           "Panamá",
           "Ghana"
         ]
+      },
+      "desempates": {
+        "p084": "Colombia",
+        "p086": "Paraguay",
+        "p093": "España"
       }
     },
     {
@@ -14334,6 +14417,10 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p082": "C. de Marfil",
+        "p094": "Bélgica"
       }
     },
     {
@@ -14841,6 +14928,14 @@
           "Panamá",
           "Ghana"
         ]
+      },
+      "desempates": {
+        "p084": "Colombia",
+        "p085": "N. Zelanda",
+        "p086": "Egipto",
+        "p090": "Francia",
+        "p099": "Inglaterra",
+        "p103": "Francia"
       }
     },
     {
@@ -15348,6 +15443,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Ecuador",
+        "p082": "Paraguay",
+        "p085": "Suiza",
+        "p091": "Ecuador",
+        "p093": "Portugal"
       }
     },
     {
@@ -15855,6 +15957,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Chequia",
+        "p076": "P. Bajos",
+        "p084": "Portugal"
       }
     },
     {
@@ -16362,6 +16469,16 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Corea del Sur",
+        "p074": "Brasil",
+        "p077": "Alemania",
+        "p079": "México",
+        "p084": "Croacia",
+        "p091": "Alemania",
+        "p094": "EE.UU.",
+        "p099": "Inglaterra"
       }
     },
     {
@@ -16869,6 +16986,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p075": "Alemania",
+        "p084": "Colombia",
+        "p104": "P. Bajos"
       }
     },
     {
@@ -17883,6 +18005,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p074": "Brasil",
+        "p079": "México",
+        "p084": "Croacia",
+        "p100": "Colombia",
+        "p101": "España"
       }
     },
     {
@@ -19404,6 +19533,18 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "México",
+        "p076": "Japón",
+        "p079": "Corea del Sur",
+        "p082": "EE.UU.",
+        "p086": "Turquía",
+        "p090": "Francia",
+        "p091": "P. Bajos",
+        "p098": "Colombia",
+        "p099": "P. Bajos",
+        "p102": "Portugal"
       }
     },
     {
@@ -21432,6 +21573,10 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p084": "Colombia",
+        "p086": "Egipto"
       }
     },
     {
@@ -21939,6 +22084,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Ecuador",
+        "p079": "Escocia",
+        "p086": "Paraguay",
+        "p100": "Argentina",
+        "p101": "Francia"
       }
     },
     {
@@ -22446,6 +22598,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Noruega",
+        "p084": "Colombia",
+        "p102": "Argentina"
       }
     },
     {
@@ -22953,6 +23110,9 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p079": "México"
       }
     },
     {
@@ -24474,6 +24634,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Ecuador",
+        "p094": "Bélgica",
+        "p104": "Portugal"
       }
     },
     {
@@ -24981,6 +25146,14 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Canadá",
+        "p079": "México",
+        "p084": "Colombia",
+        "p085": "Suiza",
+        "p090": "Francia",
+        "p094": "Paraguay"
       }
     },
     {
@@ -25488,6 +25661,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Senegal",
+        "p082": "Canadá",
+        "p085": "Suiza",
+        "p099": "Brasil",
+        "p102": "Brasil"
       }
     },
     {
@@ -25995,6 +26175,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Corea del Sur",
+        "p076": "Marruecos",
+        "p100": "Portugal"
       }
     },
     {
@@ -27009,6 +27194,12 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p084": "Colombia",
+        "p085": "Suiza",
+        "p091": "Noruega",
+        "p099": "Noruega"
       }
     },
     {
@@ -27516,6 +27707,11 @@
           "Croacia",
           "Ghana"
         ]
+      },
+      "desempates": {
+        "p076": "Marruecos",
+        "p093": "Colombia",
+        "p099": "Inglaterra"
       }
     },
     {
@@ -29037,6 +29233,14 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p076": "P. Bajos",
+        "p077": "Senegal",
+        "p082": "Japón",
+        "p100": "Argentina",
+        "p101": "España",
+        "p104": "España"
       }
     },
     {
@@ -33600,6 +33804,14 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Canadá",
+        "p076": "Marruecos",
+        "p079": "México",
+        "p087": "Uruguay",
+        "p102": "Portugal",
+        "p104": "Portugal"
       }
     },
     {
@@ -35628,6 +35840,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Ecuador",
+        "p082": "EE.UU.",
+        "p084": "Inglaterra",
+        "p087": "Argentina",
+        "p101": "Francia"
       }
     },
     {
@@ -36135,6 +36354,12 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "México",
+        "p077": "Ecuador",
+        "p085": "Canadá",
+        "p094": "Bélgica"
       }
     },
     {
@@ -38163,6 +38388,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p076": "Marruecos",
+        "p090": "Francia",
+        "p101": "España"
       }
     },
     {
@@ -40191,6 +40421,10 @@
           "Panamá",
           "Ghana"
         ]
+      },
+      "desempates": {
+        "p074": "Brasil",
+        "p084": "Inglaterra"
       }
     },
     {
@@ -41712,6 +41946,14 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Canadá",
+        "p076": "Marruecos",
+        "p079": "México",
+        "p087": "Argentina",
+        "p090": "Francia",
+        "p093": "España"
       }
     },
     {
@@ -42219,6 +42461,16 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p079": "Escocia",
+        "p082": "Turquía",
+        "p086": "EE.UU.",
+        "p089": "P. Bajos",
+        "p094": "Bélgica",
+        "p099": "Inglaterra",
+        "p100": "Argentina",
+        "p102": "Argentina"
       }
     },
     {
@@ -45261,6 +45513,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p076": "P. Bajos",
+        "p079": "México",
+        "p087": "Argentina"
       }
     },
     {
@@ -46782,6 +47039,14 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p076": "P. Bajos",
+        "p079": "México",
+        "p084": "Croacia",
+        "p086": "Australia",
+        "p100": "Portugal",
+        "p102": "Portugal"
       }
     },
     {
@@ -47796,6 +48061,14 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p079": "México",
+        "p085": "Bosnia",
+        "p086": "Irán",
+        "p091": "Ecuador",
+        "p097": "P. Bajos",
+        "p103": "P. Bajos"
       }
     },
     {
@@ -48303,6 +48576,9 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p094": "Bélgica"
       }
     },
     {
@@ -49317,6 +49593,12 @@
           "Panamá",
           "Ghana"
         ]
+      },
+      "desempates": {
+        "p077": "Ecuador",
+        "p079": "México",
+        "p084": "Croacia",
+        "p094": "Bélgica"
       }
     },
     {
@@ -49824,6 +50106,10 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "México",
+        "p077": "Noruega"
       }
     },
     {
@@ -50331,6 +50617,18 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p074": "Brasil",
+        "p076": "Marruecos",
+        "p081": "Bélgica",
+        "p082": "EE.UU.",
+        "p084": "Colombia",
+        "p085": "Suiza",
+        "p094": "Bélgica",
+        "p100": "Argentina",
+        "p101": "Francia",
+        "p102": "Argentina"
       }
     },
     {
@@ -51846,6 +52144,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p076": "Marruecos",
+        "p084": "Colombia",
+        "p086": "Egipto",
+        "p091": "Noruega",
+        "p096": "Portugal"
       }
     },
     {
@@ -53874,6 +54179,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p079": "México",
+        "p084": "Colombia",
+        "p086": "Egipto"
       }
     },
     {
@@ -55389,6 +55699,17 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Chequia",
+        "p074": "Brasil",
+        "p077": "Senegal",
+        "p082": "Turquía",
+        "p084": "Colombia",
+        "p090": "Francia",
+        "p099": "Inglaterra",
+        "p101": "Francia",
+        "p102": "Portugal"
       }
     },
     {
@@ -57417,6 +57738,12 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "México",
+        "p076": "Marruecos",
+        "p085": "Suiza",
+        "p100": "Portugal"
       }
     },
     {
@@ -57924,6 +58251,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p076": "P. Bajos",
+        "p082": "Senegal",
+        "p094": "Bélgica"
       }
     },
     {
@@ -58938,6 +59270,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p076": "P. Bajos",
+        "p077": "Noruega",
+        "p085": "C. de Marfil",
+        "p086": "Paraguay",
+        "p102": "Portugal"
       }
     }
   ]

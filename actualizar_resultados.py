@@ -278,7 +278,7 @@ BRACKET_LINKS = {
     "p095": ("p087", "p086", "Octavos", "ganadores"),  # Ganador Argentina/Cabo Verde vs Egipto
     "p096": ("p085", "p088", "Octavos", "ganadores"),  # Suiza vs ganador Colombia/Ghana
     # Cuartos oficiales
-    "p097": ("p089", "p090", "Cuartos", "ganadores"),
+    "p097": ("p090", "p089", "Cuartos", "ganadores"),
     "p098": ("p093", "p094", "Cuartos", "ganadores"),
     "p099": ("p091", "p092", "Cuartos", "ganadores"),
     "p100": ("p095", "p096", "Cuartos", "ganadores"),
