@@ -10,20 +10,22 @@
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-07-12T14:17:55.089471+00:00",
+    "ultima_revision_auto": "2026-07-12T12:40:51.208596+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
     "correccion_manual_p059": "Turquía 3-2 EE.UU.",
     "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
-    "nota_auto": "Pendientes no encontrados: p103 Perdedor p101 vs Perdedor p102; p104 Ganador p101 vs Ganador p102",
-    "diagnostico_auto": "actualizados=0; encontrados_sin_cambio=5; pendientes_no_encontrados=2",
+    "nota_auto": "p099 Noruega 1-2 Inglaterra [finalizado] ESPN:760512; p100 Argentina 3-1 Suiza [finalizado] ESPN:760513",
+    "diagnostico_auto": "actualizados=2; encontrados_sin_cambio=3; pendientes_no_encontrados=2",
     "nota_llave_auto": "V3: octavos, cuartos, semifinal, final y tercer puesto se rellenan automáticamente desde ganadores/perdedores.",
     "version_chatgpt": "v4_estable_90min_llaves_exactas",
     "nota_p087": "Argentina-Cabo Verde cerrado 1-1 a 90 minutos; clasifica Argentina por alargue.",
     "nota_llave_exacta": "La página suma +2 por acertar la llave exacta en el mismo orden en cada cambio de fase.",
     "nota_premios": "Botin/Balon de Oro-Plata-Bronce no se pueden derivar de los partidos (son premios individuales que anuncia FIFA al final del torneo). Cuando se sepan los ganadores reales, llenar los campos de premios_oficiales de abajo con el nombre del jugador (ej. \"Kylian Mbappe\"). Campeon/Subcampeon/3er/4to puesto NO van aqui: esos se calculan solos de la final (p104) y el partido por el tercer puesto (p103).",
-    "fix_chatgpt_llave_exacta": "scoring.js corregido para sumar +2 por llave exacta cuando el cruce ya está definido, aunque el partido esté pendiente."
+    "fix_chatgpt_llave_exacta": "scoring.js corregido para sumar +2 por llave exacta cuando el cruce ya está definido, aunque el partido esté pendiente.",
+    "correccion_manual_90min_cuartos": "2026-07-12: p099 Noruega 1-1 Inglaterra a 90 min, clasifica Inglaterra por alargue (final 1-2); p100 Argentina 1-1 Suiza a 90 min, clasifica Argentina por alargue (final 3-1).",
+    "nota_correccion_90min": "p099 Noruega-Inglaterra y p100 Argentina-Suiza se califican 1-1 a 90 minutos; clasifican Inglaterra y Argentina por alargue."
   },
   "premios_oficiales": {
     "botin_oro": null,
@@ -1337,12 +1339,15 @@
       "jornada": 1,
       "estado": "finalizado",
       "golesLocal": 1,
-      "golesVisitante": 2,
+      "golesVisitante": 1,
       "origenLocal": "p091",
       "origenVisitante": "p092",
       "espn_id": "760512",
       "ganador": "Inglaterra",
-      "formaDefinicion": "alargue"
+      "formaDefinicion": "alargue",
+      "golesLocalFinal": 1,
+      "golesVisitanteFinal": 2,
+      "marcadorCalificable": "90 minutos"
     },
     {
       "id": "p100",
@@ -1352,13 +1357,16 @@
       "fase": "Cuartos",
       "jornada": 1,
       "estado": "finalizado",
-      "golesLocal": 3,
+      "golesLocal": 1,
       "golesVisitante": 1,
       "origenLocal": "p095",
       "origenVisitante": "p096",
       "espn_id": "760513",
       "ganador": "Argentina",
-      "formaDefinicion": "alargue"
+      "formaDefinicion": "alargue",
+      "golesLocalFinal": 3,
+      "golesVisitanteFinal": 1,
+      "marcadorCalificable": "90 minutos"
     },
     {
       "id": "p101",
