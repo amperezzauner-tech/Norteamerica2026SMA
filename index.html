@@ -464,6 +464,9 @@ function medal(i){return i===1?'🥇':i===2?'🥈':i===3?'🥉':'#'+i}
 function koAdvancer(m){
   if(!m)return null;
   if(m.clasificado)return m.clasificado;
+  // El actualizador marca 'ganador' con el equipo que realmente avanza, incluido
+  // cuando se define por penales o alargue (donde el marcador queda empatado a 90').
+  if(m.ganador&&!isPlaceholderTeam(m.ganador))return m.ganador;
   if(KO_ADVANCERS[m.id])return KO_ADVANCERS[m.id];
   if(!isFinal(m))return null;
   if(+m.golesLocal>+m.golesVisitante)return m.local;
@@ -823,17 +826,22 @@ function allTeamsFromData(){
 }
 function aliveTeamsSet(){
   const q=actualQualifiers();
-  const initialQualified=new Set(q.teams||[]);
-  const alive=new Set(initialQualified);
-  knockoutMatches().filter(isFinal).forEach(m=>{
-    if(initialQualified.has(m.local))alive.delete(m.local);
-    if(initialQualified.has(m.visitante))alive.delete(m.visitante);
-    const adv=koAdvancer(m);
-    if(adv)alive.add(adv);
+  const alive=new Set(q.teams||[]);
+  // Incluye a los equipos reales que aparecen en cualquier cruce de eliminatoria
+  // (por si un cruce ya definido tiene un equipo que no venía en la lista de grupos).
+  knockoutMatches().forEach(m=>{
+    if(!isPlaceholderTeam(m.local))alive.add(m.local);
+    if(!isPlaceholderTeam(m.visitante))alive.add(m.visitante);
   });
-  // Los partidos ya programados de octavos mantienen vivos a sus participantes, aunque aún no se jueguen.
-  phaseMatches('8vos').forEach(m=>{ if(m.local)alive.add(m.local); if(m.visitante)alive.add(m.visitante); });
-  CONFIRMED_OCTAVOS.forEach(m=>{ alive.add(m.local); alive.add(m.visitante); });
+  // Un equipo sigue vivo mientras no PIERDA un partido de eliminatoria ya jugado.
+  // Se quita únicamente al perdedor de cada partido finalizado; el clasificado
+  // (incluida definición por alargue/penales vía koAdvancer) permanece vivo.
+  knockoutMatches().filter(isFinal).forEach(m=>{
+    const adv=koAdvancer(m);
+    if(!adv)return;
+    const loser=sameTeam(adv,m.local)?m.visitante:(sameTeam(adv,m.visitante)?m.local:null);
+    if(loser&&!isPlaceholderTeam(loser))alive.delete(loser);
+  });
   return alive;
 }
 function renderWorldMap(){
