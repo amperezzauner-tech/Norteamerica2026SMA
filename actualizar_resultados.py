@@ -271,6 +271,44 @@ def apply_event(partido: dict, ev: dict) -> bool:
 
 
 
+# Correcciones confirmadas del marcador a los 90 minutos.
+# Se aplican dentro del actualizador para que ESPN no vuelva a sobrescribirlas.
+OVERRIDES_90_MIN = {
+    "p099": {
+        "golesLocal": 1,
+        "golesVisitante": 1,
+        "golesLocalFinal": 1,
+        "golesVisitanteFinal": 2,
+        "ganador": "Inglaterra",
+        "formaDefinicion": "alargue",
+    },
+    "p100": {
+        "golesLocal": 1,
+        "golesVisitante": 1,
+        "golesLocalFinal": 3,
+        "golesVisitanteFinal": 1,
+        "ganador": "Argentina",
+        "formaDefinicion": "alargue",
+    },
+}
+
+
+def apply_regulation_overrides(data: dict) -> list[str]:
+    cambios = []
+    by_id = {p.get("id"): p for p in data.get("partidos", [])}
+    for pid, override in OVERRIDES_90_MIN.items():
+        partido = by_id.get(pid)
+        if not partido:
+            print(f"WARN no se encontró {pid} para corrección de 90 minutos", file=sys.stderr)
+            continue
+        before = {k: partido.get(k) for k in override}
+        partido.update(override)
+        after = {k: partido.get(k) for k in override}
+        if before != after:
+            cambios.append(pid)
+    return cambios
+
+
 # --- V3: relleno automático de la llave completa ---
 BRACKET_LINKS = {
     # Octavos oficiales
@@ -395,6 +433,10 @@ def main() -> int:
                 encontrados_sin_cambio += 1
         elif p.get("estado") != "finalizado":
             pendientes_no_encontrados.append(f"{p.get('id')} {p.get('local')} vs {p.get('visitante')}")
+
+    override_updates = apply_regulation_overrides(data)
+    if override_updates:
+        updates.append("Corrección 90 min: " + ", ".join(override_updates))
 
     bracket_updates = sync_bracket(data)
 
