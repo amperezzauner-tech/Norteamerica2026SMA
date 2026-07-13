@@ -11361,6 +11361,11 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "México",
+        "p094": "EE.UU.",
+        "p095": "Uruguay"
       }
     },
     {
