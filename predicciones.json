@@ -51258,6 +51258,12 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Noruega",
+        "p084": "Colombia",
+        "p086": "Egipto",
+        "p102": "Portugal"
       }
     },
     {
@@ -51759,6 +51765,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Ecuador",
+        "p079": "México",
+        "p086": "Egipto",
+        "p090": "Alemania",
+        "p101": "España"
       }
     },
     {
