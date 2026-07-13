@@ -20,6 +20,8 @@ OVERRIDES_90_MIN = {
         "golesLocalFinal": 1,
         "golesVisitanteFinal": 2,
         "ganador": "Inglaterra",
+        "clasificado": "Inglaterra",
+        "bloqueo_manual": True,
         "formaDefinicion": "alargue",
     },
     "p100": {
@@ -28,6 +30,8 @@ OVERRIDES_90_MIN = {
         "golesLocalFinal": 3,
         "golesVisitanteFinal": 1,
         "ganador": "Argentina",
+        "clasificado": "Argentina",
+        "bloqueo_manual": True,
         "formaDefinicion": "alargue",
     },
 }

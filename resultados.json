@@ -1347,7 +1347,9 @@
       "formaDefinicion": "alargue",
       "golesLocalFinal": 1,
       "golesVisitanteFinal": 2,
-      "marcadorCalificable": "90 minutos"
+      "marcadorCalificable": "90 minutos",
+      "clasificado": "Inglaterra",
+      "bloqueo_manual": true
     },
     {
       "id": "p100",
@@ -1366,7 +1368,9 @@
       "formaDefinicion": "alargue",
       "golesLocalFinal": 3,
       "golesVisitanteFinal": 1,
-      "marcadorCalificable": "90 minutos"
+      "marcadorCalificable": "90 minutos",
+      "clasificado": "Argentina",
+      "bloqueo_manual": true
     },
     {
       "id": "p101",

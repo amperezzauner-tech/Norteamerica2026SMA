@@ -214,6 +214,11 @@ def match_event(partido: dict, events: list[dict]) -> dict | None:
 
 
 def apply_event(partido: dict, ev: dict) -> bool:
+    # Partidos con bloqueo_manual (definidos en alargue/penales, cuyo marcador
+    # oficial de la polla es el de 90' y no el de 120') no se sobreescriben desde
+    # ESPN. El clasificado se conserva del dato manual para la propagación del bracket.
+    if partido.get("bloqueo_manual"):
+        return False
     status = event_status(ev)
     teams = event_teams(ev)
     local_n = norm(partido.get("local"))
