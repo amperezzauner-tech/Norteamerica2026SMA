@@ -181,6 +181,7 @@ body:before{
 .rank-chart{width:100%;height:260px;border-radius:18px;background:linear-gradient(180deg,rgba(6,26,43,.90),rgba(3,19,35,.96));border:1px solid rgba(158,199,230,.18);padding:10px;overflow:hidden}
 .rank-chart svg{width:100%;height:100%;display:block}.chart-label{font-size:10px;fill:#9EC7E6;font-weight:800}.chart-name{font-size:11px;fill:#F8FAFC;font-weight:900}.chart-grid{stroke:rgba(158,199,230,.18);stroke-width:1}.chart-line{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}.chart-dot{stroke:#031323;stroke-width:2}
 .fifa-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.fifa-mini{position:relative;min-height:170px;border-radius:24px;padding:16px;background:linear-gradient(160deg,rgba(255,212,71,.25),rgba(0,166,255,.10),rgba(11,45,77,.96));border:1px solid rgba(255,212,71,.32);box-shadow:0 14px 28px rgba(0,0,0,.20);overflow:hidden;cursor:pointer}.fifa-mini:nth-child(2){background:linear-gradient(160deg,rgba(226,232,240,.22),rgba(0,166,255,.10),rgba(11,45,77,.96))}.fifa-mini:nth-child(3){background:linear-gradient(160deg,rgba(205,127,50,.22),rgba(0,166,255,.10),rgba(11,45,77,.96))}.fifa-mini:after{content:'⚽';position:absolute;right:12px;bottom:8px;font-size:3.4rem;opacity:.12}.fifa-rank{font-size:.74rem;color:var(--gold);font-weight:950;letter-spacing:.5px}.fifa-ovr{font-size:2.8rem;line-height:1;color:var(--gold);font-weight:950}.fifa-name{font-size:1rem;color:#fff;font-weight:950;margin:5px 0}.fifa-stats{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:10px}.fifa-stats span{background:rgba(6,26,43,.68);border:1px solid rgba(158,199,230,.16);border-radius:11px;padding:6px;font-size:.66rem;color:var(--muted);font-weight:850}.fifa-stats b{display:block;color:#fff;font-size:.86rem}.world-map{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.team-pill{display:flex;justify-content:space-between;align-items:center;gap:6px;border-radius:13px;padding:8px 10px;background:rgba(6,26,43,.78);border:1px solid rgba(158,199,230,.18);font-size:.72rem;font-weight:850}.team-pill.qualified{border-color:rgba(34,197,94,.38);background:rgba(34,197,94,.10)}.team-pill.pending{border-color:rgba(255,212,71,.28)}.team-pill.eliminated{opacity:.52;filter:grayscale(.25)}.need-card{border-radius:18px;background:rgba(6,26,43,.75);border:1px solid rgba(255,212,71,.22);padding:12px;margin-top:12px}.need-card h3{color:var(--gold);font-size:.92rem;margin-bottom:6px}.need-list{margin:8px 0 0;padding:0;list-style:none}.need-list li{padding:8px 0;border-bottom:1px solid rgba(158,199,230,.12);font-size:.76rem;color:var(--muted)}.need-list li:last-child{border-bottom:0}.share-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.share-btn{border:0;border-radius:999px;padding:9px 13px;background:linear-gradient(135deg,var(--gold),#FFF0A6);color:#06101D;font-weight:950;cursor:pointer}.ghost-btn{border:1px solid rgba(158,199,230,.28);border-radius:999px;padding:9px 13px;background:rgba(6,26,43,.72);color:#fff;font-weight:900;cursor:pointer}.share-status{font-size:.7rem;color:var(--muted);margin-top:6px}
+.honor-player-eliminated{border:1px solid rgba(255,90,95,.42);background:rgba(255,90,95,.10);border-radius:12px;padding:7px 9px}.honor-player-eliminated .barhead span{color:#ff9b9f}.honor-player-status{font-size:.61rem;color:#ff9b9f;font-weight:900;margin-left:6px}.honor-player-team{font-size:.62rem;color:var(--muted);margin-left:5px}
 @media(max-width:800px){.fifa-card-grid,.world-map{grid-template-columns:1fr}.rank-chart{height:300px}}
 
 </style>
@@ -334,7 +335,7 @@ body:before{
         <div class="submenu">
           <button class="act" onclick="showSub('match-preds',this)">🔮 Predicciones por partido</button>
           <button onclick="showSub('match-results',this)">✅ Resultados fase de grupos</button>
-          <button onclick="showSub('match-next',this)">📅 16avos de Final</button>
+          <button onclick="showSub('match-next',this)">📅 Eliminatorias completas</button>
         </div>
         <div id="sub-match-preds" class="subpanel act">
           <div class="pred-table-wrap">
@@ -827,22 +828,21 @@ function allTeamsFromData(){
 function aliveTeamsSet(){
   const q=actualQualifiers();
   const alive=new Set(q.teams||[]);
-  // Incluye a los equipos reales que aparecen en cualquier cruce de eliminatoria
-  // (por si un cruce ya definido tiene un equipo que no venía en la lista de grupos).
   knockoutMatches().forEach(m=>{
     if(!isPlaceholderTeam(m.local))alive.add(m.local);
     if(!isPlaceholderTeam(m.visitante))alive.add(m.visitante);
   });
-  // Un equipo sigue vivo mientras no PIERDA un partido de eliminatoria ya jugado.
-  // Se quita únicamente al perdedor de cada partido finalizado; el clasificado
-  // (incluida definición por alargue/penales vía koAdvancer) permanece vivo.
   knockoutMatches().filter(isFinal).forEach(m=>{
-    // Los perdedores de semifinales siguen vivos hasta disputar el tercer puesto.
-    if(m.id==='p101'||m.id==='p102') return;
+    const num=parseInt(String(m.id||'').replace('p',''));
     const adv=koAdvancer(m);
     if(!adv)return;
     const loser=sameTeam(adv,m.local)?m.visitante:(sameTeam(adv,m.visitante)?m.local:null);
+    if(num===101||num===102)return;
     if(loser&&!isPlaceholderTeam(loser))alive.delete(loser);
+    if(num===103||num===104){
+      if(!isPlaceholderTeam(m.local))alive.delete(m.local);
+      if(!isPlaceholderTeam(m.visitante))alive.delete(m.visitante);
+    }
   });
   return alive;
 }
@@ -1080,12 +1080,41 @@ function renderChampionCards(){
     ['🥉 Tercer puesto',third.team,third.n]
   ].map(x=>'<div class="match-card"><div><b>'+x[0]+'</b><div class="muted">'+esc(x[1])+'</div></div><div class="score">'+x[2]+'</div></div>').join('');
 }
+function individualAwardTeam(player){
+  const n=String(player||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const map=[
+    [/mbapp|dembele|olise|griezmann|camavinga|tchouameni|saliba|thuram/,'Francia'],
+    [/kane|bellingham|saka|foden|palmer|rice/,'Inglaterra'],
+    [/yamal|pedri|ferran|morata|nico williams|rodri|olmo/,'España'],
+    [/ronaldo|cristiano|vitinha|bruno fernandes|bernardo silva|leao/,'Portugal'],
+    [/luis diaz|james rodriguez|duran|cordoba/,'Colombia'],
+    [/messi|lautaro|julian alvarez|enzo fernandez|mac allister/,'Argentina'],
+    [/musiala|wirtz|havertz|sane/,'Alemania'],
+    [/haaland|odegaard|sorloth/,'Noruega'],
+    [/vinicius|raphinha|rodrygo|neymar/,'Brasil'],
+    [/de bruyne|lukaku|doku/,'Bélgica'],
+    [/hakimi|brahim diaz|en-nesyri/,'Marruecos'],
+    [/gakpo|depay|xavi simons|frimpong/,'P. Bajos'],
+    [/pulisic|balogun/,'EE.UU.'],
+    [/salah|marmoush/,'Egipto']
+  ];
+  const hit=map.find(([rx])=>rx.test(n));
+  return hit?hit[1]:'';
+}
 function honorPlayerBars(field){
   const counts={};
   PARTICIPANTES.forEach(p=>{const raw=p.honor?.[field];const name=normalizePlayer(raw);if(name){counts[name]=(counts[name]||0)+1;}});
   const arr=Object.entries(counts).map(([t,n])=>({team:t,n})).sort((a,b)=>b.n-a.n);
   const total=PARTICIPANTES.length;const max=Math.max(1,...arr.map(x=>x.n));
-  return arr.slice(0,5).map((x,i)=>'<div class="barrow"><div class="barhead"><span>'+medal(i+1)+' '+esc(x.team)+'</span><b>'+Math.round(x.n/total*100)+'%</b></div><div class="bar"><div class="fill violet" style="width:'+Math.round(x.n/max*100)+'%"></div></div></div>').join('')||'<div class="empty">Sin predicciones.</div>';
+  const alive=aliveTeamsSet();
+  return arr.slice(0,5).map((x,i)=>{
+    const selection=individualAwardTeam(x.team);
+    const eliminated=selection && ![...alive].some(t=>sameTeam(t,selection));
+    const cls=eliminated?' honor-player-eliminated':'';
+    const status=selection?'<span class="honor-player-team">· '+esc(selection)+'</span>':'';
+    const out=eliminated?'<span class="honor-player-status">⚫ selección eliminada</span>':'';
+    return '<div class="barrow'+cls+'"><div class="barhead"><span>'+medal(i+1)+' '+esc(x.team)+status+out+'</span><b>'+Math.round(x.n/total*100)+'%</b></div><div class="bar"><div class="fill '+(eliminated?'':'violet')+'" style="width:'+Math.round(x.n/max*100)+'%"></div></div></div>';
+  }).join('')||'<div class="empty">Sin predicciones.</div>';
 }
 function renderBotinBalon(){
   const botinEl=document.getElementById('botin-card');
@@ -1212,19 +1241,23 @@ function matchPhaseLabel(m){
 function renderMatches(){
   const liveIds=new Set(currentLiveMatches().map(m=>m.id));
   document.getElementById('played-list').innerHTML=PLAYED.slice().sort((a,b)=>matchTime(a)-matchTime(b)).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">'+matchPhaseLabel(m)+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+(m.estado==='en_vivo'?' · ranking provisional':'')+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">'+(m.estado==='en_vivo'?'🔴 ':'')+m.golesLocal+' - '+m.golesVisitante+'</div></div>').join('')||'<div class="empty">Sin resultados.</div>';
-  // 16avos calendar with real match info
-  const r16Matches=MATCHES.filter(m=>{
-    const n=parseInt((m.id||'').replace('p',''));
-    return n>=73 && n<=104;
-  }).sort((a,b)=>matchTime(a)-matchTime(b));
-  const playedIds=new Set(PLAYED.map(m=>m.id));
-  document.getElementById('pending-list').innerHTML='<div style="margin-bottom:10px"><span class="chip gold">🏆 Eliminatorias · 16avos y octavos</span></div>'+r16Matches.map(m=>{
-    const real=MATCHES.find(x=>x.id===m.id);
-    const finished=real&&isScoreable(real);
-    const live=liveIds.has(m.id);
-    const score=finished?('<span class="chip gold">'+real.golesLocal+' - '+real.golesVisitante+'</span>'):(live?'🔴 EN VIVO':'⏳ '+(fmtTime(real)||m.time));
-    return '<div class="match-card"><div><b>'+m.local+'</b><div class="muted" style="font-size:.68rem">'+esc(matchPhaseLabel(real||m))+' · '+esc(fmtTime(real||{id:m.id})||m.time)+'</div><b>'+m.vis+'</b></div><div class="score">'+score+'</div></div>';
-  }).join('');
+  const knockout=MATCHES.filter(m=>{const num=parseInt(String(m.id||'').replace('p',''));return num>=73&&num<=104;}).slice().sort((a,b)=>parseInt(a.id.slice(1))-parseInt(b.id.slice(1)));
+  const phaseOrder=['16avos de Final','Octavos de Final','Cuartos de Final','Semifinal','Tercer puesto','Final'];
+  const grouped={};
+  knockout.forEach(m=>{const label=matchPhaseLabel(m).replace('🏆 ','');(grouped[label]||(grouped[label]=[])).push(m);});
+  let html='<div style="margin-bottom:10px"><span class="chip gold">🏆 Eliminatorias completas · hasta la final</span></div>';
+  phaseOrder.forEach(label=>{
+    const ms=grouped[label]||[];if(!ms.length)return;
+    html+='<div class="ko-phase-title" style="margin-top:12px">🏆 '+esc(label)+'</div>';
+    html+=ms.map(m=>{
+      const finished=isScoreable(m);const live=liveIds.has(m.id);
+      const local=isPlaceholderTeam(m.local)?'Por definir':m.local;
+      const visitante=isPlaceholderTeam(m.visitante)?'Por definir':m.visitante;
+      const state=finished?('<span class="chip gold">'+m.golesLocal+' - '+m.golesVisitante+'</span>'):(live?'🔴 EN VIVO':'⏳ '+(fmtTime(m)||KO_MATCH_INFO[m.id]?.date||'Horario por confirmar'));
+      return '<div class="match-card"><div><b>'+esc(local)+'</b><div class="muted" style="font-size:.68rem">'+esc(matchPhaseLabel(m))+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+' · '+esc(m.id)+'</div><b>'+esc(visitante)+'</b></div><div class="score">'+state+'</div></div>';
+    }).join('');
+  });
+  document.getElementById('pending-list').innerHTML=html||'<div class="empty">Sin partidos de eliminatorias.</div>';
 }
 
 function showSub(id,btn){
