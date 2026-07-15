@@ -3719,6 +3719,40 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "México",
+        "p077": "Ecuador",
+        "p084": "Colombia",
+        "p091": "Brasil",
+        "p096": "Portugal",
+        "p103": "Inglaterra"
+      },
+      "cruces_manual": {
+        "p073": {
+          "a": "México",
+          "b": "Canadá"
+        },
+        "p077": {
+          "a": "Ecuador",
+          "b": "Senegal"
+        },
+        "p084": {
+          "a": "Colombia",
+          "b": "Croacia"
+        },
+        "p091": {
+          "a": "Brasil",
+          "b": "Ecuador"
+        },
+        "p096": {
+          "a": "Suiza",
+          "b": "Portugal"
+        },
+        "p103": {
+          "a": "España",
+          "b": "Inglaterra"
+        }
       }
     },
     {
@@ -4226,6 +4260,20 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p082": "Paraguay",
+        "p086": "Australia"
+      },
+      "cruces_manual": {
+        "p082": {
+          "a": "Paraguay",
+          "b": "Qatar"
+        },
+        "p086": {
+          "a": "Australia",
+          "b": "Nueva Zelanda"
+        }
       }
     },
     {
@@ -20122,6 +20170,30 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p076": "Suecia",
+        "p089": "Suecia",
+        "p096": "Colombia",
+        "p102": "P. Bajos"
+      },
+      "cruces_manual": {
+        "p076": {
+          "a": "Suecia",
+          "b": "Marruecos"
+        },
+        "p089": {
+          "a": "Chequia",
+          "b": "Suecia"
+        },
+        "p096": {
+          "a": "Suiza",
+          "b": "Colombia"
+        },
+        "p102": {
+          "a": "P. Bajos",
+          "b": "Uruguay"
+        }
       }
     },
     {
@@ -32947,6 +33019,50 @@
           "Panamá",
           "Ghana"
         ]
+      },
+      "desempates": {
+        "p078": "Japón",
+        "p082": "Turquía",
+        "p088": "España",
+        "p087": "Portugal",
+        "p092": "Arabia Saudita",
+        "p094": "Bélgica",
+        "p097": "P. Bajos",
+        "p100": "España"
+      },
+      "cruces_manual": {
+        "p078": {
+          "a": "Francia",
+          "b": "Japón"
+        },
+        "p082": {
+          "a": "Turquía",
+          "b": "Suiza"
+        },
+        "p088": {
+          "a": "Argentina",
+          "b": "España"
+        },
+        "p087": {
+          "a": "Portugal",
+          "b": "EE.UU."
+        },
+        "p092": {
+          "a": "Arabia Saudita",
+          "b": "Inglaterra"
+        },
+        "p094": {
+          "a": "Turquía",
+          "b": "Bélgica"
+        },
+        "p097": {
+          "a": "Alemania",
+          "b": "P. Bajos"
+        },
+        "p100": {
+          "a": "España",
+          "b": "Portugal"
+        }
       }
     },
     {
