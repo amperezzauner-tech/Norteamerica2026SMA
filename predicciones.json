@@ -179,6 +179,55 @@
         "json_anterior": "2-1",
         "manual_excel": "3-1"
       }
+    ],
+    "correcciones_desempates_chatgpt": [
+      {
+        "fecha": "2026-07-14",
+        "participante": "Andres Felipe Olarte",
+        "id": "andres_felipe_olarte",
+        "cambios": [
+          {
+            "pid": "p073",
+            "llave": "Corea del Sur vs Bosnia",
+            "ganador": "Bosnia"
+          },
+          {
+            "pid": "p076",
+            "llave": "P. Bajos vs Marruecos",
+            "ganador": "Marruecos"
+          },
+          {
+            "pid": "p077",
+            "llave": "Ecuador vs Noruega",
+            "ganador": "Ecuador"
+          },
+          {
+            "pid": "p085",
+            "llave": "Canadá vs Argelia",
+            "ganador": "Canadá"
+          },
+          {
+            "pid": "p090",
+            "llave": "Alemania vs Francia",
+            "ganador": "Alemania"
+          },
+          {
+            "pid": "p094",
+            "llave": "Paraguay vs Bélgica",
+            "ganador": "Bélgica"
+          },
+          {
+            "pid": "p100",
+            "llave": "Argentina vs Portugal",
+            "ganador": "Argentina"
+          },
+          {
+            "pid": "p101",
+            "llave": "Alemania vs España",
+            "ganador": "España"
+          }
+        ]
+      }
     ]
   },
   "participantes": [
@@ -9389,6 +9438,50 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Bosnia",
+        "p076": "Marruecos",
+        "p077": "Ecuador",
+        "p085": "Canadá",
+        "p090": "Alemania",
+        "p094": "Bélgica",
+        "p100": "Argentina",
+        "p101": "España"
+      },
+      "cruces_manual": {
+        "p073": {
+          "a": "Corea del Sur",
+          "b": "Bosnia"
+        },
+        "p076": {
+          "a": "P. Bajos",
+          "b": "Marruecos"
+        },
+        "p077": {
+          "a": "Ecuador",
+          "b": "Noruega"
+        },
+        "p085": {
+          "a": "Canadá",
+          "b": "Argelia"
+        },
+        "p090": {
+          "a": "Alemania",
+          "b": "Francia"
+        },
+        "p094": {
+          "a": "Paraguay",
+          "b": "Bélgica"
+        },
+        "p100": {
+          "a": "Argentina",
+          "b": "Portugal"
+        },
+        "p101": {
+          "a": "Alemania",
+          "b": "España"
+        }
       }
     },
     {
