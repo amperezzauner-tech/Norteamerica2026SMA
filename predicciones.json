@@ -1185,6 +1185,17 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p079": "Ecuador",
+        "p085": "Suiza",
+        "p086": "EE.UU.",
+        "p094": "Bélgica",
+        "p099": "Inglaterra",
+        "p100": "Argentina",
+        "p101": "Francia",
+        "p103": "Portugal",
+        "p104": "Francia"
       }
     },
     {
@@ -8814,6 +8825,15 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p102": "Portugal"
+      },
+      "cruces_manual": {
+        "p102": {
+          "a": "Brasil",
+          "b": "Portugal"
+        }
       }
     },
     {
@@ -11387,7 +11407,7 @@
       },
       "desempates": {
         "p073": "México",
-        "p094": "EE.UU.",
+        "p094": "Bélgica",
         "p095": "Uruguay"
       }
     },
@@ -21119,6 +21139,25 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p087": "Argentina",
+        "p090": "Francia",
+        "p104": "P. Bajos"
+      },
+      "cruces_manual": {
+        "p087": {
+          "a": "Argentina",
+          "b": "Uruguay"
+        },
+        "p090": {
+          "a": "Alemania",
+          "b": "Francia"
+        },
+        "p104": {
+          "a": "P. Bajos",
+          "b": "Portugal"
+        }
       }
     },
     {
@@ -26740,6 +26779,9 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p101": "Francia"
       }
     },
     {
@@ -32354,6 +32396,50 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Corea del Sur",
+        "p075": "Alemania",
+        "p083": "Argentina",
+        "p090": "Francia",
+        "p094": "EE.UU.",
+        "p102": "Colombia",
+        "p104": "Francia",
+        "p092": "Inglaterra"
+      },
+      "cruces_manual": {
+        "p073": {
+          "a": "Corea del Sur",
+          "b": "Canadá"
+        },
+        "p075": {
+          "a": "Alemania",
+          "b": "Marruecos"
+        },
+        "p083": {
+          "a": "España",
+          "b": "Argentina"
+        },
+        "p090": {
+          "a": "Alemania",
+          "b": "Francia"
+        },
+        "p092": {
+          "a": "Chequia",
+          "b": "Inglaterra"
+        },
+        "p094": {
+          "a": "EE.UU.",
+          "b": "Bélgica"
+        },
+        "p102": {
+          "a": "Inglaterra",
+          "b": "Colombia"
+        },
+        "p104": {
+          "a": "Francia",
+          "b": "Colombia"
+        }
       }
     },
     {
@@ -35404,6 +35490,45 @@
           "Panamá",
           "Croacia"
         ]
+      },
+      "desempates": {
+        "p073": "Corea del Sur",
+        "p081": "Bélgica",
+        "p086": "Egipto",
+        "p087": "Uruguay",
+        "p094": "Egipto",
+        "p097": "Noruega",
+        "p104": "Portugal"
+      },
+      "cruces_manual": {
+        "p073": {
+          "a": "Corea del Sur",
+          "b": "Bosnia"
+        },
+        "p081": {
+          "a": "Paraguay",
+          "b": "Bélgica"
+        },
+        "p086": {
+          "a": "Egipto",
+          "b": "México"
+        },
+        "p087": {
+          "a": "Argentina",
+          "b": "Uruguay"
+        },
+        "p094": {
+          "a": "Turquía",
+          "b": "Egipto"
+        },
+        "p097": {
+          "a": "Noruega",
+          "b": "P. Bajos"
+        },
+        "p104": {
+          "a": "España",
+          "b": "Portugal"
+        }
       }
     },
     {
@@ -36938,6 +37063,13 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p077": "Ecuador",
+        "p087": "Argentina",
+        "p093": "Colombia",
+        "p100": "Portugal",
+        "p102": "Portugal"
       }
     },
     {
@@ -38976,6 +39108,19 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "México",
+        "p076": "P. Bajos",
+        "p078": "Escocia",
+        "p084": "Colombia",
+        "p085": "C. de Marfil",
+        "p086": "Paraguay",
+        "p094": "Turquía",
+        "p097": "Francia",
+        "p099": "Brasil",
+        "p101": "España",
+        "p104": "Portugal"
       }
     },
     {
@@ -56352,6 +56497,17 @@
           "Ghana",
           "Panamá"
         ]
+      },
+      "desempates": {
+        "p073": "Bosnia",
+        "p074": "Brasil",
+        "p077": "Noruega",
+        "p085": "Suiza",
+        "p086": "EE.UU.",
+        "p090": "Francia",
+        "p097": "Francia",
+        "p099": "Inglaterra",
+        "p101": "España"
       }
     },
     {

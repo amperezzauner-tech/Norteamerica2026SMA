@@ -324,7 +324,17 @@ function participantKnockoutMatchups(p){
     const id='p'+String(73+i).padStart(3,'0');
     map[id]={id,a:a.team,b:b.team,key:pairKey(a.team,b.team)};
   });
+  // Cruces manuales: permiten conservar el bracket original del participante
+  // cuando la combinación de terceros o una transcripción histórica no coincide
+  // con la reconstrucción automática. No cambian marcadores ni puntajes.
+  const manual=(p&&p.cruces_manual)||{};
+  Object.entries(manual).forEach(([id,m])=>{
+    const n=parseInt(String(id).replace('p',''));
+    if(n>=73&&n<=88&&m&&m.a&&m.b)map[id]={id,a:m.a,b:m.b,key:pairKey(m.a,m.b)};
+  });
   Object.keys(BRACKET_LINKS).forEach(id=>{
+    const mm=manual[id];
+    if(mm&&mm.a&&mm.b){map[id]={id,a:mm.a,b:mm.b,key:pairKey(mm.a,mm.b)};return;}
     const [x,y]=BRACKET_LINKS[id];
     const a=predWinnerForMatch(p,map[x]);
     const b=predWinnerForMatch(p,map[y]);
@@ -332,9 +342,13 @@ function participantKnockoutMatchups(p){
   });
   // Tercer puesto (p103): se juega entre los perdedores de las semifinales (p101/p102),
   // no está en BRACKET_LINKS porque ese mapa solo propaga ganadores.
-  const l101=predLoserForMatch(p,map['p101']);
-  const l102=predLoserForMatch(p,map['p102']);
-  if(l101&&l102)map['p103']={id:'p103',a:l101,b:l102,key:pairKey(l101,l102)};
+  const m103=manual['p103'];
+  if(m103&&m103.a&&m103.b)map['p103']={id:'p103',a:m103.a,b:m103.b,key:pairKey(m103.a,m103.b)};
+  else {
+    const l101=predLoserForMatch(p,map['p101']);
+    const l102=predLoserForMatch(p,map['p102']);
+    if(l101&&l102)map['p103']={id:'p103',a:l101,b:l102,key:pairKey(l101,l102)};
+  }
   return map;
 }
 function realPhaseMatchups(phase){
