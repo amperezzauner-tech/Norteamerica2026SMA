@@ -837,6 +837,8 @@ function aliveTeamsSet(){
   // Se quita únicamente al perdedor de cada partido finalizado; el clasificado
   // (incluida definición por alargue/penales vía koAdvancer) permanece vivo.
   knockoutMatches().filter(isFinal).forEach(m=>{
+    // Los perdedores de semifinales siguen vivos hasta disputar el tercer puesto.
+    if(m.id==='p101'||m.id==='p102') return;
     const adv=koAdvancer(m);
     if(!adv)return;
     const loser=sameTeam(adv,m.local)?m.visitante:(sameTeam(adv,m.visitante)?m.local:null);
@@ -1211,39 +1213,17 @@ function renderMatches(){
   const liveIds=new Set(currentLiveMatches().map(m=>m.id));
   document.getElementById('played-list').innerHTML=PLAYED.slice().sort((a,b)=>matchTime(a)-matchTime(b)).map(m=>'<div class="match-card"><div><b>'+esc(m.local)+'</b><div class="muted" style="font-size:.68rem">'+matchPhaseLabel(m)+(fmtTime(m)?' · '+esc(fmtTime(m)):'')+(m.estado==='en_vivo'?' · ranking provisional':'')+'</div><b>'+esc(m.visitante)+'</b></div><div class="score">'+(m.estado==='en_vivo'?'🔴 ':'')+m.golesLocal+' - '+m.golesVisitante+'</div></div>').join('')||'<div class="empty">Sin resultados.</div>';
   // 16avos calendar with real match info
-  const r16Matches=[
-    {id:'p073',local:'🇿🇦 Sudáfrica',vis:'🇨🇦 Canadá',time:'Jun 28'},
-    {id:'p074',local:'🇧🇷 Brasil',vis:'🇯🇵 Japón',time:'Jun 29'},
-    {id:'p075',local:'🇩🇪 Alemania',vis:'🇵🇾 Paraguay',time:'Jun 29'},
-    {id:'p076',local:'🇳🇱 P. Bajos',vis:'🇲🇦 Marruecos',time:'Jun 29'},
-    {id:'p077',local:'🇨🇮 C. de Marfil',vis:'🇳🇴 Noruega',time:'Jun 30'},
-    {id:'p078',local:'🇫🇷 Francia',vis:'🇸🇪 Suecia',time:'Jun 30'},
-    {id:'p079',local:'🇲🇽 México',vis:'🇪🇨 Ecuador',time:'Jun 30'},
-    {id:'p080',local:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inglaterra',vis:'🇨🇩 Congo',time:'Jul 1'},
-    {id:'p081',local:'🇧🇪 Bélgica',vis:'🇸🇳 Senegal',time:'Jul 1'},
-    {id:'p082',local:'🇺🇸 EE.UU.',vis:'🇧🇦 Bosnia',time:'Jul 1'},
-    {id:'p083',local:'🇪🇸 España',vis:'🇦🇹 Austria',time:'Jul 2'},
-    {id:'p084',local:'🇵🇹 Portugal',vis:'🇭🇷 Croacia',time:'Jul 2'},
-    {id:'p085',local:'🇨🇭 Suiza',vis:'🇩🇿 Argelia',time:'Jul 2'},
-    {id:'p086',local:'🇦🇺 Australia',vis:'🇪🇬 Egipto',time:'Jul 3'},
-    {id:'p087',local:'🇦🇷 Argentina',vis:'🇨🇻 Cabo Verde',time:'Jul 3'},
-    {id:'p088',local:'🇨🇴 Colombia',vis:'🇬🇭 Ghana',time:'Jul 3'},
-    {id:'p089',local:'🇨🇦 Canadá',vis:'🇲🇦 Marruecos',time:'Jul 4'},
-    {id:'p090',local:'🇵🇾 Paraguay',vis:'🇫🇷 Francia',time:'Jul 4'},
-    {id:'p091',local:'🇧🇷 Brasil',vis:'🇳🇴 Noruega',time:'Jul 5'},
-    {id:'p092',local:'🇲🇽 México',vis:'🏴 Inglaterra',time:'Jul 5'},
-    {id:'p093',local:'🇵🇹 Portugal',vis:'🇪🇸 España',time:'Jul 6'},
-    {id:'p094',local:'🇺🇸 EE.UU.',vis:'🇧🇪 Bélgica',time:'Jul 6'},
-    {id:'p095',local:'🇦🇷 Argentina',vis:'🇪🇬 Egipto',time:'Jul 7'},
-    {id:'p096',local:'🇨🇭 Suiza',vis:'🇨🇴 Colombia',time:'Jul 7'},
-  ];
+  const r16Matches=MATCHES.filter(m=>{
+    const n=parseInt((m.id||'').replace('p',''));
+    return n>=73 && n<=104;
+  }).sort((a,b)=>matchTime(a)-matchTime(b));
   const playedIds=new Set(PLAYED.map(m=>m.id));
   document.getElementById('pending-list').innerHTML='<div style="margin-bottom:10px"><span class="chip gold">🏆 Eliminatorias · 16avos y octavos</span></div>'+r16Matches.map(m=>{
     const real=MATCHES.find(x=>x.id===m.id);
     const finished=real&&isScoreable(real);
     const live=liveIds.has(m.id);
-    const score=finished?('<span class="chip gold">'+real.golesLocal+' - '+real.golesVisitante+'</span>'):(live?'🔴 EN VIVO':'⏳ '+m.time);
-    return '<div class="match-card"><div><b>'+m.local+'</b><div class="muted" style="font-size:.68rem">🏆 16avos · '+esc(fmtTime({id:m.id})||m.time)+'</div><b>'+m.vis+'</b></div><div class="score">'+score+'</div></div>';
+    const score=finished?('<span class="chip gold">'+real.golesLocal+' - '+real.golesVisitante+'</span>'):(live?'🔴 EN VIVO':'⏳ '+(fmtTime(real)||m.time));
+    return '<div class="match-card"><div><b>'+m.local+'</b><div class="muted" style="font-size:.68rem">'+esc(matchPhaseLabel(real||m))+' · '+esc(fmtTime(real||{id:m.id})||m.time)+'</div><b>'+m.vis+'</b></div><div class="score">'+score+'</div></div>';
   }).join('');
 }
 
