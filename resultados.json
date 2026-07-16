@@ -5,19 +5,19 @@
     "jugados": 102,
     "pendientes": 2,
     "instrucciones": "Actualizar golesLocal/golesVisitante/estado cuando termine cada partido. No tocar predicciones.json.",
-    "ultima_actualizacion_auto": "2026-07-15T22:42:38.195494+00:00",
+    "ultima_actualizacion_auto": "2026-07-16T01:10:45.872106+00:00",
     "fuente_auto": "ESPN public scoreboard",
     "ultima_validacion_manual": "2026-06-23",
     "nota_validacion": "Corregido: p041 Noruega-Senegal 3-2, p042 Francia-Irak 3-0, p043 Argentina-Austria 2-0, p044 Jordania-Argelia 1-2. p051/p052 devueltos a pendientes y nombres corregidos según Excel.",
     "en_vivo": 0,
-    "ultima_revision_auto": "2026-07-15T23:43:36.238437+00:00",
+    "ultima_revision_auto": "2026-07-16T01:10:45.872106+00:00",
     "nota_grupos": "Actualizado Grupo A: Chequia 0-3 México y Sudáfrica 1-0 Corea del Sur.",
     "ultima_actualizacion_manual_fix": "2026-06-26T14:35:00-05:00",
     "nota_fix_p059": "Corregido manualmente p059: Turquía 3-2 EE.UU. Se agregó espn_id 760470 y alias EE.UU./ee uu al script automático.",
     "correccion_manual_p059": "Turquía 3-2 EE.UU.",
     "nota_16avos": "Llaves de 16avos agregadas Jun 28 2026. Confirmar resultados cuando se jueguen.",
-    "nota_auto": "Pendientes no encontrados: p104 España vs Argentina",
-    "diagnostico_auto": "actualizados=0; encontrados_sin_cambio=3; pendientes_no_encontrados=1",
+    "nota_auto": "p104 España None-None Argentina [pendiente] ESPN:760517",
+    "diagnostico_auto": "actualizados=1; encontrados_sin_cambio=3; pendientes_no_encontrados=0",
     "nota_llave_auto": "V3: octavos, cuartos, semifinal, final y tercer puesto se rellenan automáticamente desde ganadores/perdedores.",
     "version_chatgpt": "v4_estable_90min_llaves_exactas",
     "nota_p087": "Argentina-Cabo Verde cerrado 1-1 a 90 minutos; clasifica Argentina por alargue.",
@@ -1428,7 +1428,8 @@
       "golesLocal": null,
       "golesVisitante": null,
       "origenLocal": "p101",
-      "origenVisitante": "p102"
+      "origenVisitante": "p102",
+      "espn_id": "760517"
     }
   ]
 }
