@@ -422,7 +422,8 @@ function normalizePlayer(name){
   if(n.includes('vitinha'))return'Vitinha';
   if(n.includes('pedri'))return'Pedri';
   if((n.includes('fernandes')||n.includes('bruno'))&&!n.includes('ronaldo'))return'Bruno Fernandes';
-  if(n.includes('messi')||n.includes('lionel'))return'Lionel Messi';
+  if(n.includes('messi')||n.includes('lionel')||n.includes('leonel'))return'Lionel Messi';
+  if(n.includes('belling'))return'Jude Bellingham';
   return name.trim();
 }
 
