@@ -28,12 +28,19 @@
     "nota_correccion_90min": "p099 Noruega-Inglaterra y p100 Argentina-Suiza se califican 1-1 a 90 minutos; clasifican Inglaterra y Argentina por alargue."
   },
   "premios_oficiales": {
-    "botin_oro": null,
-    "botin_plata": null,
-    "botin_bronce": null,
-    "balon_oro": null,
-    "balon_plata": null,
-    "balon_bronce": null
+    "botin_oro": "Kylian Mbappé",
+    "botin_plata": "Lionel Messi",
+    "botin_bronce": "Jude Bellingham",
+    "balon_oro": "Rodri",
+    "balon_plata": "Lionel Messi",
+    "balon_bronce": "Kylian Mbappé",
+    "guante_oro": "Unai Simón",
+    "nota_guante": "El Guante de Oro (mejor portero) no otorga puntos: el reglamento de la polla solo puntúa Botín y Balón de Oro/Plata/Bronce. Se muestra solo como dato informativo.",
+    "detalle_botines": {
+      "botin_oro": "Kylian Mbappé (Francia): 10 goles, 4 asistencias",
+      "botin_plata": "Lionel Messi (Argentina): 8 goles, 4 asistencias",
+      "botin_bronce": "Jude Bellingham (Inglaterra): 7 goles, 1 asistencia"
+    }
   },
   "partidos": [
     {

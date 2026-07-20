@@ -58,6 +58,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .pred-winner{font-weight:950;color:var(--gold)}
 .pred-score-chip{display:inline-block;border:1px solid #ffd44788;background:#ffd44722;color:#fff7e6;border-radius:999px;padding:3px 7px;font-size:.68rem;font-weight:900;margin:1px}
 .award-card{padding:12px;border:1px solid rgba(90,45,154,.7);border-radius:16px;background:linear-gradient(135deg,rgba(26,10,61,.9),rgba(14,5,32,.9));margin-bottom:9px}
+.award-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px}
+.award-grid .award-card{margin-bottom:0}
 .award-card h3{font-size:.92rem;color:var(--gold);margin-bottom:3px}
 .award-desc{font-size:.72rem;line-height:1.38;color:var(--muted);margin-top:3px}
 .award-rule{font-size:.66rem;color:var(--white);opacity:.9;margin-top:4px}
@@ -236,6 +238,8 @@ body:before{
       <div class="card"><div class="section-title">👟 Botín de Oro <span class="chip">% votos</span></div><div class="body" id="botin-card"></div></div>
       <div class="card"><div class="section-title">🏅 Balón de Oro <span class="chip">% votos</span></div><div class="body" id="balon-card"></div></div>
     </div>
+    <div style="height:10px"></div>
+    <div class="card"><div class="section-title">🏅 Premios individuales <span class="chip" id="premios-chip">ganadores oficiales</span></div><div class="body" id="premios-card"></div></div>
     <div style="height:10px"></div>
     <div class="card"><div class="section-title">🎯 Acertómetro top 5</div><div class="body" id="top-meter"></div></div>
     <div style="height:10px"></div>
@@ -535,10 +539,17 @@ function calculate(){
     const keyBonus=knockoutExactMatchupBonus(p);
     const honor=honorBonus(p);
     pts+=groupBonus.total+keyBonus.total+honor.total;
-    return {...p,pts,exact:ex,hit,pct:PLAYED.length?pct(hit,PLAYED.length):0,last:last.reverse(),surpriseScore,surpriseHits,groupPosPts:groupBonus.total,groupPosHits:groupBonus.hits,groupPosClosed:groupBonus.closed,groupPosDetail:groupBonus.detail,r32MatchPts:keyBonus.total,r32MatchHits:keyBonus.hits,r32MatchAvailable:keyBonus.available,r32MatchDetail:keyBonus.detail,honorBonusPts:honor.total,honorBonusDetail:honor.detail}
+    const INDIVIDUAL_TIPOS=['botin_oro','botin_plata','botin_bronce','balon_oro','balon_plata','balon_bronce'];
+    const honorIndividual=(honor.detail||[]).filter(d=>INDIVIDUAL_TIPOS.includes(d.tipo));
+    const honorPlacement=(honor.detail||[]).filter(d=>!INDIVIDUAL_TIPOS.includes(d.tipo));
+    const honorIndividualPts=honorIndividual.reduce((s,d)=>s+(d.pts||0),0);
+    const honorPlacementPts=honorPlacement.reduce((s,d)=>s+(d.pts||0),0);
+    const campeonHit=honorPlacement.some(d=>d.tipo==='campeon')?1:0;
+    return {...p,pts,exact:ex,hit,pct:PLAYED.length?pct(hit,PLAYED.length):0,last:last.reverse(),surpriseScore,surpriseHits,groupPosPts:groupBonus.total,groupPosHits:groupBonus.hits,groupPosClosed:groupBonus.closed,groupPosDetail:groupBonus.detail,r32MatchPts:keyBonus.total,r32MatchHits:keyBonus.hits,r32MatchAvailable:keyBonus.available,r32MatchDetail:keyBonus.detail,honorBonusPts:honor.total,honorBonusDetail:honor.detail,honorIndividualPts,honorIndividualDetail:honorIndividual,honorIndividualHits:honorIndividual.length,honorPlacementPts,campeonHit}
   });
   computeRarity();
-  RANKING.sort((a,b)=>b.pts-a.pts||b.exact-a.exact||b.hit-a.hit||b.groupPosPts-a.groupPosPts||a.nombre.localeCompare(b.nombre));
+  // Desempate oficial (reglamento): 1) puntos, 2) acertó campeón, 3) más llaves acertadas, 4) más puntos en posiciones de primera ronda. Luego exactos/aciertos/nombre como refuerzo.
+  RANKING.sort((a,b)=>b.pts-a.pts||(b.campeonHit||0)-(a.campeonHit||0)||(b.r32MatchHits||0)-(a.r32MatchHits||0)||(b.groupPosPts||0)-(a.groupPosPts||0)||b.exact-a.exact||b.hit-a.hit||a.nombre.localeCompare(b.nombre));
   RANKING.forEach((p,i)=>p.pos=i+1);
   computeChampions();
 }
@@ -983,7 +994,7 @@ function renderAll(){
   [
     renderDashboard, renderActivityFeed, renderRankingChart, renderFifaCards,
     renderWorldMap, renderDaily, renderQuickAwards, renderSurprise,
-    renderCollective, renderChampionCards, renderBotinBalon, renderKOPredictions,
+    renderCollective, renderChampionCards, renderBotinBalon, renderPremiosIndividuales, renderKOPredictions,
     renderGroupButtons, renderGroupPredictions, renderTopMeter, renderMovers,
     renderRanking, renderMatches, renderMatchPredictionTable,
     renderEliminatorias, renderBadges, renderRarest
@@ -1122,6 +1133,47 @@ function renderBotinBalon(){
   if(botinEl)botinEl.innerHTML='<div style="margin-bottom:6px"><span class="chip gold">🥇 Botín de Oro</span></div>'+honorPlayerBars('botin_oro')+'<div style="margin:10px 0 4px"><span class="chip">🥈 Botín de Plata</span></div>'+honorPlayerBars('botin_plata');
   if(balonEl)balonEl.innerHTML='<div style="margin-bottom:6px"><span class="chip gold">🥇 Balón de Oro</span></div>'+honorPlayerBars('balon_oro')+'<div style="margin:10px 0 4px"><span class="chip">🥈 Balón de Plata</span></div>'+honorPlayerBars('balon_plata');
 }
+// Apartado de premios individuales oficiales (Botín y Balón de Oro/Plata/Bronce).
+// Puntos según reglamento: Oro 40, Plata 30, Bronce 20.
+const PREMIOS_INDIVIDUALES=[
+  {field:'botin_oro',   label:'Botín de Oro',   emoji:'👟', medal:'🥇', pts:40},
+  {field:'botin_plata', label:'Botín de Plata', emoji:'👟', medal:'🥈', pts:30},
+  {field:'botin_bronce',label:'Botín de Bronce',emoji:'👟', medal:'🥉', pts:20},
+  {field:'balon_oro',   label:'Balón de Oro',   emoji:'🏅', medal:'🥇', pts:40},
+  {field:'balon_plata', label:'Balón de Plata', emoji:'🏅', medal:'🥈', pts:30},
+  {field:'balon_bronce',label:'Balón de Bronce',emoji:'🏅', medal:'🥉', pts:20}
+];
+function renderPremiosIndividuales(){
+  const el=document.getElementById('premios-card');if(!el)return;
+  const oficiales=(RES&&RES.premios_oficiales)||{};
+  const detalle=oficiales.detalle_botines||{};
+  const chip=document.getElementById('premios-chip');
+  const algunoDefinido=PREMIOS_INDIVIDUALES.some(pz=>oficiales[pz.field]);
+  if(chip)chip.textContent=algunoDefinido?'ganadores oficiales':'por definir';
+  const cards=PREMIOS_INDIVIDUALES.map(pz=>{
+    const realRaw=oficiales[pz.field];
+    const real=normalizePlayer(realRaw);
+    if(!real){
+      const topBar=honorPlayerBars(pz.field);
+      return '<div class="award-card"><h3>'+pz.medal+' '+pz.emoji+' '+pz.label+' <span class="chip">+'+pz.pts+' pts</span></h3>'+
+        '<div class="award-desc"><b>Ganador oficial:</b> por definir</div>'+
+        '<div class="award-rule">Más votados en la polla:</div>'+topBar+'</div>';
+    }
+    // participantes que acertaron este premio
+    const aciertos=PARTICIPANTES.filter(p=>{const pick=normalizePlayer(p.honor?.[pz.field]);return pick&&pick===real;}).map(p=>p.nombre);
+    const total=PARTICIPANTES.length;
+    const info=detalle[pz.field];
+    const listado=aciertos.length
+      ? '<div class="award-rule">✅ <b>'+aciertos.length+'</b> de '+total+' acertó y sumó <b>+'+pz.pts+' pts</b>:</div><div style="margin-top:4px">'+aciertos.map(n=>'<span class="chip gold" style="margin:2px">'+esc(n)+'</span>').join('')+'</div>'
+      : '<div class="award-rule">😬 Nadie acertó este premio. 0 puntos otorgados.</div>';
+    return '<div class="award-card"><h3>'+pz.medal+' '+pz.emoji+' '+pz.label+' <span class="chip gold">+'+pz.pts+' pts</span></h3>'+
+      '<div class="award-desc"><b>Ganador oficial:</b> '+esc(real)+(info?' <span class="muted">('+esc(String(info).replace(/^[^:]*:\s*/,''))+')</span>':'')+'</div>'+
+      listado+'</div>';
+  }).join('');
+  const guante=oficiales.guante_oro;
+  const guanteHtml=guante?'<div class="award-card"><h3>🧤 Guante de Oro <span class="chip">informativo</span></h3><div class="award-desc"><b>Mejor portero:</b> '+esc(guante)+'</div><div class="award-rule">No otorga puntos: el reglamento solo puntúa Botín y Balón.</div></div>':'';
+  el.innerHTML='<div class="award-grid">'+cards+guanteHtml+'</div>';
+}
 // KO phase prediction summary: for each match in a phase, show what % predicted each team to win
 const KO_MATCH_INFO={
   p073:{a:'Sudáfrica',b:'Canadá',date:'Jun 28'},p074:{a:'Brasil',b:'Japón',date:'Jun 29'},
@@ -1227,7 +1279,7 @@ function renderMovers(){
   if(down.length)html+='<div class="muted" style="font-weight:900;margin:10px 0 4px">🔽 Bajaron</div>'+down.map(x=>row(x,'bad','🔽')).join('');
   el.innerHTML=html||'<div class="empty">Nadie cambió de puesto en la última jornada.</div>';
 }
-function renderRanking(){const searchEl=document.getElementById('search');const q=norm(searchEl?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+((p.r32MatchHits||0)?'<span class="chip gold">🔗 '+p.r32MatchHits+' llaves</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
+function renderRanking(){const searchEl=document.getElementById('search');const q=norm(searchEl?.value||'');const arr=RANKING.filter(p=>!q||norm(p.nombre).includes(q));document.getElementById('ranking-list').innerHTML=arr.map(p=>'<div class="rank-row" onclick="openProfile(\''+p.id+'\')"><div class="pos">'+medal(p.pos)+'</div><div><div class="name">'+esc(p.nombre)+'</div><div class="chips"><span class="chip">🎯 '+p.exact+'</span><span class="chip">✅ '+p.hit+'</span><span class="chip">'+p.pct+'%</span><span class="chip violet">🔥 '+(p.surpriseHits||0)+'</span>'+((p.groupPosPts||0)?'<span class="chip gold">📋 +'+p.groupPosPts+' pos.</span>':'')+((p.r32MatchHits||0)?'<span class="chip gold">🔗 '+p.r32MatchHits+' llaves</span>':'')+((p.honorIndividualPts||0)?'<span class="chip gold">🏅 +'+p.honorIndividualPts+' premios</span>':'')+'</div></div><div class="pts">'+p.pts+'</div></div>').join('')||'<div class="empty">No encontré participantes.</div>'}
 function matchPhaseLabel(m){
   const id=m.id;const num=parseInt((id||'').replace('p',''));
   if(num>=73&&num<=88)return'🏆 16avos de Final';
@@ -1377,7 +1429,7 @@ function openProfile(id){
   const pc=document.getElementById('prof-card');
   if(pc){pc.innerHTML='<div class="player-card"><div class="ovr">'+ovr+'</div><div class="pc-name">'+esc(p.nombre)+'</div><div class="pc-meta">#'+p.pos+' · '+p.pts+' pts · '+p.exact+' exactos · '+p.hit+'/'+PLAYED.length+' aciertos</div><div class="share-actions"><button class="share-btn" onclick="sharePlayer(\''+p.id+'\')">📲 Compartir</button><button class="ghost-btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(shareTextFor(RANKING.find(x=>x.id===\''+p.id+'\')))">Copiar texto</button></div><div class="share-status" id="share-status">Lista para captura o WhatsApp.</div></div>'+championPathCard(p)+needToWinCard(p);}
   document.getElementById('prof-grid').innerHTML=[
-    ['Posición','#'+p.pos],['Puntos',p.pts],['Puntos posiciones',p.groupPosPts||0],['Llaves acertadas',(p.r32MatchHits||0)+' (+'+(p.r32MatchPts||0)+' pts)'],['Premios finales',(p.honorBonusPts||0)+' pts'],['Grupos cerrados',p.groupPosClosed||0],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',cleanHonorTeam(p.honor?.campeon)||'—'],['Subcampeón',cleanHonorTeam(p.honor?.subcampeon)||'—'],['Sorpresas',p.surpriseHits||0]
+    ['Posición','#'+p.pos],['Puntos',p.pts],['Puntos posiciones',p.groupPosPts||0],['Llaves acertadas',(p.r32MatchHits||0)+' (+'+(p.r32MatchPts||0)+' pts)'],['Posiciones finales',(p.honorPlacementPts||0)+' pts'],['Premios individuales',(p.honorIndividualHits||0)+' (+'+(p.honorIndividualPts||0)+' pts)'],['Grupos cerrados',p.groupPosClosed||0],['Aciertos',p.hit+'/'+PLAYED.length],['Exactos',p.exact],['Efectividad',p.pct+'%'],['Campeón',cleanHonorTeam(p.honor?.campeon)||'—'],['Subcampeón',cleanHonorTeam(p.honor?.subcampeon)||'—'],['Sorpresas',p.surpriseHits||0]
   ].map(r=>'<div class="prof-stat"><span>'+esc(r[0])+'</span><b>'+esc(r[1])+'</b></div>').join('');
   document.getElementById('prof-matches').innerHTML=p.last.slice(0,10).map(x=>'<div class="match-card"><div><b>'+esc(x.m.local)+' '+x.m.golesLocal+'-'+x.m.golesVisitante+' '+esc(x.m.visitante)+'</b><div class="muted" style="font-size:.68rem">Predijo '+x.pr.golesLocal+'-'+x.pr.golesVisitante+(x.exact?' · exacto':x.ok?' · resultado':'')+'</div></div><div class="score">+'+x.s+'</div></div>').join('')||'<div class="empty">Sin partidos evaluados.</div>';
   document.getElementById('profile').classList.add('act');
