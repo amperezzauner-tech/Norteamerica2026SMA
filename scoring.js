@@ -119,6 +119,15 @@ function applyKnockoutOverrides(matches){
     p087.estado='finalizado';p087.golesLocal=1;p087.golesVisitante=1;
     p087.clasificado='Argentina';p087.definicion='alargue';
   }
+  // La final (p104) se definió en alargue: España 1-0 marcador final, pero 0-0 a los
+  // 90 minutos. La polla se califica con el marcador a 90', así que se corrige aquí
+  // igual que p087. El marcador final (1-0) se guarda aparte solo como referencia.
+  const p104=out.find(m=>m.id==='p104'||String(m.matchId)==='104');
+  if(p104){
+    p104.estado='finalizado';p104.golesLocal=0;p104.golesVisitante=0;
+    p104.golesLocalFinal=1;p104.golesVisitanteFinal=0;
+    p104.clasificado='España';p104.definicion='alargue';
+  }
   const byId=new Map(out.map(m=>[m.id,m]));
   CONFIRMED_OCTAVOS.forEach(base=>{
     const existing=byId.get(base.id);
@@ -465,11 +474,13 @@ function honorBonus(p){
   if(official.subcampeon&&pickSub&&sameTeam(pickSub,official.subcampeon)){
     total+=FINAL_PLACEMENT_BONUS.subcampeon;detail.push({tipo:'subcampeon',pts:FINAL_PLACEMENT_BONUS.subcampeon,team:official.subcampeon});
   }
+  // Solo se otorgan puntos por acertar EXACTAMENTE la posición. El de 3er puesto se
+  // paga solo si el equipo terminó 3º de verdad; no hay crédito parcial por "el que
+  // puse de 3º quedó 4º". Nadie predijo un 4º puesto explícito, así que ese bono (5)
+  // no se reparte.
   const pickTercero=cleanHonorTeam(h.tercer_puesto);
   if(pickTercero&&official.tercer_puesto&&sameTeam(pickTercero,official.tercer_puesto)){
     total+=FINAL_PLACEMENT_BONUS.tercer_puesto;detail.push({tipo:'tercer_puesto',pts:FINAL_PLACEMENT_BONUS.tercer_puesto,team:official.tercer_puesto});
-  }else if(pickTercero&&official.cuarto_puesto&&sameTeam(pickTercero,official.cuarto_puesto)){
-    total+=FINAL_PLACEMENT_BONUS.cuarto_puesto;detail.push({tipo:'cuarto_puesto',pts:FINAL_PLACEMENT_BONUS.cuarto_puesto,team:official.cuarto_puesto});
   }
   const oficialesJugadores=(typeof RES!=='undefined'&&RES&&RES.premios_oficiales)||{};
   Object.keys(HONOR_PLAYER_BONUS).forEach(campo=>{
