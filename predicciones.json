@@ -28630,7 +28630,7 @@
           "golesVisitante": 2
         },
         "p058": {
-          "golesLocal": 1,
+          "golesLocal": 0,
           "golesVisitante": 3
         },
         "p016": {
@@ -28667,7 +28667,7 @@
         },
         "p038": {
           "golesLocal": 4,
-          "golesVisitante": 0
+          "golesVisitante": 1
         },
         "p037": {
           "golesLocal": 4,
